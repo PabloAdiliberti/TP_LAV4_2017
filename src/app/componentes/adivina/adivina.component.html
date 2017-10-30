@@ -1,0 +1,18 @@
+
+<div class="col-md-4 col-md-offset-4 text-center">
+      <br><br><h3>{{miJuego.NombreDelJuego}} </h3><br><br>
+      <form class="loginForm">
+        <div class="input-group">
+          <input type="text"  class="form-control"  name="numero" [(ngModel)]="miJuego.NumeroIngresado" placeholder="Ingrase un numero"/>
+          <input type="submit" id="nuevo" class="form-control" value="Nuevo" (click)="miJuego.GenerarNuevo()">
+          <input type="submit" id="verificar" class="form-control" value="Verificar" (click)="miJuego.Verificar()">
+        </div>
+      </form>
+      {{miJuego.NumeroSecreto}}
+      <!-- {{miJuego.Jugador}}
+      {{miJuego.Nombre}} -->
+     
+      <p [hidden]="!miJuego.Gano">Ganó</p>
+      <p [hidden]="miJuego.Gano">No Ganó</p>
+      <p [hidden]="!miJuego.Gano">Tardaste {{miJuego.Fin}} Segundo en adivinar.</p>
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
+
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -8,27 +9,37 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute,
-    private router: Router) { }
+  constructor(private Route:ActivatedRoute,private router: Router) 
+  {
+    var personaGuardada = localStorage.getItem("miUsuario");
+    var persona = JSON.parse(personaGuardada);
+  }
 
   ngOnInit() {
   }
 
-  Juego(tipo: string) {
-    switch (tipo) {
-      case 'Adivina':
-          this.router.navigate(['/Juegos/Adivina']);
-        break;
-      case 'Agilidad':
-          this.router.navigate(['/Juegos/Agilidad']);
-        break;
-      case 'AdivinaMasListado':
-          this.router.navigate(['/Juegos/AdivinaMasListado']);
-        break;
-      case 'AgilidadaMasListado':
-          this.router.navigate(['/Juegos/AgilidadaMasListado']);
-        break;
+  OpcionMenu(Opcion:string)
+  {
+    switch(Opcion)
+   {
+      case 'menu':
+      this.router.navigate(['/menu']);   
+      break;  
+      case 'agilidad':
+      this.router.navigate(['/agilidad']);
+      break;
+      case 'adivina':
+      this.router.navigate(['/adivina']);     
+      break;
+      case 'estAdivina':
+      this.router.navigate(['/estadisticaAdivina']);     
+      break;
+      case 'estAgilidad':
+      this.router.navigate(['/estadisticaAgilidad']);     
+      break;
     }
-  }
+
+ }
+
 
 }

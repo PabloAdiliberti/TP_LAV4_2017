@@ -1,3 +1,18 @@
-<p>
-  anagrama works!
-</p>
+<div class="col-md-4 col-md-offset-4 text-center">
+		<!-- <br><br><h3>{{miJuego.NombreDelJuego}} </h3><br><br> -->
+	<form class="loginForm">
+		<div class="input-group">
+		
+					
+			Anagrama:
+			<!-- <a  *ngFor="let item of miJuego.respuestaArray">
+					{{item}}
+      </a> -->
+      {{miJuego.Display}}
+
+			<input type="text"  class="form-control"  name="usuario" [(ngModel)]="miJuego.ingresado" placeholder="Respuesta"/>
+			<input type="submit" id="verificar" class="form-control" value="Verificar" (click)="miJuego.Verificar()">
+
+		</div>
+	</form>
+</div>

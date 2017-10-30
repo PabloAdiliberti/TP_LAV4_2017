@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { NgModule } from '@angular/core';
+import { Login } from '../../Clase/login';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import {AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
+import { AngularFireAuthModule,AngularFireAuth, } from 'angularfire2/auth';
+import { StoreService } from '../../servicios/store.service';
+import { LocalStorageService } from 'angular-2-local-storage';
 
-import {Subscription} from "rxjs";
-import {TimerObservable} from "rxjs/observable/TimerObservable";
+import {firebase}  from 'firebase/database';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -10,72 +16,56 @@ import {TimerObservable} from "rxjs/observable/TimerObservable";
 })
 export class LoginComponent implements OnInit {
 
-  private subscription: Subscription;
-  usuario = '';
-  clave= '';
-  progreso: number;
-  progresoMensaje="esperando..."; 
-  logeando=true;
-  ProgresoDeAncho:string;
+  miUsuario : Login;
+  users: FirebaseListObservable<any[]>;
+  tipoUser:string;
 
-  clase="progress-bar progress-bar-info progress-bar-striped ";
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router) {
-      this.progreso=0;
-      this.ProgresoDeAncho="0%";
-
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private localStorageService: LocalStorageService,
+              db: AngularFireDatabase,
+              private _auth:AngularFireAuth)
+  {
+    this.miUsuario = new Login(route,router,_auth);
+    console.info(this.users);
   }
+
+
+  Registrarse(){
+
+    this.router.navigate(['/Registrar']);
+  }
+
+    UserValido()
+    {
+      switch(this.tipoUser){
+        case "admin":{
+          this.miUsuario.usuario="admin@admin.com";
+          this.miUsuario.clave="111111";
+          break;}
+        case "usuario":{
+          this.miUsuario.usuario="usuario@usuario.com";
+          this.miUsuario.clave="333333";
+          break;}
+        case "invitado":{
+          this.miUsuario.usuario="invitado@invitado.com";
+          this.miUsuario.clave="222222";
+          break;}                
+        case "jugador1":{
+          this.miUsuario.usuario="j1@jugador.com";
+          this.miUsuario.clave="444444";
+          break;}
+        case "jugador2":{
+          this.miUsuario.usuario="j2@jugador.com";
+          this.miUsuario.clave="555555";
+          break;}        
+      }
+    }
 
   ngOnInit() {
   }
 
-  Entrar() {
-    if (this.usuario === 'admin' && this.clave === 'admin') {
-      this.router.navigate(['/Principal']);
-    }
-  }
-  MoverBarraDeProgreso() {
-    
-    this.logeando=false;
-    this.clase="progress-bar progress-bar-danger progress-bar-striped active";
-    this.progresoMensaje="NSA spy..."; 
-    let timer = TimerObservable.create(200, 50);
-    this.subscription = timer.subscribe(t => {
-      console.log("inicio");
-      this.progreso=this.progreso+1;
-      this.ProgresoDeAncho=this.progreso+20+"%";
-      switch (this.progreso) {
-        case 15:
-        this.clase="progress-bar progress-bar-warning progress-bar-striped active";
-        this.progresoMensaje="Verificando ADN..."; 
-          break;
-        case 30:
-          this.clase="progress-bar progress-bar-Info progress-bar-striped active";
-          this.progresoMensaje="Adjustando encriptación.."; 
-          break;
-          case 60:
-          this.clase="progress-bar progress-bar-success progress-bar-striped active";
-          this.progresoMensaje="Recompilando Info del dispositivo..";
-          break;
-          case 75:
-          this.clase="progress-bar progress-bar-success progress-bar-striped active";
-          this.progresoMensaje="Recompilando claves facebook, gmail, chats..";
-          break;
-          case 85:
-          this.clase="progress-bar progress-bar-success progress-bar-striped active";
-          this.progresoMensaje="Instalando KeyLogger..";
-          break;
-          
-        case 100:
-          console.log("final");
-          this.subscription.unsubscribe();
-          this.Entrar();
-          break;
-      }     
-    });
-    //this.logeando=true;
-  }
+
+  
 
 }

@@ -1,0 +1,129 @@
+
+/*-----------------------------------------*/
+body{
+  background:url('http://www.wallpaperup.com/uploads/wallpapers/2012/10/21/20181/cad2441dd3252cf53f12154412286ba0.jpg');
+  /* padding:50px; */
+}
+
+#login-dp{
+  min-width: 250px;
+  padding: 14px 14px 0;
+  overflow:hidden;
+  background-color:rgba(255,255,255,.8);
+}
+#login-dp .help-block{
+  font-size:12px    
+}
+#login-dp .bottom{
+  background-color:rgba(255,255,255,.8);
+  border-top:1px solid #ddd;
+  clear:both;
+  padding:14px;
+}
+#login-dp .social-buttons{
+  margin:12px 0    
+}
+#login-dp .social-buttons a{
+  width: 49%;
+}
+#login-dp .form-group {
+  margin-bottom: 10px;
+}
+.btn-fb{
+  color: #fff;
+  background-color:#3b5998;
+}
+.btn-tw:hover{
+  color: #fff;
+  background-color:#59b5fa;
+}
+@media(max-width:768px){
+  #login-dp{
+      background-color: inherit;
+      color: #fff;
+  }
+  #login-dp .bottom{
+      background-color: inherit;
+      border-top:0 none;
+  }
+}
+
+
+
+/**/
+
+
+/* menu */
+
+#menu ul {
+  list-style:none;
+  margin:0;
+  padding:0;
+ }
+ 
+ /* items del menu */
+ 
+ #menu ul li {
+  background-color:rgb(0, 0, 0)
+ }
+ 
+ /* enlaces del menu */
+ 
+ #menu ul a {
+  display:block;
+  color:#fff;
+  text-decoration:none;
+  font-weight:400;
+  font-size:15px;
+  padding:10px;
+  font-family:"HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform:uppercase;
+  letter-spacing:1px;
+ }
+ 
+ /* items del menu */
+ 
+ #menu ul li {
+  position:relative;
+  float:left;
+  margin:0;
+  padding:0;
+ }
+ 
+ /* efecto al pasar el ratón por los items del menu */
+ 
+ #menu ul li:hover {
+  background: rgb(0, 0, 0)
+ }
+
+ #menu ul ul {
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  background:rgb(0, 0, 0);
+  padding:0;
+ }
+ 
+ /* items del menu desplegable */
+ 
+ #menu ul ul li {
+  /* float:none; */
+  width:200px
+ }
+ 
+ /* enlaces de los items del menu desplegable */
+ 
+ #menu ul ul a {
+  line-height:100%;
+  padding:10px 15px;
+ }
+ 
+ /* items del menu desplegable al pasar el ratón */
+ 
+ #menu ul li:hover > ul {
+  display:block;
+ }
+ 
+
+

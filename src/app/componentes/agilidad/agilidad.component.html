@@ -1,0 +1,23 @@
+	
+<div class="col-md-4 col-md-offset-4 text-center">
+        <br><br>     <h1> {{miJuego.NombreDelJuego}}</h1>
+        <h3>Resuelva la operacion</h3>
+<br><br><input type="text" class="form-control" [(ngModel)]="miJuego.Numero1" >
+<br><br><input type="text" class="form-control" [(ngModel)]="miJuego.Operador" >
+<br><br><input type="text" class="form-control" [(ngModel)]="miJuego.Numero2" >
+<br><br><input type="text" class="form-control" [(ngModel)]="miJuego.Resultado" >
+<p [hidden]="!miJuego.Gano">Ganó</p>
+<p [hidden]="miJuego.Gano">No Ganó</p>  
+<p [hidden]="!miJuego.Gano">Tardaste {{miJuego.Fin}} Segundo en adivinar.</p>
+</div>
+
+
+<div class="col-md-4 col-md-offset-4 text-center">
+            <form class="loginForm">
+                <div class="input-group">                   
+                    <input type="submit" id="nuevo" class="form-control" (click)="miJuego.GenerarNuevo()" value="Nuevo">
+                    <input type="submit" id="verificar" class="form-control" (click)="miJuego.Verificar()" value="Verificar">	
+                    <input type="submit" id="verificar" class="form-control" (click)="Salir()" value="Salir">			
+                </div>
+            </form>  
+</div>
