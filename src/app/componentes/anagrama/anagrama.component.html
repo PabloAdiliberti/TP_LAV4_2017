@@ -4,11 +4,11 @@
 		<div class="input-group">
 		
 					
-			Anagrama:
+		<h1>	Anagrama:</h1>
 			<!-- <a  *ngFor="let item of miJuego.respuestaArray">
 					{{item}}
       </a> -->
-      {{miJuego.Display}}
+      <h3>{{miJuego.Display}}</h3>
 
 			<input type="text"  class="form-control"  name="usuario" [(ngModel)]="miJuego.ingresado" placeholder="Respuesta"/>
 			<input type="submit" id="verificar" class="form-control" value="Verificar" (click)="miJuego.Verificar()">
@@ -16,3 +16,22 @@
 		</div>
 	</form>
 </div>
+<table class="table table-condensed">
+        <thead>
+          <tr>
+              <th>Jugador</th>
+              <th>Gano</th>
+              <th>Tiempo</th>
+              <th>Juego</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let juego of miJuego.Jugadores">
+            <td>{{juego.Nombre}} </td>
+            <td>{{juego.Gano}} </td> 
+            <td>{{juego.Tiempo}} </td> 
+            <td>{{juego.Juego}} </td> 
+          </tr>
+        
+        </tbody>
+      </table>

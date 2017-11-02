@@ -21,3 +21,22 @@
                 </div>
             </form>  
 </div>
+<table class="table table-condensed">
+        <thead>
+          <tr>
+              <th>Jugador</th>
+              <th>Gano</th>
+              <th>Tiempo</th>
+              <th>Juego</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let juego of miJuego.Jugadores">
+            <td>{{juego.Nombre}} </td>
+            <td>{{juego.Gano}} </td> 
+            <td>{{juego.Tiempo}} </td> 
+            <td>{{juego.Juego}} </td> 
+          </tr>
+        
+        </tbody>
+      </table>

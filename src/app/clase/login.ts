@@ -1,6 +1,7 @@
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AngularFireAuthModule,AngularFireAuth, } from 'angularfire2/auth';
 import { StoreService } from '.././servicios/store.service';
+import { LocalStorageService } from 'angular-2-local-storage';
 
 export class Login {
 

@@ -116,3 +116,16 @@ a:hover { text-decoration: none }
 #pswd_info {
     display:none;
 }
+
+
+
+table {
+    width: 100%;
+}
+
+th {
+    height: 50px;
+}
+td {
+    height: 50px;
+}

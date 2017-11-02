@@ -1,6 +1,7 @@
 
 import { Component, OnInit ,Input,Output,EventEmitter} from '@angular/core';
-import { JuegoAdivina } from '../../clases/juego-adivina'
+import { JuegoAdivina } from '../../clases/juego-adivina';
+
 
 @Component({
   selector: 'app-adivina-el-numero',
@@ -15,10 +16,15 @@ export class AdivinaElNumeroComponent implements OnInit {
   contador:number;
   ocultarVerificar:boolean;
  
-  constructor() { 
+  constructor( ) { 
+
+    alert("asd");
     this.nuevoJuego = new JuegoAdivina();
     console.info("numero Secreto:",this.nuevoJuego.numeroSecreto);  
     this.ocultarVerificar=false;
+
+
+ 
   }
   generarnumero() {
     this.nuevoJuego.generarnumero();

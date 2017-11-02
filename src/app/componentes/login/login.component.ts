@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
               private _auth:AngularFireAuth)
   {
     this.miUsuario = new Login(route,router,_auth);
+    
     console.info(this.users);
   }
 

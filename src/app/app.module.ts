@@ -23,6 +23,7 @@ import { StoreService } from './servicios/store.service';
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { AnagramaComponent } from './componentes/anagrama/anagrama.component';
 import { PiedraPapelTijeraComponent } from './componentes/piedra-papel-tijera/piedra-papel-tijera.component';
+import { MenuOpcionesComponent } from './componentes/menu-opciones/menu-opciones.component';
 
 
 
@@ -37,6 +38,7 @@ let miRuteo = [{path:'adivina',component:AdivinaComponent},
 {path:'estadisticaAgilidad',component: EstadisticaAgilidadComponent},
 {path:'memotest',component: MemotestComponent},
 {path:'anagrama',component: AnagramaComponent},
+{path:'PPT',component: PiedraPapelTijeraComponent},
 {path:'menuDeListado',component: MenuDeListadoComponent}] 
 
 export const firebaseConfig = {
@@ -62,7 +64,8 @@ export const firebaseConfig = {
     RegistrarComponent,
     MemotestComponent,
     AnagramaComponent,
-    PiedraPapelTijeraComponent
+    PiedraPapelTijeraComponent,
+    MenuOpcionesComponent
   ],
   imports: [
     RouterModule.forRoot(miRuteo),

@@ -12,7 +12,10 @@ export class AgilidadComponent implements OnInit {
   miJuego: Agilidad;
   constructor(private router: Router) 
   {
-    this.miJuego = new Agilidad();
+  
+    var user = localStorage.getItem("miUsuario");
+    var personaGuardada = JSON.parse(user);
+    this.miJuego = new Agilidad("Agilidad aritmetica",personaGuardada.nombre);
   }
 
   ngOnInit() {

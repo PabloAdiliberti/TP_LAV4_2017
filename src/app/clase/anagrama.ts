@@ -7,33 +7,26 @@ export class Anagrama  extends Juego
     ingresado: string;
     Display: string;
     respuestaArray: Array<any>;
+    nombre:string;
+    Jugadores: Array<any>;
 
-    constructor()
+    constructor(nombre:string, jugador: string) 
      { 
-        super("pablo","jugador1");
-        // this.NombreDelJuego = "Anagrama";
-        
+        super(nombre,jugador);
+        this.nombre = jugador;
+        this.NombreDelJuego = "Anagrama";  
+        this.Jugadores = new Array<any>();
         this.respuesta = "Eduardo"; 
         this.respuestaArray=  this.respuesta.split('');
         this.Display = "Deudora"
-        // Afinar = Francia
-        // Deudora = Eduardo
-        // Marta = matar
-        // Mónica = camino
-        
-        // Pedro = poder
-        
-        // Santiago = agonista
-        
-        // Susana = saunas
-        
-        // Teresa = aretes
-        // Sergio = riesgo
-        
-        // Nicolás = colinas
-        
-        // Álvaro = valora
-        
+
+        var user = localStorage.getItem("JugadoresGuardadosAnagrama");
+        var json = JSON.parse(user);
+
+            
+        alert(json);
+        if(json != null)
+            this.Jugadores = json;
 
      }
 
@@ -42,8 +35,27 @@ export class Anagrama  extends Juego
         if( this.respuesta == this.ingresado)
             {
                 alert("Gano");
-                this.Siguiente();
+             
                 this.ingresado = "";
+
+
+                var persona = {
+                    Nombre: this.nombre,
+                    Tiempo: this.Fin,
+                    Gano: "Gano",
+                    Juego: this.NombreDelJuego
+                };
+              
+                alert(persona);
+                this.Jugadores.push(persona);    
+                
+                alert(this.Jugadores);
+                var JugadoresGuardados = JSON.stringify(this.Jugadores);
+
+                alert(JugadoresGuardados);
+                localStorage.setItem("JugadoresGuardadosAnagrama", JugadoresGuardados); 
+
+                this.Siguiente();
             }
         else
            { 

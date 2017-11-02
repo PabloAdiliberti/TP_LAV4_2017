@@ -6,6 +6,7 @@
           <input type="text"  class="form-control"  name="numero" [(ngModel)]="miJuego.NumeroIngresado" placeholder="Ingrase un numero"/>
           <input type="submit" id="nuevo" class="form-control" value="Nuevo" (click)="miJuego.GenerarNuevo()">
           <input type="submit" id="verificar" class="form-control" value="Verificar" (click)="miJuego.Verificar()">
+          <input type="submit" id="verificar" class="form-control" (click)="Salir()" value="Salir">		
         </div>
       </form>
       {{miJuego.NumeroSecreto}}
@@ -14,5 +15,33 @@
      
       <p [hidden]="!miJuego.Gano">Ganó</p>
       <p [hidden]="miJuego.Gano">No Ganó</p>
-      <p [hidden]="!miJuego.Gano">Tardaste {{miJuego.Fin}} Segundo en adivinar.</p>
+      <p [hidden]="!miJuego.Gano">Tardaste {{miJuego.Fin}} Segundos en adivinar.</p>
+
+      
+      <table class="table table-condensed">
+          <thead>
+            <tr>
+                <th>Jugador</th>
+                <th>Gano</th>
+                <th>Tiempo</th>
+                <th>Intentos</th>
+                <th>Juego</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let juego of miJuego.Jugadores">
+              <td>{{juego.Nombre}} </td>
+              <td>{{juego.Gano}} </td> 
+              <td>{{juego.Tiempo}} </td> 
+              <td>{{juego.Intentos}} </td> 
+              <td>{{juego.Juego}} </td> 
+            </tr>
+          
+          </tbody>
+        </table>
 </div>
+
+
+
+
+

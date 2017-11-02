@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PPT } from '../../Clase/piedraPapelTijera';
 
 @Component({
   selector: 'app-piedra-papel-tijera',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PiedraPapelTijeraComponent implements OnInit {
 
-  constructor() { }
+  miJuego: PPT;
+  constructor() {
+    this.miJuego = new PPT("pablo","Jugador1");
+  }
 
   ngOnInit() {
   }

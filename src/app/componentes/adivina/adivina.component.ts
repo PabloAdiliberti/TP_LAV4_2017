@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Juego} from '../../Clase/juego';
 import { Adivina} from '../../Clase/adivina';
+import { LocalStorageService } from 'angular-2-local-storage';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-adivina',
@@ -10,12 +12,26 @@ import { Adivina} from '../../Clase/adivina';
 export class AdivinaComponent implements OnInit {
 
   miJuego: Adivina;
-  constructor() 
+  filtrado : any;
+
+
+  constructor(private localStorageService: LocalStorageService,private router: Router) 
   {
-    this.miJuego = new Adivina("pablo","Jugador1");
+   
+    var user = localStorage.getItem("miUsuario");
+    var personaGuardada = JSON.parse(user);
+    this.miJuego = new Adivina("Adivina el numero",personaGuardada.nombre);
+
   }
 
   ngOnInit() {
+  }
+
+
+
+  Salir()
+  {
+    this.router.navigate(['/menu']);
   }
 
 }

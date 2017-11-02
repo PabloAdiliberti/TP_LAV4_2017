@@ -9,11 +9,19 @@ export class Agilidad  extends Juego
     ResultadoReal: number;
     Inicio:number; 
     Fin:number; 
+    Jugadores: Array<any>;
+    nombre:string;
+ 
 
-    constructor()
+    constructor(nombre:string, jugador: string) 
      { 
-        super("pablo","jugador1");
+        super(nombre,jugador);
         this.NombreDelJuego = "Agilidad aritmetica";   
+        this.nombre = jugador;
+        this.Jugadores = new Array<any>();
+        
+        var user = localStorage.getItem("JugadoresGuardadosAgilidad");
+        var json = JSON.parse(user);
      }
 
      public GenerarNuevo()
@@ -62,7 +70,19 @@ export class Agilidad  extends Juego
          if(this.ResultadoReal == this.Resultado)
             {
                 this.Gano = true;
-                this.Fin = Math.floor((new Date().getTime() - this.Inicio)/1000);   
+                this.Fin = Math.floor((new Date().getTime() - this.Inicio)/1000);
+                
+                var persona = {
+                    Nombre: this.nombre,
+                    Tiempo: this.Fin,
+                    Gano: "Gano",
+                    Juego: this.NombreDelJuego
+                };
+              
+                this.Jugadores.push(persona);             
+                var JugadoresGuardados = JSON.stringify(this.Jugadores);
+                localStorage.setItem("JugadoresGuardadosAgilidad", JugadoresGuardados); 
+               
             }
          else
             this.Gano = false;

@@ -10,7 +10,11 @@ export class AnagramaComponent implements OnInit {
 
   miJuego: Anagrama;
   constructor() { 
-    this.miJuego = new Anagrama();
+
+
+    var user = localStorage.getItem("miUsuario");
+    var personaGuardada = JSON.parse(user);
+    this.miJuego = new Anagrama("Adivina el numero",personaGuardada.nombre);
   }
 
   ngOnInit() {
