@@ -30,7 +30,7 @@ export class MemoTest extends Juego{
             this.Jugadores = json;
        
         this.NombreDelJuego = "Traductor"
-        this.myPhotoURL = "../assets/perro.jpg";
+        this.myPhotoURL = "./assets/perro.jpg";
         this.respuesta= "DOG";
         this.respuestaArray=  this.respuesta.split('');
         this.ayuda = new Array<any>(this.respuesta.length);
@@ -92,8 +92,8 @@ export class MemoTest extends Juego{
             this.ayuda[index]= "_"
         }
         switch (this.myPhotoURL) {
-            case "../assets/perro.jpg":
-            this.myPhotoURL = "../assets/casa.jpg";
+            case "./assets/perro.jpg":
+            this.myPhotoURL = "./assets/casa.jpg";
             this.respuesta= "HOUSE";
             this.respuestaArray=  this.respuesta.split('');
             this.ayuda = new Array<any>(this.respuesta.length);
@@ -101,8 +101,8 @@ export class MemoTest extends Juego{
                 this.ayuda[index]= "_"
             }
             break;
-            case "../assets/casa.jpg":
-            this.myPhotoURL = "../assets/estrella.jpg";
+            case "./assets/casa.jpg":
+            this.myPhotoURL = "./assets/estrella.jpg";
             this.respuesta= "STAR";
             this.respuestaArray=  this.respuesta.split('');
             this.ayuda = new Array<any>(this.respuesta.length);
@@ -111,8 +111,8 @@ export class MemoTest extends Juego{
             }
                 
             break;
-            case "../assets/estrella.jpg":
-            this.myPhotoURL = "../assets/manzana.jpg";
+            case "./assets/estrella.jpg":
+            this.myPhotoURL = "./assets/manzana.jpg";
             this.respuesta= "APPLE";
             this.respuestaArray=  this.respuesta.split('');
             this.ayuda = new Array<any>(this.respuesta.length);
@@ -132,7 +132,7 @@ export class MemoTest extends Juego{
         alert("Inicio del juego");
         this.Inicio = new Date().getTime();   
         this.Habilitado = false;
-        this.myPhotoURL = "../assets/perro.jpg";
+        this.myPhotoURL = "./assets/perro.jpg";
         this.respuesta= "DOG";
 
         this.respuestaArray=  this.respuesta.split('');
