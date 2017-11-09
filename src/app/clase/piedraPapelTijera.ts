@@ -36,17 +36,17 @@ export class PPT extends Juego{
     {
         switch (opcion) {
             case "piedra":
-            this.elijioUsuario= "../assets/piedra.jpg";
+            this.elijioUsuario= "./assets/piedra.jpg";
             this.ElijeMaquina(); 
             this.QuienGano(opcion);
                 break;
             case "papel":
-            this.elijioUsuario =  "../assets/papel.jpg"; 
+            this.elijioUsuario =  "./assets/papel.jpg"; 
             this.ElijeMaquina(); 
             this.QuienGano(opcion);  
                 break;
             case "tijera":
-            this.elijioUsuario =  "../assets/tijera.jpg";  
+            this.elijioUsuario =  "./assets/tijera.jpg";  
             this.ElijeMaquina(); 
             this.QuienGano(opcion);
                 break;
@@ -62,15 +62,15 @@ export class PPT extends Juego{
       //  alert("numero " + numero);
         switch (numero) {
             case 1:
-            this.elijioMaquina =  "../assets/piedra.jpg";
+            this.elijioMaquina =  "./assets/piedra.jpg";
             this.maquina = "piedra";
                 break;
             case 2:
-            this.elijioMaquina =  "../assets/papel.jpg";
+            this.elijioMaquina =  "./assets/papel.jpg";
             this.maquina = "papel";
                 break;
             case 3:
-            this.elijioMaquina =  "../assets/tijera.jpg";
+            this.elijioMaquina =  "./assets/tijera.jpg";
             this.maquina = "tijera";
                 break;
         
