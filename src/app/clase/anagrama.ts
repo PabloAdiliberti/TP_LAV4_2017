@@ -9,22 +9,24 @@ export class Anagrama  extends Juego
     respuestaArray: Array<any>;
     nombre:string;
     Jugadores: Array<any>;
+    Habilitado: boolean;
+    Inicio:number; 
+    Fin:number;
 
     constructor(nombre:string, jugador: string) 
      { 
         super(nombre,jugador);
         this.nombre = jugador;
+        this.Habilitado = true;
         this.NombreDelJuego = "Anagrama";  
         this.Jugadores = new Array<any>();
         this.respuesta = "Eduardo"; 
         this.respuestaArray=  this.respuesta.split('');
-        this.Display = "Deudora"
+        this.Display = "Deudora";
 
         var user = localStorage.getItem("JugadoresGuardadosAnagrama");
         var json = JSON.parse(user);
-
-            
-        alert(json);
+           
         if(json != null)
             this.Jugadores = json;
 
@@ -32,35 +34,32 @@ export class Anagrama  extends Juego
 
      Verificar()
      {
-        if( this.respuesta == this.ingresado)
+        var respuestaUsuario=this.ingresado.toUpperCase();
+        if( this.respuesta == respuestaUsuario)
             {
-                alert("Gano");
-             
+                if(respuestaUsuario == "NICOLAS")
+                {
+                    alert("Gano");
+                    this.Fin = (new Date().getTime() - this.Inicio)/1000;              
+                    this.ingresado = "";
+                    var persona = {
+                        Nombre: this.nombre,
+                        Tiempo: this.Fin,
+                        Gano: "Gano",
+                        Juego: this.NombreDelJuego
+                    };
+                            
+                    this.Jugadores.push(persona);           
+                    var JugadoresGuardados = JSON.stringify(this.Jugadores);        
+                    localStorage.setItem("JugadoresGuardadosAnagrama", JugadoresGuardados); 
+                }
                 this.ingresado = "";
-
-
-                var persona = {
-                    Nombre: this.nombre,
-                    Tiempo: this.Fin,
-                    Gano: "Gano",
-                    Juego: this.NombreDelJuego
-                };
-              
-                alert(persona);
-                this.Jugadores.push(persona);    
-                
-                alert(this.Jugadores);
-                var JugadoresGuardados = JSON.stringify(this.Jugadores);
-
-                alert(JugadoresGuardados);
-                localStorage.setItem("JugadoresGuardadosAnagrama", JugadoresGuardados); 
-
                 this.Siguiente();
             }
         else
            { 
-               alert("Perdio");
-               this.ingresado = "";
+                alert("No es la respuesta, intenta denuevo.");
+                this.ingresado = "";
             }
      }
 
@@ -69,24 +68,34 @@ export class Anagrama  extends Juego
          switch (this.Display) {
             case "Deudora":
                 this.Display = "Matar";   
-                this.respuesta = "Marta";      
+                this.respuesta = "MARTA";      
                  break;
             case "Matar":
                  this.Display = "camino";   
-                 this.respuesta = "Monica";      
+                 this.respuesta = "MONICA";      
                   break;
             case "camino":
                   this.Display = "riesgo";   
-                  this.respuesta = "Sergio";      
+                  this.respuesta = "SERGIO";      
                    break;
             case "riesgo":
                    this.Display = "colinas";   
-                   this.respuesta = "Nicolas";      
+                   this.respuesta = "NICOLAS";      
                     break;
          
              default:
                  break;
          }
+     }
+
+
+     public GenerarNuevo()
+     {
+        this.Habilitado = false
+        this.respuesta = "EDUARDO"; 
+        this.respuestaArray=  this.respuesta.split('');
+        this.Display = "Deudora";
+        this.Inicio = new Date().getTime();  
      }
 
 

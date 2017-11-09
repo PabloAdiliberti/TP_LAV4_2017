@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PPT } from '../../Clase/piedraPapelTijera';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-piedra-papel-tijera',
@@ -9,11 +10,19 @@ import { PPT } from '../../Clase/piedraPapelTijera';
 export class PiedraPapelTijeraComponent implements OnInit {
 
   miJuego: PPT;
-  constructor() {
-    this.miJuego = new PPT("pablo","Jugador1");
+  constructor(private router: Router) {
+
+    var user = localStorage.getItem("miUsuario");
+    var personaGuardada = JSON.parse(user);
+    this.miJuego = new PPT("Piedra , papel o tijera",personaGuardada.nombre);
   }
 
   ngOnInit() {
+  }
+
+  Salir()
+  {
+    this.router.navigate(['/menu']);
   }
 
 }

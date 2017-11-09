@@ -24,7 +24,8 @@ import { LocalStorageModule } from 'angular-2-local-storage';
 import { AnagramaComponent } from './componentes/anagrama/anagrama.component';
 import { PiedraPapelTijeraComponent } from './componentes/piedra-papel-tijera/piedra-papel-tijera.component';
 import { MenuOpcionesComponent } from './componentes/menu-opciones/menu-opciones.component';
-
+import { MenuBarraComponent } from './componentes/menu-barra/menu-barra.component';
+import { QuienSoyComponent } from './componentes/quien-soy/quien-soy.component';
 
 
 let miRuteo = [{path:'adivina',component:AdivinaComponent},
@@ -39,6 +40,7 @@ let miRuteo = [{path:'adivina',component:AdivinaComponent},
 {path:'memotest',component: MemotestComponent},
 {path:'anagrama',component: AnagramaComponent},
 {path:'PPT',component: PiedraPapelTijeraComponent},
+{path:'quienSoy',component: QuienSoyComponent},
 {path:'menuDeListado',component: MenuDeListadoComponent}] 
 
 export const firebaseConfig = {
@@ -65,7 +67,9 @@ export const firebaseConfig = {
     MemotestComponent,
     AnagramaComponent,
     PiedraPapelTijeraComponent,
-    MenuOpcionesComponent
+    MenuOpcionesComponent,
+    MenuBarraComponent,
+    QuienSoyComponent
   ],
   imports: [
     RouterModule.forRoot(miRuteo),

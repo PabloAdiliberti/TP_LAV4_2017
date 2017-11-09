@@ -1,4 +1,10 @@
 /* Base CSS */
+
+body{
+    background:url('http://ghostcode.in/wp-content/uploads/2016/09/super_hero_whatsapp_background_by_x_ama-d8fr7iz.jpg'); 
+   /* padding:50px; */
+   font-family: cursive;
+ }
 .alignleft {
     float: left;
     margin-right: 15px;
@@ -118,7 +124,7 @@ a:hover { text-decoration: none }
 }
 
 
-.miboton
+/* .miboton
 {
     background-color: rgb(5, 50, 182);
     border: 1px solidrgb(5, 50, 182);
@@ -135,4 +141,4 @@ a:hover { text-decoration: none }
     width: 240px;
     margin-bottom: 5px;
     
-}
+} */

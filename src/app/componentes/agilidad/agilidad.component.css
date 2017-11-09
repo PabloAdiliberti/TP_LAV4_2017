@@ -1,4 +1,9 @@
 /* Base CSS */
+body{
+    background:url('http://ghostcode.in/wp-content/uploads/2016/09/super_hero_whatsapp_background_by_x_ama-d8fr7iz.jpg'); 
+   /* padding:50px; */
+   font-family: cursive;
+ }
 .alignleft {
     float: left;
     margin-right: 15px;

@@ -1,6 +1,10 @@
-
+<body >
+  <div>
 <div  ALIGN=center>
-  <table>
+    <h1 align="center" >{{miJuego.NombreDelJuego}}</h1>
+    <input class="miboton" type="image" align="right" style='width:120px'  (click)="miJuego.GenerarNuevo()"  img src="assets/Nuevo.png">
+    <h3>El primero en llegar a 7 puntos gana.</h3>
+  <table align="center">
     <tr>
       <th>Usuario</th>
       <th></th>
@@ -13,21 +17,21 @@
       <td></td>
       <td></td>
       <td></td>
-      <td><a (click)="miJuego.OpcionElegida('piedra')"><img src="../assets/piedra.jpg" style='width:120px;height:120px'></a></td>
+      <td><a><img src="../assets/piedra.jpg" style='width:120px;height:120px'></a></td>
     </tr>
     <tr>
       <td><a (click)="miJuego.OpcionElegida('papel')"><img src="../assets/papel.jpg" style='width:120px;height:120px'></a></td>
       <td><img src="{{ miJuego.elijioUsuario }}" style='width:120px;height:120px'></td>
       <td></td>
       <td><img src="{{ miJuego.elijioMaquina }}" style='width:120px;height:120px'></td>
-      <td><a (click)="miJuego.OpcionElegida('papel')"><img src="../assets/papel.jpg" style='width:120px;height:120px'></a></td>
+      <td><a><img src="../assets/papel.jpg" style='width:120px;height:120px'></a></td>
     </tr>
     <tr>
       <td><a (click)="miJuego.OpcionElegida('tijera')"><img src="../assets/tijera.jpg" style='width:120px;height:120px'></a></td>
       <td></td>
       <td></td>
       <td></td>
-      <td><a (click)="miJuego.OpcionElegida('tijera')"><img src="../assets/tijera.jpg" style='width:120px;height:120px'></a></td>
+      <td><a><img src="../assets/tijera.jpg" style='width:120px;height:120px'></a></td>
     </tr>
     <tr>
       <td><h3>Puntos {{miJuego.puntosU}}</h3></td>
@@ -38,3 +42,24 @@
     </tr>
   </table>
 </div>
+<input class="miboton" type="image" style='width:120px;height:160px'  (click)="Salir()"  img src="assets/Salir.png">	
+
+<table class="table table-condensed">
+  <thead>
+    <tr>
+        <th>Jugador</th>
+        <th>Gano</th>
+        <th>Juego</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let juego of miJuego.Jugadores">
+      <td>{{juego.Nombre}} </td>
+      <td>{{juego.Gano}} </td> 
+      <td>{{juego.Juego}} </td> 
+    </tr>
+  
+  </tbody>
+</table>
+</div>
+</body>

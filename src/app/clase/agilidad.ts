@@ -11,21 +11,24 @@ export class Agilidad  extends Juego
     Fin:number; 
     Jugadores: Array<any>;
     nombre:string;
- 
+    Habilitado: boolean;
 
     constructor(nombre:string, jugador: string) 
      { 
         super(nombre,jugador);
+        this.Habilitado = true;
         this.NombreDelJuego = "Agilidad aritmetica";   
         this.nombre = jugador;
         this.Jugadores = new Array<any>();
         
         var user = localStorage.getItem("JugadoresGuardadosAgilidad");
         var json = JSON.parse(user);
+
      }
 
      public GenerarNuevo()
      {
+        this.Habilitado = false
         this.Resultado = null;
         this.Numero1 = Math.floor(Math.random()*100+1);
         this.Numero2 = Math.floor(Math.random()*100+1);

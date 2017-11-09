@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MemoTest} from '../../Clase/memoTest';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 
 @Component({
@@ -11,7 +12,7 @@ export class MemotestComponent implements OnInit {
 
 
   miJuego: MemoTest;
-  constructor() {
+  constructor(private router: Router) {
     this.miJuego = new MemoTest("pablo","Jugador1");
   }
 
@@ -19,6 +20,9 @@ export class MemotestComponent implements OnInit {
   }
 
 
-
+  Salir()
+  {
+    this.router.navigate(['/menu']);
+  }
 
 }

@@ -1,49 +1,13 @@
-<!-- <div class="container">
-	<div class="row">
-		<div class="col-md-4 col-md-offset-4 text-center">
-			<div class="search-box">
-				<div class="caption">
-						
-					<h3>Login</h3>
-			
-				</div>
-				<form action="" class="loginForm">
-					<div class="input-group">
-							
 
-						
-						<input type="text"  class="form-control"  name="usuario" [(ngModel)]="miUsuario.usuario" placeholder="Usuario"/>
-						<input type="password" id="paw" class="form-control" [(ngModel)]="miUsuario.clave" name="pass" placeholder="Clave">		
-						<br>
-						<br>
-						<input type="submit" (click)="miUsuario.Entrar()" id="submit" class="form-control" value="Ingresar">
-						<input type="submit" (click)="Registrarse()" id="submit" class="form-control" value="Registrar">
-									
-					
-						<h3  [hidden]="!ingreso" > {{miUsuario.Mensaje}}</h3>
-			
-						<select class="form-control" name="firstField" [(ngModel)]="tipoUser" (change)="UserValido()" placeholder="Seleccione usuario">
-								<option value="usuario">Usuario</option>
-								<option value="admin">Administrador</option>
-								<option value="invitado">Invitado</option>
-								<option value="jugador1">Jugador 1</option>
-								<option value="jugador2">Jugador 2</option>
-							</select>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div> -->
 <html >
 	
 <body clase = "miclase" background="../assets/2.jpg" >
 <div class = "container" >
 	<div class="wrapper">
 		<form action="" method="post" name="Login_Form" class="form-signin">       
-		    <h3 class="form-signin-heading">Welcome Back! Please Sign In</h3>
+		    <h3 class="form-signin-heading">Sala de juegos</h3>
 			  <hr class="colorgraph"><br>
-			   Ayuda:
+			  
 			  <input type="text"  class="form-control"  name="usuario" [(ngModel)]="miUsuario.usuario" placeholder="Usuario"/>
 			  <input type="password" id="paw" class="form-control" [(ngModel)]="miUsuario.clave" name="pass" placeholder="Clave">	 		  
 			  <select class="form-control" name="firstField" [(ngModel)]="tipoUser" (change)="UserValido()" placeholder="Seleccione usuario">

@@ -8,16 +8,30 @@ export class MemoTest extends Juego{
     ayuda:Array<any>;
     respuestaArray: Array<any>;
     largo:any;
+    Jugadores: Array<any>;
+    nombre:string;
+    Inicio:number; 
+    Fin:number; 
+    Habilitado: boolean;
 
     constructor(nombre:string, jugador: string) 
     {    
         super(nombre,jugador);
+
+        this.Habilitado = true;
+
+        this.nombre = jugador;
+        this.Jugadores = new Array<any>();
+        
+        var user = localStorage.getItem("JugadoresGuardadosTra");
        
-        this.NombreDelJuego = "Pais"
-
-        this.myPhotoURL = "../assets/españa.png";
-        this.respuesta= "españa";
-
+        var json = JSON.parse(user);
+        if(json != null)
+            this.Jugadores = json;
+       
+        this.NombreDelJuego = "Traductor"
+        this.myPhotoURL = "../assets/perro.jpg";
+        this.respuesta= "DOG";
         this.respuestaArray=  this.respuesta.split('');
         this.ayuda = new Array<any>(this.respuesta.length);
         for (var index = 0; index < this.respuesta.length; index++) {
@@ -30,15 +44,34 @@ export class MemoTest extends Juego{
 
     public Verificar()
     {
-        if(this.respuesta == this.foto)
+        var respuestaUsuario=this.foto.toUpperCase();
+        if(this.respuesta == respuestaUsuario)
         {
-            alert("gano"); 
+            if(respuestaUsuario == "APPLE")
+                {
+                    this.Fin = Math.floor((new Date().getTime() - this.Inicio)/1000); 
+                    alert("gano en :"+this.Fin + "Segundos" ); 
+                  
+                    var persona = {
+                        Nombre: this.nombre,
+                        Tiempo: this.Fin,
+                        Gano: "Gano",
+                        Juego: this.NombreDelJuego
+                    };
+                  
+                    this.Jugadores.push(persona);             
+                    var JugadoresGuardados = JSON.stringify(this.Jugadores);
+                    localStorage.setItem("JugadoresGuardadosTra", JugadoresGuardados);
+                }
+
+
+                
             this.foto = "";
             this.Siguiente();
         }
         else
         {
-            alert("perdio");
+            alert("No es la respuesta, intenta denuevo.");
             this.foto = "";
         }
     }
@@ -54,24 +87,23 @@ export class MemoTest extends Juego{
 
     Siguiente()
     {  
-       // this.ayuda = null;
         this.ayuda = new Array<any>(this.respuesta.length);
         for (var index = 0; index < this.respuesta.length; index++) {
             this.ayuda[index]= "_"
         }
         switch (this.myPhotoURL) {
-            case "../assets/españa.png":
-            this.myPhotoURL = "../assets/brasil.png";
-            this.respuesta= "brasil";
+            case "../assets/perro.jpg":
+            this.myPhotoURL = "../assets/casa.jpg";
+            this.respuesta= "HOUSE";
             this.respuestaArray=  this.respuesta.split('');
             this.ayuda = new Array<any>(this.respuesta.length);
             for (var index = 0; index < this.respuesta.length; index++) {
                 this.ayuda[index]= "_"
             }
             break;
-            case "../assets/brasil.png":
-            this.myPhotoURL = "../assets/argentina.png";
-            this.respuesta= "argentina";
+            case "../assets/casa.jpg":
+            this.myPhotoURL = "../assets/estrella.jpg";
+            this.respuesta= "STAR";
             this.respuestaArray=  this.respuesta.split('');
             this.ayuda = new Array<any>(this.respuesta.length);
             for (var index = 0; index < this.respuesta.length; index++) {
@@ -79,9 +111,9 @@ export class MemoTest extends Juego{
             }
                 
             break;
-            case "../assets/argentina.png":
-            this.myPhotoURL = "../assets/francia.png";
-            this.respuesta= "francia";
+            case "../assets/estrella.jpg":
+            this.myPhotoURL = "../assets/manzana.jpg";
+            this.respuesta= "APPLE";
             this.respuestaArray=  this.respuesta.split('');
             this.ayuda = new Array<any>(this.respuesta.length);
             for (var index = 0; index < this.respuesta.length; index++) {
@@ -97,8 +129,11 @@ export class MemoTest extends Juego{
 
     Nuevo()
     {
-        this.myPhotoURL = "../assets/españa.png";
-        this.respuesta= "españa";
+        alert("Inicio del juego");
+        this.Inicio = new Date().getTime();   
+        this.Habilitado = false;
+        this.myPhotoURL = "../assets/perro.jpg";
+        this.respuesta= "DOG";
 
         this.respuestaArray=  this.respuesta.split('');
         this.ayuda = new Array<any>(this.respuesta.length);

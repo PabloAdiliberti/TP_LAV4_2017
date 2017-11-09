@@ -6,65 +6,73 @@ export class Adivina extends Juego{
     Inicio:number; 
     Fin:number; 
     nombre:string;
+    Habilitado: boolean;
+    intentos:number;
     
 
     Jugadores: Array<any>;
     
     constructor(nombre:string, jugador: string) 
     { 
-   
+     
         super(nombre,jugador);
+        this.intentos = 0;
+        this.Habilitado = true;
         this.nombre = jugador;
         this.NombreDelJuego = nombre;
         this.NumeroSecreto = null;
         this.Jugadores = new Array<any>();
 
-        var user = localStorage.getItem("JugadoresGuardados");
+        var user = localStorage.getItem("JugadoresGuardadosA");
         var json = JSON.parse(user);
 
             
         if(json != null)
             this.Jugadores = json;
-        //alert(user);
-        //alert(personaGuardada);
+
 
     }
 
     public GenerarNuevo():void
     {
-    this.NumeroSecreto = Math.floor(Math.random()*100+1);
-    console.info("Numero: ", this.NumeroSecreto);
-    this.Inicio = new Date().getTime();   
-    this.Gano = false;           
+        this.intentos = 0;
+        this.Habilitado = false
+        this.NumeroIngresado= null;
+        this.NumeroSecreto = Math.floor(Math.random()*100+1);
+        console.info("Numero: ", this.NumeroSecreto);
+        this.Inicio = new Date().getTime();   
+        this.Gano = false;           
     }
 
     public Verificar()
     {
+        this.intentos++;
         if(this.NumeroIngresado==this.NumeroSecreto)
             {
+                alert("Gano");
+                this.NumeroIngresado= null;
                 this.Gano= true;   
-                this.Fin = Math.floor((new Date().getTime() - this.Inicio)/1000); 
+                this.Fin = (new Date().getTime() - this.Inicio)/1000; 
 
                 var persona = {
                     Nombre: this.nombre,
                     Tiempo: this.Fin,
                     Gano: "Gano",
-                    Intentos : 2,
+                    Intentos : this.intentos,
                     Juego: this.NombreDelJuego
                 };
               
                 this.Jugadores.push(persona);             
                 var JugadoresGuardados = JSON.stringify(this.Jugadores);
-                localStorage.setItem("JugadoresGuardados", JugadoresGuardados); 
+                localStorage.setItem("JugadoresGuardadosA", JugadoresGuardados); 
 
                
             }
         else
             {
+                alert("Intente denuevo");
                 this.Gano = false;
-                this.NumeroIngresado = null;
-
-               
+                this.NumeroIngresado = null;               
             } 
     }
 }
