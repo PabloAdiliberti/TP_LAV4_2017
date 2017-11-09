@@ -13,6 +13,670 @@ webpackEmptyAsyncContext.id = "../../../../../src/$$_gendir lazy recursive";
 
 /***/ }),
 
+/***/ "../../../../../src/app/Clase/Juego.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Juego; });
+var Juego = (function () {
+    function Juego(nombre, jugador) {
+        this.NombreDelJuego = nombre;
+        this.Jugador = jugador;
+    }
+    return Juego;
+}());
+
+//# sourceMappingURL=Juego.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/Clase/adivina.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Adivina; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Juego__ = __webpack_require__("../../../../../src/app/Clase/Juego.ts");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var Adivina = (function (_super) {
+    __extends(Adivina, _super);
+    function Adivina(nombre, jugador) {
+        var _this = _super.call(this, nombre, jugador) || this;
+        _this.intentos = 0;
+        _this.Habilitado = true;
+        _this.nombre = jugador;
+        _this.NombreDelJuego = nombre;
+        _this.NumeroSecreto = null;
+        _this.Jugadores = new Array();
+        var user = localStorage.getItem("JugadoresGuardadosA");
+        var json = JSON.parse(user);
+        if (json != null)
+            _this.Jugadores = json;
+        return _this;
+    }
+    Adivina.prototype.GenerarNuevo = function () {
+        this.intentos = 0;
+        this.Habilitado = false;
+        this.NumeroIngresado = null;
+        this.NumeroSecreto = Math.floor(Math.random() * 100 + 1);
+        console.info("Numero: ", this.NumeroSecreto);
+        this.Inicio = new Date().getTime();
+        this.Gano = false;
+    };
+    Adivina.prototype.Verificar = function () {
+        this.intentos++;
+        if (this.NumeroIngresado == this.NumeroSecreto) {
+            alert("Gano");
+            this.NumeroIngresado = null;
+            this.Gano = true;
+            this.Fin = (new Date().getTime() - this.Inicio) / 1000;
+            var persona = {
+                Nombre: this.nombre,
+                Tiempo: this.Fin,
+                Gano: "Gano",
+                Intentos: this.intentos,
+                Juego: this.NombreDelJuego
+            };
+            this.Jugadores.push(persona);
+            var JugadoresGuardados = JSON.stringify(this.Jugadores);
+            localStorage.setItem("JugadoresGuardadosA", JugadoresGuardados);
+        }
+        else {
+            alert("Intente denuevo");
+            this.Gano = false;
+            this.NumeroIngresado = null;
+        }
+    };
+    return Adivina;
+}(__WEBPACK_IMPORTED_MODULE_0__Juego__["a" /* Juego */]));
+
+//# sourceMappingURL=adivina.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/Clase/agilidad.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Agilidad; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Juego__ = __webpack_require__("../../../../../src/app/Clase/Juego.ts");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var Agilidad = (function (_super) {
+    __extends(Agilidad, _super);
+    function Agilidad(nombre, jugador) {
+        var _this = _super.call(this, nombre, jugador) || this;
+        _this.Habilitado = true;
+        _this.NombreDelJuego = "Agilidad aritmetica";
+        _this.nombre = jugador;
+        _this.Jugadores = new Array();
+        var user = localStorage.getItem("JugadoresGuardadosAgilidad");
+        var json = JSON.parse(user);
+        return _this;
+    }
+    Agilidad.prototype.GenerarNuevo = function () {
+        this.Habilitado = false;
+        this.Resultado = null;
+        this.Numero1 = Math.floor(Math.random() * 100 + 1);
+        this.Numero2 = Math.floor(Math.random() * 100 + 1);
+        switch (Math.floor(Math.random() * (5 - 1)) + 1) {
+            case 1:
+                this.Operador = "+";
+                break;
+            case 2:
+                this.Operador = "-";
+                break;
+            case 3:
+                this.Operador = "*";
+                break;
+            case 4:
+                this.Operador = "/";
+                break;
+        }
+        this.Inicio = new Date().getTime();
+    };
+    Agilidad.prototype.Verificar = function () {
+        switch (this.Operador) {
+            case "+":
+                this.ResultadoReal = this.Numero1 + this.Numero2;
+                break;
+            case "-":
+                this.ResultadoReal = this.Numero1 - this.Numero2;
+                break;
+            case "*":
+                this.ResultadoReal = this.Numero1 * this.Numero2;
+                break;
+            case "/":
+                this.ResultadoReal = this.Numero1 / this.Numero2;
+                break;
+        }
+        if (this.ResultadoReal == this.Resultado) {
+            this.Gano = true;
+            this.Fin = Math.floor((new Date().getTime() - this.Inicio) / 1000);
+            var persona = {
+                Nombre: this.nombre,
+                Tiempo: this.Fin,
+                Gano: "Gano",
+                Juego: this.NombreDelJuego
+            };
+            this.Jugadores.push(persona);
+            var JugadoresGuardados = JSON.stringify(this.Jugadores);
+            localStorage.setItem("JugadoresGuardadosAgilidad", JugadoresGuardados);
+        }
+        else
+            this.Gano = false;
+    };
+    return Agilidad;
+}(__WEBPACK_IMPORTED_MODULE_0__Juego__["a" /* Juego */]));
+
+//# sourceMappingURL=agilidad.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/Clase/anagrama.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Anagrama; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Juego__ = __webpack_require__("../../../../../src/app/Clase/Juego.ts");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var Anagrama = (function (_super) {
+    __extends(Anagrama, _super);
+    function Anagrama(nombre, jugador) {
+        var _this = _super.call(this, nombre, jugador) || this;
+        _this.nombre = jugador;
+        _this.Habilitado = true;
+        _this.NombreDelJuego = "Anagrama";
+        _this.Jugadores = new Array();
+        _this.respuesta = "Eduardo";
+        _this.respuestaArray = _this.respuesta.split('');
+        _this.Display = "Deudora";
+        var user = localStorage.getItem("JugadoresGuardadosAnagrama");
+        var json = JSON.parse(user);
+        if (json != null)
+            _this.Jugadores = json;
+        return _this;
+    }
+    Anagrama.prototype.Verificar = function () {
+        var respuestaUsuario = this.ingresado.toUpperCase();
+        if (this.respuesta == respuestaUsuario) {
+            if (respuestaUsuario == "NICOLAS") {
+                alert("Gano");
+                this.Fin = (new Date().getTime() - this.Inicio) / 1000;
+                this.ingresado = "";
+                var persona = {
+                    Nombre: this.nombre,
+                    Tiempo: this.Fin,
+                    Gano: "Gano",
+                    Juego: this.NombreDelJuego
+                };
+                this.Jugadores.push(persona);
+                var JugadoresGuardados = JSON.stringify(this.Jugadores);
+                localStorage.setItem("JugadoresGuardadosAnagrama", JugadoresGuardados);
+            }
+            this.ingresado = "";
+            this.Siguiente();
+        }
+        else {
+            alert("No es la respuesta, intenta denuevo.");
+            this.ingresado = "";
+        }
+    };
+    Anagrama.prototype.Siguiente = function () {
+        switch (this.Display) {
+            case "Deudora":
+                this.Display = "Matar";
+                this.respuesta = "MARTA";
+                break;
+            case "Matar":
+                this.Display = "camino";
+                this.respuesta = "MONICA";
+                break;
+            case "camino":
+                this.Display = "riesgo";
+                this.respuesta = "SERGIO";
+                break;
+            case "riesgo":
+                this.Display = "colinas";
+                this.respuesta = "NICOLAS";
+                break;
+            default:
+                break;
+        }
+    };
+    Anagrama.prototype.GenerarNuevo = function () {
+        this.Habilitado = false;
+        this.respuesta = "EDUARDO";
+        this.respuestaArray = this.respuesta.split('');
+        this.Display = "Deudora";
+        this.Inicio = new Date().getTime();
+    };
+    return Anagrama;
+}(__WEBPACK_IMPORTED_MODULE_0__Juego__["a" /* Juego */]));
+
+//# sourceMappingURL=anagrama.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/Clase/juego.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Juego; });
+var Juego = (function () {
+    function Juego(nombre, jugador) {
+        this.NombreDelJuego = nombre;
+        this.Jugador = jugador;
+    }
+    return Juego;
+}());
+
+//# sourceMappingURL=juego.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/Clase/login.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Login; });
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var Login = (function () {
+    function Login(route, router, _auth) {
+        this.route = route;
+        this.router = router;
+        this._auth = _auth;
+        this.tipoUser = 'null';
+        this.Mensaje = "";
+        this.ingreso = false;
+    }
+    Login.prototype.Entrar = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var result, persona, personaAGuardar;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this._auth.auth.signInWithEmailAndPassword(this.usuario, this.clave)
+                            .catch(function (error) {
+                            alert(error.message);
+                            //console.log(error);
+                        })];
+                    case 1:
+                        result = _a.sent();
+                        persona = {
+                            nombre: this.usuario
+                        };
+                        personaAGuardar = JSON.stringify(persona);
+                        localStorage.setItem("miUsuario", personaAGuardar);
+                        if (result != undefined) {
+                            this.router.navigate(['/menu']);
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Login.prototype.registrar = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var result, e_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this._auth.auth.createUserWithEmailAndPassword(this.usuario, this.clave)];
+                    case 1:
+                        result = _a.sent();
+                        this.Mensaje = this.usuario + " Fue ingresado Exitosamente!";
+                        this.ingreso = true;
+                        return [3 /*break*/, 3];
+                    case 2:
+                        e_1 = _a.sent();
+                        this.ingreso = false;
+                        console.error(e_1);
+                        this.Mensaje = e_1;
+                        return [3 /*break*/, 3];
+                    case 3:
+                        this.router.navigate(['/Registrar']);
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    return Login;
+}());
+
+//# sourceMappingURL=login.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/Clase/memoTest.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MemoTest; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Juego__ = __webpack_require__("../../../../../src/app/Clase/Juego.ts");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var MemoTest = (function (_super) {
+    __extends(MemoTest, _super);
+    function MemoTest(nombre, jugador) {
+        var _this = _super.call(this, nombre, jugador) || this;
+        _this.Habilitado = true;
+        _this.nombre = jugador;
+        _this.Jugadores = new Array();
+        var user = localStorage.getItem("JugadoresGuardadosTra");
+        var json = JSON.parse(user);
+        if (json != null)
+            _this.Jugadores = json;
+        _this.NombreDelJuego = "Traductor";
+        _this.myPhotoURL = "../assets/perro.jpg";
+        _this.respuesta = "DOG";
+        _this.respuestaArray = _this.respuesta.split('');
+        _this.ayuda = new Array(_this.respuesta.length);
+        for (var index = 0; index < _this.respuesta.length; index++) {
+            _this.ayuda[index] = "_";
+        }
+        _this.foto = "";
+        _this.largo = 0;
+        return _this;
+    }
+    MemoTest.prototype.Verificar = function () {
+        var respuestaUsuario = this.foto.toUpperCase();
+        if (this.respuesta == respuestaUsuario) {
+            if (respuestaUsuario == "APPLE") {
+                this.Fin = Math.floor((new Date().getTime() - this.Inicio) / 1000);
+                alert("gano en :" + this.Fin + "Segundos");
+                var persona = {
+                    Nombre: this.nombre,
+                    Tiempo: this.Fin,
+                    Gano: "Gano",
+                    Juego: this.NombreDelJuego
+                };
+                this.Jugadores.push(persona);
+                var JugadoresGuardados = JSON.stringify(this.Jugadores);
+                localStorage.setItem("JugadoresGuardadosTra", JugadoresGuardados);
+            }
+            this.foto = "";
+            this.Siguiente();
+        }
+        else {
+            alert("No es la respuesta, intenta denuevo.");
+            this.foto = "";
+        }
+    };
+    MemoTest.prototype.Ayuda = function () {
+        this.largo = Math.floor(Math.random() * this.respuesta.length);
+        if (this.ayuda[this.largo] != this.respuestaArray[this.largo])
+            this.ayuda[this.largo] = this.respuestaArray[this.largo];
+        else
+            this.Ayuda();
+    };
+    MemoTest.prototype.Siguiente = function () {
+        this.ayuda = new Array(this.respuesta.length);
+        for (var index = 0; index < this.respuesta.length; index++) {
+            this.ayuda[index] = "_";
+        }
+        switch (this.myPhotoURL) {
+            case "../assets/perro.jpg":
+                this.myPhotoURL = "../assets/casa.jpg";
+                this.respuesta = "HOUSE";
+                this.respuestaArray = this.respuesta.split('');
+                this.ayuda = new Array(this.respuesta.length);
+                for (var index = 0; index < this.respuesta.length; index++) {
+                    this.ayuda[index] = "_";
+                }
+                break;
+            case "../assets/casa.jpg":
+                this.myPhotoURL = "../assets/estrella.jpg";
+                this.respuesta = "STAR";
+                this.respuestaArray = this.respuesta.split('');
+                this.ayuda = new Array(this.respuesta.length);
+                for (var index = 0; index < this.respuesta.length; index++) {
+                    this.ayuda[index] = "_";
+                }
+                break;
+            case "../assets/estrella.jpg":
+                this.myPhotoURL = "../assets/manzana.jpg";
+                this.respuesta = "APPLE";
+                this.respuestaArray = this.respuesta.split('');
+                this.ayuda = new Array(this.respuesta.length);
+                for (var index = 0; index < this.respuesta.length; index++) {
+                    this.ayuda[index] = "_";
+                }
+                break;
+            default:
+                break;
+        }
+    };
+    MemoTest.prototype.Nuevo = function () {
+        alert("Inicio del juego");
+        this.Inicio = new Date().getTime();
+        this.Habilitado = false;
+        this.myPhotoURL = "../assets/perro.jpg";
+        this.respuesta = "DOG";
+        this.respuestaArray = this.respuesta.split('');
+        this.ayuda = new Array(this.respuesta.length);
+        for (var index = 0; index < this.respuesta.length; index++) {
+            this.ayuda[index] = "_";
+        }
+        this.foto = "";
+    };
+    return MemoTest;
+}(__WEBPACK_IMPORTED_MODULE_0__Juego__["a" /* Juego */]));
+
+//# sourceMappingURL=memoTest.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/Clase/piedraPapelTijera.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PPT; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Juego__ = __webpack_require__("../../../../../src/app/Clase/Juego.ts");
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var PPT = (function (_super) {
+    __extends(PPT, _super);
+    function PPT(nombre, jugador) {
+        var _this = _super.call(this, nombre, jugador) || this;
+        _this.nombre = jugador;
+        var user = localStorage.getItem("JugadoresGuardadosPPT");
+        var json = JSON.parse(user);
+        _this.Jugadores = new Array();
+        if (json != null)
+            _this.Jugadores = json;
+        _this.NombreDelJuego = "Piedra, papel o tijera";
+        _this.puntosU = 0;
+        _this.puntosM = 0;
+        _this.empate = 0;
+        return _this;
+    }
+    PPT.prototype.OpcionElegida = function (opcion) {
+        switch (opcion) {
+            case "piedra":
+                this.elijioUsuario = "../assets/piedra.jpg";
+                this.ElijeMaquina();
+                this.QuienGano(opcion);
+                break;
+            case "papel":
+                this.elijioUsuario = "../assets/papel.jpg";
+                this.ElijeMaquina();
+                this.QuienGano(opcion);
+                break;
+            case "tijera":
+                this.elijioUsuario = "../assets/tijera.jpg";
+                this.ElijeMaquina();
+                this.QuienGano(opcion);
+                break;
+            default:
+                break;
+        }
+    };
+    PPT.prototype.ElijeMaquina = function () {
+        var numero = Math.floor(Math.random() * 3 + 1);
+        //  alert("numero " + numero);
+        switch (numero) {
+            case 1:
+                this.elijioMaquina = "../assets/piedra.jpg";
+                this.maquina = "piedra";
+                break;
+            case 2:
+                this.elijioMaquina = "../assets/papel.jpg";
+                this.maquina = "papel";
+                break;
+            case 3:
+                this.elijioMaquina = "../assets/tijera.jpg";
+                this.maquina = "tijera";
+                break;
+            default:
+                break;
+        }
+    };
+    PPT.prototype.QuienGano = function (usuario) {
+        //  alert(this.maquina);
+        switch (usuario) {
+            case "piedra":
+                if (this.maquina == "piedra")
+                    this.empate++;
+                if (this.maquina == "papel")
+                    this.puntosM++;
+                if (this.maquina == "tijera")
+                    this.puntosU++;
+                this.VerificarGano();
+                break;
+            case "papel":
+                if (this.maquina == "piedra")
+                    this.puntosU++;
+                if (this.maquina == "papel")
+                    this.empate++;
+                if (this.maquina == "tijera")
+                    this.puntosM++;
+                this.VerificarGano();
+                break;
+            case "tijera":
+                if (this.maquina == "piedra")
+                    this.puntosM++;
+                if (this.maquina == "papel")
+                    this.puntosU++;
+                if (this.maquina == "tijera")
+                    this.empate++;
+                this.VerificarGano();
+                break;
+            default:
+                break;
+        }
+    };
+    PPT.prototype.GenerarNuevo = function () {
+        alert("¡Iniciemos! eliga una opcion");
+        this.puntosU = 0;
+        this.puntosM = 0;
+        this.empate = 0;
+    };
+    PPT.prototype.VerificarGano = function () {
+        if (this.puntosU == 7) {
+            alert("Gano");
+            var persona = {
+                Nombre: this.nombre,
+                Gano: "Gano",
+                Juego: this.NombreDelJuego
+            };
+            this.Jugadores.push(persona);
+            var JugadoresGuardados = JSON.stringify(this.Jugadores);
+            localStorage.setItem("JugadoresGuardadosPPT", JugadoresGuardados);
+            this.GenerarNuevo();
+        }
+        if (this.puntosM == 7) {
+            alert("Perdio");
+            this.GenerarNuevo();
+        }
+    };
+    return PPT;
+}(__WEBPACK_IMPORTED_MODULE_0__Juego__["a" /* Juego */]));
+
+//# sourceMappingURL=piedraPapelTijera.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/app.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34,7 +698,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<!--Donde se encuentre este tag, se instancian los componentes dependientes del ruteo-->\n<router-outlet></router-outlet>\n"
+module.exports = "<router-outlet></router-outlet>\n"
 
 /***/ }),
 
@@ -53,11 +717,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 var AppComponent = (function () {
     function AppComponent() {
+        this.title = 'app';
     }
     return AppComponent;
 }());
 AppComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-root',
         template: __webpack_require__("../../../../../src/app/app.component.html"),
         styles: [__webpack_require__("../../../../../src/app/app.component.css")]
@@ -72,36 +737,35 @@ AppComponent = __decorate([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export firebaseConfig */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__("../../../platform-browser/@angular/platform-browser.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__componentes_adivina_el_numero_adivina_el_numero_component__ = __webpack_require__("../../../../../src/app/componentes/adivina-el-numero/adivina-el-numero.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__componentes_listado_de_resultados_listado_de_resultados_component__ = __webpack_require__("../../../../../src/app/componentes/listado-de-resultados/listado-de-resultados.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__componentes_login_login_component__ = __webpack_require__("../../../../../src/app/componentes/login/login.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__servicios_mi_http_mi_http_service__ = __webpack_require__("../../../../../src/app/servicios/mi-http/mi-http.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__servicios_paises_service__ = __webpack_require__("../../../../../src/app/servicios/paises.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__componentes_error_error_component__ = __webpack_require__("../../../../../src/app/componentes/error/error.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__componentes_principal_principal_component__ = __webpack_require__("../../../../../src/app/componentes/principal/principal.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__componentes_agilidad_aritmetica_agilidad_aritmetica_component__ = __webpack_require__("../../../../../src/app/componentes/agilidad-aritmetica/agilidad-aritmetica.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__componentes_menu_menu_component__ = __webpack_require__("../../../../../src/app/componentes/menu/menu.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__componentes_adivina_mas_listado_adivina_mas_listado_component__ = __webpack_require__("../../../../../src/app/componentes/adivina-mas-listado/adivina-mas-listado.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__componentes_agilidad_mas_listado_agilidad_mas_listado_component__ = __webpack_require__("../../../../../src/app/componentes/agilidad-mas-listado/agilidad-mas-listado.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ruteando_ruteando_module__ = __webpack_require__("../../../../../src/app/ruteando/ruteando.module.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__componentes_listado_listado_component__ = __webpack_require__("../../../../../src/app/componentes/listado/listado.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__servicios_juego_service_service__ = __webpack_require__("../../../../../src/app/servicios/juego-service.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__componentes_listados_listados_component__ = __webpack_require__("../../../../../src/app/componentes/listados/listados.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__componentes_juegos_juegos_component__ = __webpack_require__("../../../../../src/app/componentes/juegos/juegos.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__componentes_registro_registro_component__ = __webpack_require__("../../../../../src/app/componentes/registro/registro.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__componentes_menu_card_menu_card_component__ = __webpack_require__("../../../../../src/app/componentes/menu-card/menu-card.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__componentes_cabecera_cabecera_component__ = __webpack_require__("../../../../../src/app/componentes/cabecera/cabecera.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__componentes_quien_soy_quien_soy_component__ = __webpack_require__("../../../../../src/app/componentes/quien-soy/quien-soy.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__componentes_anagrama_anagrama_component__ = __webpack_require__("../../../../../src/app/componentes/anagrama/anagrama.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__componentes_listado_de_paises_listado_de_paises_component__ = __webpack_require__("../../../../../src/app/componentes/listado-de-paises/listado-de-paises.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__componentes_mapa_de_google_mapa_de_google_component__ = __webpack_require__("../../../../../src/app/componentes/mapa-de-google/mapa-de-google.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__agm_core__ = __webpack_require__("../../../../@agm/core/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2__ = __webpack_require__("../../../../angularfire2/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__("../../../../angularfire2/database/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__("../../../../angularfire2/auth/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__componentes_adivina_adivina_component__ = __webpack_require__("../../../../../src/app/componentes/adivina/adivina.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__componentes_agilidad_agilidad_component__ = __webpack_require__("../../../../../src/app/componentes/agilidad/agilidad.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__componentes_menu_menu_component__ = __webpack_require__("../../../../../src/app/componentes/menu/menu.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__componentes_login_login_component__ = __webpack_require__("../../../../../src/app/componentes/login/login.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__componentes_listado_listado_component__ = __webpack_require__("../../../../../src/app/componentes/listado/listado.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__componentes_menu_de_listado_menu_de_listado_component__ = __webpack_require__("../../../../../src/app/componentes/menu-de-listado/menu-de-listado.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__servicios_listado_service__ = __webpack_require__("../../../../../src/app/servicios/listado.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__componentes_estadistica_adivina_estadistica_adivina_component__ = __webpack_require__("../../../../../src/app/componentes/estadistica-adivina/estadistica-adivina.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__componentes_estadistica_agilidad_estadistica_agilidad_component__ = __webpack_require__("../../../../../src/app/componentes/estadistica-agilidad/estadistica-agilidad.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__componentes_registrar_registrar_component__ = __webpack_require__("../../../../../src/app/componentes/registrar/registrar.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__componentes_memotest_memotest_component__ = __webpack_require__("../../../../../src/app/componentes/memotest/memotest.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__servicios_store_service__ = __webpack_require__("../../../../../src/app/servicios/store.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_angular_2_local_storage__ = __webpack_require__("../../../../angular-2-local-storage/dist/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20_angular_2_local_storage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20_angular_2_local_storage__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__componentes_anagrama_anagrama_component__ = __webpack_require__("../../../../../src/app/componentes/anagrama/anagrama.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__componentes_piedra_papel_tijera_piedra_papel_tijera_component__ = __webpack_require__("../../../../../src/app/componentes/piedra-papel-tijera/piedra-papel-tijera.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__componentes_menu_opciones_menu_opciones_component__ = __webpack_require__("../../../../../src/app/componentes/menu-opciones/menu-opciones.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__componentes_menu_barra_menu_barra_component__ = __webpack_require__("../../../../../src/app/componentes/menu-barra/menu-barra.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__componentes_quien_soy_quien_soy_component__ = __webpack_require__("../../../../../src/app/componentes/quien-soy/quien-soy.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -115,7 +779,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-//  import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -127,19 +790,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-// declaro donde quiero que se dirija
-/*
-const MiRuteo = [{path: 'error' , component: ErrorComponent},
-{path: 'Login' , component: LoginComponent},
-{path: 'Principal' , component: PrincipalComponent , pathMatch: 'full'},
-{path: 'Adivina' , component: AdivinaElNumeroComponent},
-{path: 'AdivinaMasListado' , component: AdivinaMasListadoComponent},
-{path: 'AgilidadaMasListado' , component: AgilidadMasListadoComponent},
-{path: 'Agilidad' , component: AgilidadAritmeticaComponent},
-{path: '' , component: LoginComponent , pathMatch: 'full'},
-
-{path: '**' , component: ErrorComponent} ];
-*/
 
 
 
@@ -148,52 +798,70 @@ const MiRuteo = [{path: 'error' , component: ErrorComponent},
 
 
 
-
-
-
+var miRuteo = [{ path: 'adivina', component: __WEBPACK_IMPORTED_MODULE_6__componentes_adivina_adivina_component__["a" /* AdivinaComponent */] },
+    { path: 'login', component: __WEBPACK_IMPORTED_MODULE_10__componentes_login_login_component__["a" /* LoginComponent */] },
+    { path: '', component: __WEBPACK_IMPORTED_MODULE_10__componentes_login_login_component__["a" /* LoginComponent */] },
+    { path: 'agilidad', component: __WEBPACK_IMPORTED_MODULE_8__componentes_agilidad_agilidad_component__["a" /* AgilidadComponent */] },
+    { path: 'menu', component: __WEBPACK_IMPORTED_MODULE_9__componentes_menu_menu_component__["a" /* MenuComponent */] },
+    { path: 'listado', component: __WEBPACK_IMPORTED_MODULE_12__componentes_listado_listado_component__["a" /* ListadoComponent */] },
+    { path: 'Registrar', component: __WEBPACK_IMPORTED_MODULE_17__componentes_registrar_registrar_component__["a" /* RegistrarComponent */] },
+    { path: 'estadisticaAdivina', component: __WEBPACK_IMPORTED_MODULE_15__componentes_estadistica_adivina_estadistica_adivina_component__["a" /* EstadisticaAdivinaComponent */] },
+    { path: 'estadisticaAgilidad', component: __WEBPACK_IMPORTED_MODULE_16__componentes_estadistica_agilidad_estadistica_agilidad_component__["a" /* EstadisticaAgilidadComponent */] },
+    { path: 'memotest', component: __WEBPACK_IMPORTED_MODULE_18__componentes_memotest_memotest_component__["a" /* MemotestComponent */] },
+    { path: 'anagrama', component: __WEBPACK_IMPORTED_MODULE_21__componentes_anagrama_anagrama_component__["a" /* AnagramaComponent */] },
+    { path: 'PPT', component: __WEBPACK_IMPORTED_MODULE_22__componentes_piedra_papel_tijera_piedra_papel_tijera_component__["a" /* PiedraPapelTijeraComponent */] },
+    { path: 'quienSoy', component: __WEBPACK_IMPORTED_MODULE_25__componentes_quien_soy_quien_soy_component__["a" /* QuienSoyComponent */] },
+    { path: 'menuDeListado', component: __WEBPACK_IMPORTED_MODULE_13__componentes_menu_de_listado_menu_de_listado_component__["a" /* MenuDeListadoComponent */] }];
+var firebaseConfig = {
+    apiKey: "AIzaSyDxMQdYSpRKuZgh7L_mOohzuSqN6utZb0k",
+    authDomain: "appsaladejuegos.firebaseapp.com",
+    databaseURL: "https://appsaladejuegos.firebaseio.com",
+    projectId: "appsaladejuegos",
+    storageBucket: "",
+    messagingSenderId: "464290374032"
+};
 var AppModule = (function () {
     function AppModule() {
     }
     return AppModule;
 }());
 AppModule = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["M" /* NgModule */])({
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["NgModule"])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */],
-            __WEBPACK_IMPORTED_MODULE_4__componentes_adivina_el_numero_adivina_el_numero_component__["a" /* AdivinaElNumeroComponent */],
-            __WEBPACK_IMPORTED_MODULE_5__componentes_listado_de_resultados_listado_de_resultados_component__["a" /* ListadoDeResultadosComponent */],
-            __WEBPACK_IMPORTED_MODULE_10__componentes_error_error_component__["a" /* ErrorComponent */],
-            __WEBPACK_IMPORTED_MODULE_11__componentes_principal_principal_component__["a" /* PrincipalComponent */],
-            __WEBPACK_IMPORTED_MODULE_6__componentes_login_login_component__["a" /* LoginComponent */],
-            __WEBPACK_IMPORTED_MODULE_12__componentes_agilidad_aritmetica_agilidad_aritmetica_component__["a" /* AgilidadAritmeticaComponent */],
-            __WEBPACK_IMPORTED_MODULE_13__componentes_menu_menu_component__["a" /* MenuComponent */],
-            __WEBPACK_IMPORTED_MODULE_14__componentes_adivina_mas_listado_adivina_mas_listado_component__["a" /* AdivinaMasListadoComponent */],
-            __WEBPACK_IMPORTED_MODULE_15__componentes_agilidad_mas_listado_agilidad_mas_listado_component__["a" /* AgilidadMasListadoComponent */],
-            __WEBPACK_IMPORTED_MODULE_17__componentes_listado_listado_component__["a" /* ListadoComponent */],
-            __WEBPACK_IMPORTED_MODULE_19__componentes_listados_listados_component__["a" /* ListadosComponent */],
-            __WEBPACK_IMPORTED_MODULE_20__componentes_juegos_juegos_component__["a" /* JuegosComponent */],
-            __WEBPACK_IMPORTED_MODULE_21__componentes_registro_registro_component__["a" /* RegistroComponent */],
-            __WEBPACK_IMPORTED_MODULE_22__componentes_menu_card_menu_card_component__["a" /* MenuCardComponent */],
-            __WEBPACK_IMPORTED_MODULE_23__componentes_cabecera_cabecera_component__["a" /* CabeceraComponent */],
-            __WEBPACK_IMPORTED_MODULE_24__componentes_quien_soy_quien_soy_component__["a" /* QuienSoyComponent */],
-            __WEBPACK_IMPORTED_MODULE_25__componentes_anagrama_anagrama_component__["a" /* AnagramaComponent */],
-            __WEBPACK_IMPORTED_MODULE_26__componentes_listado_de_paises_listado_de_paises_component__["a" /* ListadoDePaisesComponent */],
-            __WEBPACK_IMPORTED_MODULE_27__componentes_mapa_de_google_mapa_de_google_component__["a" /* MapaDeGoogleComponent */],
+            __WEBPACK_IMPORTED_MODULE_5__app_component__["a" /* AppComponent */],
+            __WEBPACK_IMPORTED_MODULE_6__componentes_adivina_adivina_component__["a" /* AdivinaComponent */],
+            __WEBPACK_IMPORTED_MODULE_8__componentes_agilidad_agilidad_component__["a" /* AgilidadComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__componentes_menu_menu_component__["a" /* MenuComponent */],
+            __WEBPACK_IMPORTED_MODULE_10__componentes_login_login_component__["a" /* LoginComponent */],
+            __WEBPACK_IMPORTED_MODULE_12__componentes_listado_listado_component__["a" /* ListadoComponent */],
+            __WEBPACK_IMPORTED_MODULE_13__componentes_menu_de_listado_menu_de_listado_component__["a" /* MenuDeListadoComponent */],
+            __WEBPACK_IMPORTED_MODULE_15__componentes_estadistica_adivina_estadistica_adivina_component__["a" /* EstadisticaAdivinaComponent */],
+            __WEBPACK_IMPORTED_MODULE_16__componentes_estadistica_agilidad_estadistica_agilidad_component__["a" /* EstadisticaAgilidadComponent */],
+            __WEBPACK_IMPORTED_MODULE_17__componentes_registrar_registrar_component__["a" /* RegistrarComponent */],
+            __WEBPACK_IMPORTED_MODULE_18__componentes_memotest_memotest_component__["a" /* MemotestComponent */],
+            __WEBPACK_IMPORTED_MODULE_21__componentes_anagrama_anagrama_component__["a" /* AnagramaComponent */],
+            __WEBPACK_IMPORTED_MODULE_22__componentes_piedra_papel_tijera_piedra_papel_tijera_component__["a" /* PiedraPapelTijeraComponent */],
+            __WEBPACK_IMPORTED_MODULE_23__componentes_menu_opciones_menu_opciones_component__["a" /* MenuOpcionesComponent */],
+            __WEBPACK_IMPORTED_MODULE_24__componentes_menu_barra_menu_barra_component__["a" /* MenuBarraComponent */],
+            __WEBPACK_IMPORTED_MODULE_25__componentes_quien_soy_quien_soy_component__["a" /* QuienSoyComponent */]
         ],
         imports: [
+            __WEBPACK_IMPORTED_MODULE_11__angular_router__["c" /* RouterModule */].forRoot(miRuteo),
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
-            __WEBPACK_IMPORTED_MODULE_16__ruteando_ruteando_module__["a" /* RuteandoModule */],
-            __WEBPACK_IMPORTED_MODULE_7__angular_http__["b" /* HttpModule */],
-            __WEBPACK_IMPORTED_MODULE_28__agm_core__["a" /* AgmCoreModule */].forRoot({
-                apiKey: 'AIzaSyB6f8x4IjRlesQ3oETc6BXYQHVRTOlY3Ys'
+            __WEBPACK_IMPORTED_MODULE_7__angular_forms__["a" /* FormsModule */],
+            __WEBPACK_IMPORTED_MODULE_2_angularfire2__["a" /* AngularFireModule */].initializeApp(firebaseConfig),
+            __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["b" /* AngularFireDatabaseModule */],
+            __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["b" /* AngularFireAuthModule */],
+            __WEBPACK_IMPORTED_MODULE_20_angular_2_local_storage__["LocalStorageModule"].withConfig({
+                prefix: 'my-app',
+                storageType: 'localStorage'
             })
-            // NgbModule.forRoot(MiRuteo),
-            // importo el ruteo
-            // RouterModule.forRoot(MiRuteo)
         ],
-        providers: [__WEBPACK_IMPORTED_MODULE_18__servicios_juego_service_service__["a" /* JuegoServiceService */], __WEBPACK_IMPORTED_MODULE_8__servicios_mi_http_mi_http_service__["a" /* MiHttpService */], __WEBPACK_IMPORTED_MODULE_9__servicios_paises_service__["a" /* PaisesService */]],
-        bootstrap: [__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */]]
+        providers: [
+            __WEBPACK_IMPORTED_MODULE_19__servicios_store_service__["a" /* StoreService */],
+            __WEBPACK_IMPORTED_MODULE_14__servicios_listado_service__["a" /* ListadoService */]
+        ],
+        bootstrap: [__WEBPACK_IMPORTED_MODULE_5__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
 
@@ -201,104 +869,7 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ "../../../../../src/app/clases/juego-adivina.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return JuegoAdivina; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__clases_juego__ = __webpack_require__("../../../../../src/app/clases/juego.ts");
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-
-var JuegoAdivina = (function (_super) {
-    __extends(JuegoAdivina, _super);
-    function JuegoAdivina(nombre, gano, jugador) {
-        var _this = _super.call(this, "Adivina el número", gano, jugador) || this;
-        _this.numeroSecreto = 0;
-        _this.numeroIngresado = 0;
-        return _this;
-    }
-    JuegoAdivina.prototype.verificar = function () {
-        if (this.numeroIngresado == this.numeroSecreto) {
-            this.gano = true;
-        }
-        if (this.gano) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    };
-    JuegoAdivina.prototype.generarnumero = function () {
-        this.numeroSecreto = Math.floor((Math.random() * 100) + 1);
-        console.info('numero Secreto:' + this.numeroSecreto);
-        this.gano = false;
-    };
-    JuegoAdivina.prototype.retornarAyuda = function () {
-        if (this.numeroIngresado < this.numeroSecreto) {
-            return "Falta";
-        }
-        return "Te pasate";
-    };
-    return JuegoAdivina;
-}(__WEBPACK_IMPORTED_MODULE_0__clases_juego__["a" /* Juego */]));
-
-//# sourceMappingURL=juego-adivina.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/clases/juego-agilidad.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return JuegoAgilidad; });
-var JuegoAgilidad = (function () {
-    function JuegoAgilidad() {
-    }
-    return JuegoAgilidad;
-}());
-
-//# sourceMappingURL=juego-agilidad.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/clases/juego.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Juego; });
-var Juego = (function () {
-    function Juego(nombre, gano, jugador) {
-        this.nombre = 'Sin Nombre';
-        this.gano = false;
-        if (nombre)
-            this.nombre = nombre;
-        if (gano)
-            this.gano = gano;
-        if (jugador)
-            this.jugador = jugador;
-        else
-            this.jugador = "natalia natalia";
-    }
-    Juego.prototype.retornarAyuda = function () {
-        return "NO hay Ayuda definida";
-    };
-    return Juego;
-}());
-
-//# sourceMappingURL=juego.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/adivina-el-numero/adivina-el-numero.component.css":
+/***/ "../../../../../src/app/componentes/adivina/adivina.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
@@ -306,7 +877,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "\r\nform {\r\n    border: 10px solid #f1f1f1;\r\n    padding: 10px;\r\n    background:gray;\r\n}\r\n\r\ninput[type=text], input[type=password] {\r\n    width: 100%;\r\n    padding: 12px 20px;\r\n    margin: 8px 0;\r\n    display: inline-block;\r\n    border: 1px solid #ccc;\r\n    box-sizing: border-box;\r\n}\r\n\r\nbutton {\r\n    /*background-color: #4CAF50;*/\r\n    color: white;\r\n    padding: 14px 20px;\r\n    margin: 8px 0;\r\n    border: none;\r\n    cursor: pointer;\r\n    width: 100%;\r\n}\r\n\r\nbutton:hover {\r\n    opacity: 0.8;\r\n}\r\n\r\n.cancelbtn {\r\n    width: auto;\r\n    padding: 10px 18px;\r\n    background-color: #f44336;\r\n}\r\n.aceptbtn {\r\n    width: auto;\r\n    padding: 10px 18px;\r\n    background-color: #3664F4;\r\n}\r\n.imgcontainer {\r\n    text-align: center;\r\n    margin: 24px 0 12px 0;\r\n}\r\n\r\nimg.avatar {\r\n    width: 40%;\r\n    border-radius: 50%;\r\n}\r\n\r\n.container {\r\n    padding: 16px;\r\n}\r\n\r\nspan.psw {\r\n    float: right;\r\n    padding-top: 16px;\r\n}\r\n\r\n/* Change styles for span and cancel button on extra small screens */\r\n@media screen and (max-width: 300px) {\r\n    span.psw {\r\n       display: block;\r\n       float: none;\r\n    }\r\n    .cancelbtn {\r\n       width: 100%;\r\n    }\r\n}\r\n\r\n\r\n\r\n#snackbar {\r\n    visibility: hidden;\r\n    min-width: 250px;\r\n    margin-left: -125px;\r\n   \r\n    color: #fff;\r\n    text-align: center;\r\n    border-radius: 2px;\r\n    padding: 16px;\r\n    position: fixed;\r\n    z-index: 1;\r\n    left: 50%;\r\n    bottom: 30px;\r\n    font-size: 17px;\r\n}\r\n#snackbar.Ganador {\r\n    background-color: #059F2F;\r\n}\r\n#snackbar.Perdedor {\r\n    background-color: #FF0000;\r\n}\r\n#snackbar.show {\r\n    visibility: visible;\r\n    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;\r\n    animation: fadein 0.5s, fadeout 0.5s 2.5s;\r\n}\r\n\r\n@-webkit-keyframes fadein {\r\n    from {bottom: 0; opacity: 0;} \r\n    to {bottom: 30px; opacity: 1;}\r\n}\r\n\r\n@keyframes fadein {\r\n    from {bottom: 0; opacity: 0;}\r\n    to {bottom: 30px; opacity: 1;}\r\n}\r\n\r\n@-webkit-keyframes fadeout {\r\n    from {bottom: 30px; opacity: 1;} \r\n    to {bottom: 0; opacity: 0;}\r\n}\r\n\r\n@keyframes fadeout {\r\n    from {bottom: 30px; opacity: 1;}\r\n    to {bottom: 0; opacity: 0;}\r\n}", ""]);
+exports.push([module.i, "/* Base CSS */\r\n\r\nbody{\r\n     background:url('http://ghostcode.in/wp-content/uploads/2016/09/super_hero_whatsapp_background_by_x_ama-d8fr7iz.jpg'); \r\n    /* padding:50px; */\r\n    font-family: cursive;\r\n  }\r\n\r\n.alignleft {\r\n    float: left;\r\n    margin-right: 15px;\r\n}\r\n.alignright {\r\n    float: right;\r\n    margin-left: 15px;\r\n}\r\n.aligncenter {\r\n    display: block;\r\n    margin: 0 auto 15px;\r\n}\r\na:focus { outline: 0 solid }\r\nimg {\r\n    max-width: 100%;\r\n    height: auto;\r\n}\r\n.fix { overflow: hidden }\r\nh1,\r\nh2,\r\nh3,\r\nh4,\r\nh5,\r\nh6 {\r\n    margin: 0 0 15px;\r\n    font-weight: 700;\r\n}\r\nhtml,\r\nbody { height: 100% }\r\n\r\na {\r\n    transition: 0.3s;\r\n    color: #333;\r\n}\r\na:hover { text-decoration: none }\r\n\r\n\r\n\r\n.search-box{margin:80px auto;position:absolute;}\r\n.caption{margin-bottom:50px;}\r\n.loginForm input[type=text], .loginForm input[type=password]{\r\n\tmargin-bottom:10px;\r\n}\r\n.loginForm input[type=submit]{\r\n\tbackground:#fb044a;\r\n\tcolor:#fff;\r\n    font-weight:700;\r\n    margin-bottom:10px;\r\n    padding: 5px 100px;\r\n}\r\n.loginForm input[type=submit]:focus{\r\n\tbackground:#C00003;\r\n\tcolor:#fff;\r\n\tfont-weight:700;\r\n\t\r\n}\r\n.loginForm input[type=submit]:hover{\r\n\tbackground:#C00003;\r\n\tcolor:#fff;\r\n\tfont-weight:700;\t\r\n}\r\n\r\n#pswd_info {\r\n\tbackground: #dfdfdf none repeat scroll 0 0;\r\n\tcolor: #fff;\r\n\tleft: 20px;\r\n\tposition: absolute;\r\n\ttop: 115px;\r\n}\r\n#pswd_info h4{\r\n    background: black none repeat scroll 0 0;\r\n    display: block;\r\n    font-size: 14px;\r\n    letter-spacing: 0;\r\n    padding: 17px 0;\r\n    text-align: center;\r\n    text-transform: uppercase;\r\n}\r\n#pswd_info ul {\r\n    list-style: outside none none;\r\n}\r\n#pswd_info ul li {\r\n   padding: 10px 45px;\r\n}\r\n\r\n.valid {\r\n\tbackground: rgba(0, 0, 0, 0) url(\"https://s19.postimg.org/vq43s2wib/valid.png\") no-repeat scroll 2px 6px;\r\n\tcolor: green;\r\n\tline-height: 21px;\r\n\tpadding-left: 22px;\r\n}\r\n\r\n.invalid {\r\n\tbackground: rgba(0, 0, 0, 0) url(\"https://s19.postimg.org/olmaj1p8z/invalid.png\") no-repeat scroll 2px 6px;\r\n\tcolor: red;\r\n\tline-height: 21px;\r\n\tpadding-left: 22px;\r\n}\r\n\r\n\r\n#pswd_info::before {\r\n    background: #dfdfdf none repeat scroll 0 0;\r\n    content: \"\";\r\n    height: 25px;\r\n    left: -13px;\r\n    margin-top: -12.5px;\r\n    position: absolute;\r\n    top: 50%;\r\n    -webkit-transform: rotate(45deg);\r\n            transform: rotate(45deg);\r\n    width: 25px;\r\n}\r\n#pswd_info {\r\n    display:none;\r\n}\r\n\r\n\r\n\r\ntable {\r\n    width: 100%;\r\n}\r\n\r\nth {\r\n    height: 50px;\r\n}\r\ntd {\r\n    height: 50px;\r\n}", ""]);
 
 // exports
 
@@ -316,20 +887,23 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ "../../../../../src/app/componentes/adivina-el-numero/adivina-el-numero.component.html":
+/***/ "../../../../../src/app/componentes/adivina/adivina.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<!--app-menu></app-menu-->\n<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">\n<div style=\"text-align:center\">\n  <h1>\n    {{nuevoJuego.nombre}}!\n  </h1>\n </div>\n<h2></h2>\n<form name=\"juego\">\n\n   <label>ingrese numero:  </label>  <input [(ngModel)]=\"nuevoJuego.numeroIngresado\" placeholder=\"ingrese numero\" name=\"numeroIngresado\" type=\"text\" class=\"form-control\" style=\"width:50%\"/>\n    <h1>{{nuevoJuego.numeroIngresado}}  </h1>\n \n    <h2 [hidden]=\"ocultarVerificar\"><button  *ngIf=\"nuevoJuego.numeroSecreto!=0\" (click)=\"verificar()\" class=\"btn btn-success btn-lg\">Verificar</button></h2>\n \n    <h2><button *ngIf=\"nuevoJuego.numeroSecreto==0 \" (click)=\"generarnumero()\"  class=\"btn btn-info btn-lg\">Nuevo número secreto</button></h2>\n \n    <h2><p *ngIf=\"nuevoJuego.numeroSecreto!=0\" ><i class=\"fa fa-spinner fa-spin\"></i>Esperando que ingrese un número</p></h2>\n\n    <h3 [hidden]=\"!nuevoJuego.gano\">usted adivino el número</h3>\n    <h3 [hidden]=\"nuevoJuego.gano\">usted aún no gano </h3>\n\n\n</form>\n<div id=\"snackbar\">{{Mensajes}}</div>"
+module.exports = "<body >\n    <app-menu-barra></app-menu-barra>\n<div>\n  <!-- <br><br><h3>{{miJuego.NombreDelJuego}} </h3><br><br> -->\n    <form class=\"loginForm\">\n      <div >\n\n              <table>\n                <tr>\n                  <th></th>\n                  <th></th>\n                  <th><h3 align=\"center\">{{miJuego.NombreDelJuego}} </h3></th>\n                  <th></th>\n                  <th> <input class=\"miboton\" type=\"image\" style='width:120px'  (click)=\"miJuego.GenerarNuevo()\"  img src=\"assets/Nuevo.png\"></th>\n                </tr>\n                <tr>\n                  <td></td>\n                  <td></td>\n                  <td></td>\n                  <td></td>\n                  <td></td>\n                </tr>\n                <tr>\n                  <td></td>\n                  <td></td>\n                  <td><div [hidden]=\"miJuego.Habilitado\"><input type=\"text\"  class=\"form-control\"  name=\"numero\" [(ngModel)]=\"miJuego.NumeroIngresado\" placeholder=\"Ingrase un numero\"/></div></td>\n                  <td></td>\n                  <td></td>\n                </tr>\n                <tr>\n                  <td></td>\n                  <td></td>\n                  <td><div align=\"center\" [hidden]=\"miJuego.Habilitado\"><input class=\"miboton\" type=\"image\" align=\"center\" style='width:120px'  (click)=\"miJuego.Verificar()\"  img src=\"assets/Verificar.png\"></div></td>\n                  <td></td>\n                  <td></td> \n                </tr>\n                <tr>\n                    <td>  <input class=\"miboton\" type=\"image\" style='width:120px;height:160px'  (click)=\"Salir()\"  img src=\"assets/Salir.png\">\t\t</td>\n                  <td></td>\n                  <td>      {{miJuego.NumeroSecreto}}  \n                    <p [hidden]=\"!miJuego.Gano\">Ganó</p>\n                    <p [hidden]=\"miJuego.Gano\">No Ganó</p>\n                    <p [hidden]=\"!miJuego.Gano\">Tardaste {{miJuego.Fin}} Segundos en adivinar.</p></td>\n                  <td></td>\n                  <td></td>\n                </tr>\n              </table>\n        </div>\n      </form>\n      <br>\n      <br>\n      <br>\n\n\n      <table class=\"table table-condensed\">\n        <thead>\n          <tr>\n              <th>Jugador</th>\n              <th>Gano</th>\n              <th>Tiempo</th>\n              <th>Intentos</th>\n              <th>Juego</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr *ngFor=\"let juego of miJuego.Jugadores\">\n            <td>{{juego.Nombre}} </td>\n            <td>{{juego.Gano}} </td> \n            <td>{{juego.Tiempo}} </td> \n            <td>{{juego.Intentos}} </td> \n            <td>{{juego.Juego}} </td> \n          </tr>\n        \n        </tbody>\n      </table>\n</div>\n</body>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/componentes/adivina-el-numero/adivina-el-numero.component.ts":
+/***/ "../../../../../src/app/componentes/adivina/adivina.component.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdivinaElNumeroComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdivinaComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__clases_juego_adivina__ = __webpack_require__("../../../../../src/app/clases/juego-adivina.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Clase_adivina__ = __webpack_require__("../../../../../src/app/Clase/adivina.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular_2_local_storage__ = __webpack_require__("../../../../angular-2-local-storage/dist/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angular_2_local_storage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angular_2_local_storage__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -341,315 +915,107 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-var AdivinaElNumeroComponent = (function () {
-    function AdivinaElNumeroComponent() {
-        this.enviarJuego = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
-        this.nuevoJuego = new __WEBPACK_IMPORTED_MODULE_1__clases_juego_adivina__["a" /* JuegoAdivina */]();
-        console.info("numero Secreto:", this.nuevoJuego.numeroSecreto);
-        this.ocultarVerificar = false;
+
+
+var AdivinaComponent = (function () {
+    function AdivinaComponent(localStorageService, router) {
+        this.localStorageService = localStorageService;
+        this.router = router;
+        var user = localStorage.getItem("miUsuario");
+        var personaGuardada = JSON.parse(user);
+        this.miJuego = new __WEBPACK_IMPORTED_MODULE_1__Clase_adivina__["a" /* Adivina */]("Adivina el numero", personaGuardada.nombre);
     }
-    AdivinaElNumeroComponent.prototype.generarnumero = function () {
-        this.nuevoJuego.generarnumero();
-        this.contador = 0;
+    AdivinaComponent.prototype.ngOnInit = function () {
     };
-    AdivinaElNumeroComponent.prototype.verificar = function () {
-        this.contador++;
-        this.ocultarVerificar = true;
-        console.info("numero Secreto:", this.nuevoJuego.gano);
-        if (this.nuevoJuego.verificar()) {
-            this.enviarJuego.emit(this.nuevoJuego);
-            this.MostarMensaje("Sos un Genio!!!", true);
-            this.nuevoJuego.numeroSecreto = 0;
-        }
-        else {
-            var mensaje = void 0;
-            switch (this.contador) {
-                case 1:
-                    mensaje = "No, intento fallido, animo";
-                    break;
-                case 2:
-                    mensaje = "No,Te estaras Acercando???";
-                    break;
-                case 3:
-                    mensaje = "No es, Yo crei que la tercera era la vencida.";
-                    break;
-                case 4:
-                    mensaje = "No era el  " + this.nuevoJuego.numeroIngresado;
-                    break;
-                case 5:
-                    mensaje = " intentos y nada.";
-                    break;
-                case 6:
-                    mensaje = "Afortunado en el amor";
-                    break;
-                default:
-                    mensaje = "Ya le erraste " + this.contador + " veces";
-                    break;
-            }
-            this.MostarMensaje("#" + this.contador + " " + mensaje + " ayuda :" + this.nuevoJuego.retornarAyuda());
-        }
-        console.info("numero Secreto:", this.nuevoJuego.gano);
+    AdivinaComponent.prototype.Salir = function () {
+        this.router.navigate(['/menu']);
     };
-    AdivinaElNumeroComponent.prototype.MostarMensaje = function (mensaje, ganador) {
-        if (mensaje === void 0) { mensaje = "este es el mensaje"; }
-        if (ganador === void 0) { ganador = false; }
-        this.Mensajes = mensaje;
-        var x = document.getElementById("snackbar");
-        if (ganador) {
-            x.className = "show Ganador";
-        }
-        else {
-            x.className = "show Perdedor";
-        }
-        var modelo = this;
-        setTimeout(function () {
-            x.className = x.className.replace("show", "");
-            modelo.ocultarVerificar = false;
-        }, 3000);
-        console.info("objeto", x);
-    };
-    AdivinaElNumeroComponent.prototype.ngOnInit = function () {
-    };
-    return AdivinaElNumeroComponent;
+    return AdivinaComponent;
 }());
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["U" /* Output */])(),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]) === "function" && _a || Object)
-], AdivinaElNumeroComponent.prototype, "enviarJuego", void 0);
-AdivinaElNumeroComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'app-adivina-el-numero',
-        template: __webpack_require__("../../../../../src/app/componentes/adivina-el-numero/adivina-el-numero.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/componentes/adivina-el-numero/adivina-el-numero.component.css")]
+AdivinaComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-adivina',
+        template: __webpack_require__("../../../../../src/app/componentes/adivina/adivina.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/componentes/adivina/adivina.component.css")]
     }),
-    __metadata("design:paramtypes", [])
-], AdivinaElNumeroComponent);
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_angular_2_local_storage__["LocalStorageService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angular_2_local_storage__["LocalStorageService"]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */]) === "function" && _b || Object])
+], AdivinaComponent);
+
+var _a, _b;
+//# sourceMappingURL=adivina.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/componentes/agilidad/agilidad.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "/* Base CSS */\r\nbody{\r\n    background:url('http://ghostcode.in/wp-content/uploads/2016/09/super_hero_whatsapp_background_by_x_ama-d8fr7iz.jpg'); \r\n   /* padding:50px; */\r\n   font-family: cursive;\r\n }\r\n.alignleft {\r\n    float: left;\r\n    margin-right: 15px;\r\n}\r\n.alignright {\r\n    float: right;\r\n    margin-left: 15px;\r\n}\r\n.aligncenter {\r\n    display: block;\r\n    margin: 0 auto 15px;\r\n}\r\na:focus { outline: 0 solid }\r\nimg {\r\n    max-width: 100%;\r\n    height: auto;\r\n}\r\n.fix { overflow: hidden }\r\nh1,\r\nh2,\r\nh3,\r\nh4,\r\nh5,\r\nh6 {\r\n    margin: 0 0 15px;\r\n    font-weight: 700;\r\n}\r\nhtml,\r\nbody { height: 100% }\r\n\r\na {\r\n    transition: 0.3s;\r\n    color: #333;\r\n}\r\na:hover { text-decoration: none }\r\n\r\n\r\n\r\n.search-box{margin:80px auto;position:absolute;}\r\n.caption{margin-bottom:50px;}\r\n.loginForm input[type=text], .loginForm input[type=password]{\r\n    margin-bottom:10px;\r\n    \r\n}\r\n.loginForm input[type=submit]{\r\n\tbackground:#fb044a;\r\n\tcolor:#fff;\r\n\tfont-weight:700;\r\n    margin-bottom:10px;\r\n    padding: 5px 100px;\r\n  \r\n}\r\n.loginForm input[type=submit]:focus{\r\n\tbackground:#C00003;\r\n\tcolor:#fff;\r\n\tfont-weight:700;\r\n\t\r\n}\r\n.loginForm input[type=submit]:hover{\r\n\tbackground:#C00003;\r\n\tcolor:#fff;\r\n\tfont-weight:700;\t\r\n}\r\n\r\n#pswd_info {\r\n\tbackground: #dfdfdf none repeat scroll 0 0;\r\n\tcolor: #fff;\r\n\tleft: 20px;\r\n\tposition: absolute;\r\n\ttop: 115px;\r\n}\r\n#pswd_info h4{\r\n    background: black none repeat scroll 0 0;\r\n    display: block;\r\n    font-size: 14px;\r\n    letter-spacing: 0;\r\n    padding: 17px 0;\r\n    text-align: center;\r\n    text-transform: uppercase;\r\n}\r\n#pswd_info ul {\r\n    list-style: outside none none;\r\n}\r\n#pswd_info ul li {\r\n   padding: 10px 45px;\r\n}\r\n\r\n.valid {\r\n\tbackground: rgba(0, 0, 0, 0) url(\"https://s19.postimg.org/vq43s2wib/valid.png\") no-repeat scroll 2px 6px;\r\n\tcolor: green;\r\n\tline-height: 21px;\r\n\tpadding-left: 22px;\r\n}\r\n\r\n.invalid {\r\n\tbackground: rgba(0, 0, 0, 0) url(\"https://s19.postimg.org/olmaj1p8z/invalid.png\") no-repeat scroll 2px 6px;\r\n\tcolor: red;\r\n\tline-height: 21px;\r\n\tpadding-left: 22px;\r\n}\r\n\r\n\r\n#pswd_info::before {\r\n    background: #dfdfdf none repeat scroll 0 0;\r\n    content: \"\";\r\n    height: 25px;\r\n    left: -13px;\r\n    margin-top: -12.5px;\r\n    position: absolute;\r\n    top: 50%;\r\n    -webkit-transform: rotate(45deg);\r\n            transform: rotate(45deg);\r\n    width: 25px;\r\n}\r\n#pswd_info {\r\n    display:none;\r\n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/componentes/agilidad/agilidad.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "\n\n<!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->\n\n<body style=\"background-color:#FF0000;\">\n  <div>\n<form class=\"loginForm\">\n  <div >\n          <table WIDTH=100%>\n            <tr>\n              <th></th>\n              <th></th>\n              <th><h1 align=\"center\">{{miJuego.NombreDelJuego}}</h1>\n                  <h3>Resuelva la operacion</h3></th>\n              <th></th>\n              <th> <input class=\"miboton\" type=\"image\" style='width:120px'  (click)=\"miJuego.GenerarNuevo()\"  img src=\"assets/Nuevo.png\"></th>\n            </tr>\n            <tr>\n              <td></td>\n              <td></td>\n              <td></td>\n              <td></td>\n              <td></td>\n            </tr>\n            <tr>\n              <td></td>\n              <td></td>\n              <td><div [hidden]=\"miJuego.Habilitado\"><br><br><input type=\"text\" name=\"numero\" class=\"form-control\" [(ngModel)]=\"miJuego.Numero1\" >\n                <br><br><input type=\"text\" name=\"numero1\" class=\"form-control\" [(ngModel)]=\"miJuego.Operador\" >\n                <br><br><input type=\"text\" name=\"numero2\" class=\"form-control\" [(ngModel)]=\"miJuego.Numero2\" >\n                <br><br><input type=\"text\" name=\"numero3\" class=\"form-control\" [(ngModel)]=\"miJuego.Resultado\" >\n                <p [hidden]=\"!miJuego.Gano\">Ganó</p>\n                <p [hidden]=\"miJuego.Gano\">No Ganó</p>  \n                <p [hidden]=\"!miJuego.Gano\">Tardaste {{miJuego.Fin}} Segundo en adivinar.</p></div></td>\n              <td></td>\n              <td></td>\n            </tr>\n            <tr>\n              <td></td>\n              <td></td>\n              <td><div align=\"center\" [hidden]=\"miJuego.Habilitado\"><input class=\"miboton\" type=\"image\" align=\"center\" style='width:120px'  (click)=\"miJuego.Verificar()\"  img src=\"assets/Verificar.png\"></div></td>\n              <td></td>\n              <td></td> \n            </tr>\n            <tr>\n                <td><input class=\"miboton\" type=\"image\" style='width:120px;height:160px'  (click)=\"Salir()\"  img src=\"assets/Salir.png\">\t\t</td>\n              <td></td>\n              <td></td>\n              <td></td>\n              <td></td>\n            </tr>\n          </table>\n    </div>\n  </form>\n\n  <table class=\"table table-condensed\">\n    <thead>\n      <tr>\n          <th>Jugador</th>\n          <th>Gano</th>\n          <th>Tiempo</th>\n          <th>Juego</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr *ngFor=\"let juego of miJuego.Jugadores\">\n        <td>{{juego.Nombre}} </td>\n        <td>{{juego.Gano}} </td> \n        <td>{{juego.Tiempo}} </td> \n        <td>{{juego.Juego}} </td> \n      </tr>\n    \n    </tbody>\n  </table>\n</div>\n</body>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/componentes/agilidad/agilidad.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AgilidadComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Clase_agilidad__ = __webpack_require__("../../../../../src/app/Clase/agilidad.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var AgilidadComponent = (function () {
+    function AgilidadComponent(router) {
+        this.router = router;
+        var user = localStorage.getItem("miUsuario");
+        var personaGuardada = JSON.parse(user);
+        this.miJuego = new __WEBPACK_IMPORTED_MODULE_1__Clase_agilidad__["a" /* Agilidad */]("Agilidad aritmetica", personaGuardada.nombre);
+    }
+    AgilidadComponent.prototype.ngOnInit = function () {
+    };
+    AgilidadComponent.prototype.Salir = function () {
+        this.router.navigate(['/menu']);
+    };
+    return AgilidadComponent;
+}());
+AgilidadComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-agilidad',
+        template: __webpack_require__("../../../../../src/app/componentes/agilidad/agilidad.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/componentes/agilidad/agilidad.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _a || Object])
+], AgilidadComponent);
 
 var _a;
-//# sourceMappingURL=adivina-el-numero.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/adivina-mas-listado/adivina-mas-listado.component.css":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/adivina-mas-listado/adivina-mas-listado.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "\n<app-adivina-el-numero (enviarJuego)=\"tomarJuegoTerminado($event)\">   </app-adivina-el-numero> \n<h1> listado </h1>\n<app-listado-de-resultados [listado]=\"listadoParaCompartir\"> </app-listado-de-resultados>\n\n"
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/adivina-mas-listado/adivina-mas-listado.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdivinaMasListadoComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var AdivinaMasListadoComponent = (function () {
-    function AdivinaMasListadoComponent() {
-        this.listadoParaCompartir = new Array();
-    }
-    AdivinaMasListadoComponent.prototype.ngOnInit = function () {
-    };
-    AdivinaMasListadoComponent.prototype.tomarJuegoTerminado = function (juego) {
-        this.listadoParaCompartir.push(juego);
-        // console.info("en app",this.listadoParaCompartir);
-    };
-    return AdivinaMasListadoComponent;
-}());
-AdivinaMasListadoComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'app-adivina-mas-listado',
-        template: __webpack_require__("../../../../../src/app/componentes/adivina-mas-listado/adivina-mas-listado.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/componentes/adivina-mas-listado/adivina-mas-listado.component.css")]
-    }),
-    __metadata("design:paramtypes", [])
-], AdivinaMasListadoComponent);
-
-//# sourceMappingURL=adivina-mas-listado.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/agilidad-aritmetica/agilidad-aritmetica.component.css":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/agilidad-aritmetica/agilidad-aritmetica.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<!--app-menu></app-menu-->\n<!-- index.html -->\n\n\n<form name=\"juego\">\n<ul>\n   <li>\n   Primer número: <input [(ngModel)]=\"nuevoJuego.numeroIngresado\" placeholder=\"ingrese numero\" name=\"numeroIngresado\" type=\"text\" class=\"form-control\" style=\"width:50%\" readonly/>\n  \n  </li>\n  <li>\n   Operador: <input [(ngModel)]=\"nuevoJuego.numeroIngresado\" placeholder=\"ingrese numero\" name=\"numeroIngresado\" type=\"text\" class=\"form-control\" style=\"width:50%\" readonly/>\n    \n  </li>\n  <li>\n   Segundo número: <input [(ngModel)]=\"nuevoJuego.numeroIngresado\" placeholder=\"ingrese numero\" name=\"numeroIngresado\" type=\"text\" class=\"form-control\" style=\"width:50%\" readonly/>\n    \n  </li>\n  <li>\n    Respuesta: <input [(ngModel)]=\"nuevoJuego.numeroIngresado\" placeholder=\"ingrese numero\" name=\"numeroIngresado\" type=\"text\" class=\"form-control\" style=\"width:50%\"/>\n     \n   </li>\n  <li>\n    <h2 [hidden]=\"ocultarVerificar\" ><button (click)=\"verificar()\" class=\"btn btn-success btn-lg\">Verificar {{Tiempo}} </button></h2>\n  </li>\n  <li>\n    <h2 [hidden]=\"!ocultarVerificar\"><button  (click)=\"NuevoJuego()\"  class=\"btn btn-info btn-lg\">Nuevo</button></h2>\n  </li>\n  <li>\n    <h2><p><i class=\"fa fa-spinner fa-spin\"></i>Esperando numero...</p></h2>\n\n    <h3 [hidden]=\"!nuevoJuego.gano\">usted adivino el número</h3>\n    <h3 [hidden]=\"nuevoJuego.gano\">usted aún no gano </h3>\n  </li>\n</ul>\n\n</form>"
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/agilidad-aritmetica/agilidad-aritmetica.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AgilidadAritmeticaComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__clases_juego_agilidad__ = __webpack_require__("../../../../../src/app/clases/juego-agilidad.ts");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var AgilidadAritmeticaComponent = (function () {
-    function AgilidadAritmeticaComponent() {
-        this.enviarJuego = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]();
-        this.ocultarVerificar = true;
-        this.Tiempo = 5;
-        this.nuevoJuego = new __WEBPACK_IMPORTED_MODULE_1__clases_juego_agilidad__["a" /* JuegoAgilidad */]();
-        console.info("Inicio agilidad");
-    }
-    AgilidadAritmeticaComponent.prototype.ngOnInit = function () {
-    };
-    AgilidadAritmeticaComponent.prototype.NuevoJuego = function () {
-        var _this = this;
-        this.ocultarVerificar = false;
-        this.repetidor = setInterval(function () {
-            _this.Tiempo--;
-            console.log("llego", _this.Tiempo);
-            if (_this.Tiempo == 0) {
-                clearInterval(_this.repetidor);
-                _this.verificar();
-                _this.ocultarVerificar = true;
-                _this.Tiempo = 5;
-            }
-        }, 900);
-    };
-    AgilidadAritmeticaComponent.prototype.verificar = function () {
-        this.ocultarVerificar = false;
-        clearInterval(this.repetidor);
-    };
-    return AgilidadAritmeticaComponent;
-}());
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["U" /* Output */])(),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["x" /* EventEmitter */]) === "function" && _a || Object)
-], AgilidadAritmeticaComponent.prototype, "enviarJuego", void 0);
-AgilidadAritmeticaComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'app-agilidad-aritmetica',
-        template: __webpack_require__("../../../../../src/app/componentes/agilidad-aritmetica/agilidad-aritmetica.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/componentes/agilidad-aritmetica/agilidad-aritmetica.component.css")]
-    }),
-    __metadata("design:paramtypes", [])
-], AgilidadAritmeticaComponent);
-
-var _a;
-//# sourceMappingURL=agilidad-aritmetica.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/agilidad-mas-listado/agilidad-mas-listado.component.css":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/agilidad-mas-listado/agilidad-mas-listado.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "\n<app-agilidad-aritmetica (enviarJuego)=\"tomarJuegoTerminado($event)\">   </app-agilidad-aritmetica> \n<h1> Listado de Resultados </h1>\n<app-listado-de-resultados [listado]=\"listadoParaCompartir\"> </app-listado-de-resultados>"
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/agilidad-mas-listado/agilidad-mas-listado.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AgilidadMasListadoComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var AgilidadMasListadoComponent = (function () {
-    function AgilidadMasListadoComponent() {
-        this.listadoParaCompartir = new Array();
-    }
-    AgilidadMasListadoComponent.prototype.ngOnInit = function () {
-    };
-    AgilidadMasListadoComponent.prototype.tomarJuegoTerminado = function (juego) {
-        this.listadoParaCompartir.push(juego);
-        console.info("en app", this.listadoParaCompartir);
-    };
-    return AgilidadMasListadoComponent;
-}());
-AgilidadMasListadoComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'app-agilidad-mas-listado',
-        template: __webpack_require__("../../../../../src/app/componentes/agilidad-mas-listado/agilidad-mas-listado.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/componentes/agilidad-mas-listado/agilidad-mas-listado.component.css")]
-    }),
-    __metadata("design:paramtypes", [])
-], AgilidadMasListadoComponent);
-
-//# sourceMappingURL=agilidad-mas-listado.component.js.map
+//# sourceMappingURL=agilidad.component.js.map
 
 /***/ }),
 
@@ -661,7 +1027,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "/* Base CSS */\r\n\r\nbody{\r\n    background:url('http://ghostcode.in/wp-content/uploads/2016/09/super_hero_whatsapp_background_by_x_ama-d8fr7iz.jpg'); \r\n   /* padding:50px; */\r\n   font-family: cursive;\r\n }\r\n.alignleft {\r\n    float: left;\r\n    margin-right: 15px;\r\n}\r\n.alignright {\r\n    float: right;\r\n    margin-left: 15px;\r\n}\r\n.aligncenter {\r\n    display: block;\r\n    margin: 0 auto 15px;\r\n}\r\na:focus { outline: 0 solid }\r\nimg {\r\n    max-width: 100%;\r\n    height: auto;\r\n}\r\n.fix { overflow: hidden }\r\nh1,\r\nh2,\r\nh3,\r\nh4,\r\nh5,\r\nh6 {\r\n    margin: 0 0 15px;\r\n    font-weight: 700;\r\n}\r\nhtml,\r\nbody { height: 100% }\r\n\r\na {\r\n    transition: 0.3s;\r\n    color: #333;\r\n}\r\na:hover { text-decoration: none }\r\n\r\n\r\n\r\n.search-box{margin:80px auto;position:absolute;}\r\n.caption{margin-bottom:50px;}\r\n.loginForm input[type=text], .loginForm input[type=password]{\r\n\tmargin-bottom:10px;\r\n}\r\n.loginForm input[type=submit]{\r\n\tbackground:#fb044a;\r\n\tcolor:#fff;\r\n    font-weight:700;\r\n    margin-bottom:10px;\r\n    padding: 5px 100px;\r\n}\r\n.loginForm input[type=submit]:focus{\r\n\tbackground:#C00003;\r\n\tcolor:#fff;\r\n\tfont-weight:700;\r\n\t\r\n}\r\n.loginForm input[type=submit]:hover{\r\n\tbackground:#C00003;\r\n\tcolor:#fff;\r\n\tfont-weight:700;\t\r\n}\r\n\r\n#pswd_info {\r\n\tbackground: #dfdfdf none repeat scroll 0 0;\r\n\tcolor: #fff;\r\n\tleft: 20px;\r\n\tposition: absolute;\r\n\ttop: 115px;\r\n}\r\n#pswd_info h4{\r\n    background: black none repeat scroll 0 0;\r\n    display: block;\r\n    font-size: 14px;\r\n    letter-spacing: 0;\r\n    padding: 17px 0;\r\n    text-align: center;\r\n    text-transform: uppercase;\r\n}\r\n#pswd_info ul {\r\n    list-style: outside none none;\r\n}\r\n#pswd_info ul li {\r\n   padding: 10px 45px;\r\n}\r\n\r\n.valid {\r\n\tbackground: rgba(0, 0, 0, 0) url(\"https://s19.postimg.org/vq43s2wib/valid.png\") no-repeat scroll 2px 6px;\r\n\tcolor: green;\r\n\tline-height: 21px;\r\n\tpadding-left: 22px;\r\n}\r\n\r\n.invalid {\r\n\tbackground: rgba(0, 0, 0, 0) url(\"https://s19.postimg.org/olmaj1p8z/invalid.png\") no-repeat scroll 2px 6px;\r\n\tcolor: red;\r\n\tline-height: 21px;\r\n\tpadding-left: 22px;\r\n}\r\n\r\n\r\n#pswd_info::before {\r\n    background: #dfdfdf none repeat scroll 0 0;\r\n    content: \"\";\r\n    height: 25px;\r\n    left: -13px;\r\n    margin-top: -12.5px;\r\n    position: absolute;\r\n    top: 50%;\r\n    -webkit-transform: rotate(45deg);\r\n            transform: rotate(45deg);\r\n    width: 25px;\r\n}\r\n#pswd_info {\r\n    display:none;\r\n}\r\n\r\n\r\n/* .miboton\r\n{\r\n    background-color: rgb(5, 50, 182);\r\n    border: 1px solidrgb(5, 50, 182);\r\n    border-radius: 15px;\r\n    -moz-border-radius: 15px;\r\n    -webkit-border-radius: 15px;\r\n  -ms-border-radius: 15px;\r\n  -o-border-radius: 15px;\r\n    color: #fff;\r\n    font-weight: bold;\r\n    line-height: 48px;\r\n    text-align: center;\r\n    text-transform: uppercase;\r\n    width: 240px;\r\n    margin-bottom: 5px;\r\n    \r\n} */", ""]);
 
 // exports
 
@@ -674,7 +1040,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/componentes/anagrama/anagrama.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  anagrama works!\n</p>\n"
+module.exports = "<!-- <div class=\"col-md-4 col-md-offset-4 text-center\">\n\n\t<form class=\"loginForm\">\n\t\t<div class=\"input-group\">\n\t\t\n\t\t\t\t\t\n\t\t<h1>\tAnagrama:</h1>\n\n      <h3>{{miJuego.Display}}</h3>\n\n\t\t\t<input type=\"text\"  class=\"form-control\"  name=\"usuario\" [(ngModel)]=\"miJuego.ingresado\" placeholder=\"Respuesta\"/>\n\t\t\t<input type=\"submit\" id=\"verificar\" class=\"form-control\" value=\"Verificar\" (click)=\"miJuego.Verificar()\">\n      <input type=\"submit\" id=\"verificar\" class=\"form-control\" (click)=\"Salir()\" value=\"Salir\">\t\t\t\n\t\t</div>\n\t</form>\n</div> -->\n<!-- <table class=\"table table-condensed\">\n        <thead>\n          <tr>\n              <th>Jugador</th>\n              <th>Gano</th>\n              <th>Tiempo</th>\n              <th>Juego</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr *ngFor=\"let juego of miJuego.Jugadores\">\n            <td>{{juego.Nombre}} </td>\n            <td>{{juego.Gano}} </td> \n            <td>{{juego.Tiempo}} </td> \n            <td>{{juego.Juego}} </td> \n          </tr>\n        \n        </tbody>\n      </table> -->\n\n\n      <!-- Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->\n\n<body >\n  <div>\n      <form class=\"loginForm\">\n        <div >\n                <table WIDTH=100%>\n                  <tr>\n                    <th></th>\n                    <th></th>\n                    <th>\t\t<h1>\tAnagrama: Adivine el nombre</h1>\n                      <div [hidden]=\"miJuego.Habilitado\">\n                            <h3>{{miJuego.Display}}</h3>\n                      </div>\n                      <div [hidden]=\"!miJuego.Habilitado\">\n                        <h3>Oprima en nuevo para empezar</h3>\n                      </div>\n                    </th>\n                      \n                    <th></th>\n                    <th> <input class=\"miboton\" type=\"image\" style='width:120px'  (click)=\"miJuego.GenerarNuevo()\"  img src=\"assets/Nuevo.png\"></th>\n                  </tr>\n                  <tr>\n                    <td></td>\n                    <td></td>\n                    <td></td>\n                    <td></td>\n                    <td></td>\n                  </tr>\n                  <tr>\n                    <td></td>\n                    <td></td>\n                    <td><div [hidden]=\"miJuego.Habilitado\"><input type=\"text\"  class=\"form-control\"  name=\"usuario\" [(ngModel)]=\"miJuego.ingresado\" placeholder=\"Respuesta\"/></div></td>\n                    <td></td>\n                    <td></td>\n                  </tr>\n                  <tr>\n                    <td></td>\n                    <td></td>\n                    <td><div align=\"center\" [hidden]=\"miJuego.Habilitado\"><input class=\"miboton\" type=\"image\" align=\"center\" style='width:120px'  (click)=\"miJuego.Verificar()\"  img src=\"assets/Verificar.png\"></div></td>\n                    <td></td>\n                    <td></td> \n                  </tr>\n                  <tr>\n                      <td><input class=\"miboton\" type=\"image\" style='width:120px;height:160px'  (click)=\"Salir()\"  img src=\"assets/Salir.png\">\t\t</td>\n                    <td></td>\n                    <td></td>\n                    <td></td>\n                    <td></td>\n                  </tr>\n                </table>\n          </div>\n        </form>\n      \n        <table class=\"table table-condensed\">\n          <thead>\n            <tr>\n                <th>Jugador</th>\n                <th>Gano</th>\n                <th>Tiempo</th>\n                <th>Juego</th>\n            </tr>\n          </thead>\n          <tbody>\n            <tr *ngFor=\"let juego of miJuego.Jugadores\">\n              <td>{{juego.Nombre}} </td>\n              <td>{{juego.Gano}} </td> \n              <td>{{juego.Tiempo}} </td> \n              <td>{{juego.Juego}} </td> \n            </tr>\n          \n          </tbody>\n        </table>\n</div>\n</body>"
 
 /***/ }),
 
@@ -684,6 +1050,8 @@ module.exports = "<p>\n  anagrama works!\n</p>\n"
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AnagramaComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Clase_anagrama__ = __webpack_require__("../../../../../src/app/Clase/anagrama.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -694,88 +1062,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var AnagramaComponent = (function () {
-    function AnagramaComponent() {
+    function AnagramaComponent(router) {
+        this.router = router;
+        var user = localStorage.getItem("miUsuario");
+        var personaGuardada = JSON.parse(user);
+        this.miJuego = new __WEBPACK_IMPORTED_MODULE_1__Clase_anagrama__["a" /* Anagrama */]("Adivina el numero", personaGuardada.nombre);
     }
+    AnagramaComponent.prototype.Salir = function () {
+        this.router.navigate(['/menu']);
+    };
     AnagramaComponent.prototype.ngOnInit = function () {
     };
     return AnagramaComponent;
 }());
 AnagramaComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-anagrama',
         template: __webpack_require__("../../../../../src/app/componentes/anagrama/anagrama.component.html"),
         styles: [__webpack_require__("../../../../../src/app/componentes/anagrama/anagrama.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _a || Object])
 ], AnagramaComponent);
 
+var _a;
 //# sourceMappingURL=anagrama.component.js.map
 
 /***/ }),
 
-/***/ "../../../../../src/app/componentes/cabecera/cabecera.component.css":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, ".panel\r\n{\r\n    height: 200px;\r\n    background-image: url(\"/dist/assets/imagenes/cabecera.png\");\r\n    background-position: center;\r\n    background-repeat: no-repeat;\r\n    background-size: cover;\r\n    position: relative;\r\n}\r\n\r\n\r\n.hero-text {\r\ntext-align: center;\r\nposition: absolute;\r\ntop: 50%;\r\nleft: 50%;\r\n-webkit-transform: translate(-50%, -50%);\r\n        transform: translate(-50%, -50%);\r\ncolor: #3E06B0;\r\n}\r\n\r\n.hero-text a {\r\nborder: none;\r\noutline: 0;\r\ndisplay: inline-block;\r\npadding: 10px 25px;\r\ncolor: black;\r\nbackground-color: #ddd;\r\ntext-align: center;\r\ncursor: pointer;\r\n}\r\n\r\n.hero-text a:hover {\r\nbackground-color: #555;\r\ncolor: white;\r\n}", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/cabecera/cabecera.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"panel panel-default\">\n  <div class=\"hero-text\">\n      <h1 style=\"font-size:50px\">Sala de Juegos</h1>\n      <p>Octavio villegas</p>\n      <a href=\"https://github.com/octaviovillegas\"target=\"_blank\">en GitHub <i class=\"fa fa-github\"></i></a>\n      <a  routerLink=\"/QuienSoy\" >Quien Soy? <i class=\"fa fa-user\"></i></a>\n  </div>\n  <ul class=\"nav navbar-nav navbar-right\">\n          <li><a routerLink=\"/Registro\"><span class=\"glyphicon glyphicon-user\"></span>Registrarse</a></li>\n          <li><a  routerLink=\"/Login\"><span class=\"glyphicon glyphicon-log-in\"></span> Ingresar</a></li>\n  </ul>\n</div>\n"
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/cabecera/cabecera.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CabeceraComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var CabeceraComponent = (function () {
-    function CabeceraComponent() {
-    }
-    CabeceraComponent.prototype.ngOnInit = function () {
-    };
-    return CabeceraComponent;
-}());
-CabeceraComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'app-cabecera',
-        template: __webpack_require__("../../../../../src/app/componentes/cabecera/cabecera.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/componentes/cabecera/cabecera.component.css")]
-    }),
-    __metadata("design:paramtypes", [])
-], CabeceraComponent);
-
-//# sourceMappingURL=cabecera.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/error/error.component.css":
+/***/ "../../../../../src/app/componentes/estadistica-adivina/estadistica-adivina.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
@@ -793,21 +1110,19 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ "../../../../../src/app/componentes/error/error.component.html":
+/***/ "../../../../../src/app/componentes/estadistica-adivina/estadistica-adivina.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n\n<div class=\"panel panel-default\">\n    <div class=\"hero-text\">\n        <h1 style=\"font-size:50px\">Sala de Juegos</h1>\n        <p>Octavio villegas</p>\n        <a href=\"https://github.com/octaviovillegas\"target=\"_blank\">en GitHub <i class=\"fa fa-github\"></i></a>\n        <a  routerLink=\"/QuienSoy\"target=\"_blank\">Quien Soy? <i class=\"fa fa-github\"></i></a>\n    </div>\n    <ul class=\"nav navbar-nav navbar-right\">\n            <li><a href=\"#\"><span class=\"glyphicon glyphicon-user\"></span>Registrase</a></li>\n            <li><a href=\"#\"><span class=\"glyphicon glyphicon-log-in\"></span> Ingresar</a></li>\n          </ul>\n</div>"
+module.exports = "<p>\n  estadistica-adivina works!\n</p>\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/componentes/error/error.component.ts":
+/***/ "../../../../../src/app/componentes/estadistica-adivina/estadistica-adivina.component.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ErrorComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EstadisticaAdivinaComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_add_operator_switchMap__ = __webpack_require__("../../../../rxjs/add/operator/switchMap.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_add_operator_switchMap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_add_operator_switchMap__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -818,28 +1133,52 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-
-var ErrorComponent = (function () {
-    function ErrorComponent() {
+var EstadisticaAdivinaComponent = (function () {
+    function EstadisticaAdivinaComponent() {
+        this.settings = {
+            columns: {
+                cuit: {
+                    title: 'Cuit'
+                },
+                usuario: {
+                    title: 'Usuario'
+                },
+                email: {
+                    title: 'Email'
+                },
+                puntaje: {
+                    title: 'Puntaje'
+                },
+                fecha: {
+                    title: 'Fecha'
+                },
+                sexo: {
+                    title: 'Sexo'
+                },
+                gano: {
+                    title: 'Gano'
+                }
+            }
+        };
     }
-    ErrorComponent.prototype.ngOnInit = function () {
+    EstadisticaAdivinaComponent.prototype.ngOnInit = function () {
     };
-    return ErrorComponent;
+    return EstadisticaAdivinaComponent;
 }());
-ErrorComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'app-error',
-        template: __webpack_require__("../../../../../src/app/componentes/error/error.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/componentes/error/error.component.css")]
+EstadisticaAdivinaComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-estadistica-adivina',
+        template: __webpack_require__("../../../../../src/app/componentes/estadistica-adivina/estadistica-adivina.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/componentes/estadistica-adivina/estadistica-adivina.component.css")]
     }),
     __metadata("design:paramtypes", [])
-], ErrorComponent);
+], EstadisticaAdivinaComponent);
 
-//# sourceMappingURL=error.component.js.map
+//# sourceMappingURL=estadistica-adivina.component.js.map
 
 /***/ }),
 
-/***/ "../../../../../src/app/componentes/juegos/juegos.component.css":
+/***/ "../../../../../src/app/componentes/estadistica-agilidad/estadistica-agilidad.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
@@ -857,18 +1196,18 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ "../../../../../src/app/componentes/juegos/juegos.component.html":
+/***/ "../../../../../src/app/componentes/estadistica-agilidad/estadistica-agilidad.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n<app-menu></app-menu>\n<div style=\"text-align:center\">\n  <h1>\n   Sala de Juegos\n  </h1>\n </div>\n <router-outlet></router-outlet>\n"
+module.exports = "<p>\n  estadistica-agilidad works!\n</p>\n"
 
 /***/ }),
 
-/***/ "../../../../../src/app/componentes/juegos/juegos.component.ts":
+/***/ "../../../../../src/app/componentes/estadistica-agilidad/estadistica-agilidad.component.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return JuegosComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EstadisticaAgilidadComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -880,162 +1219,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-var JuegosComponent = (function () {
-    function JuegosComponent() {
+var EstadisticaAgilidadComponent = (function () {
+    function EstadisticaAgilidadComponent() {
     }
-    JuegosComponent.prototype.ngOnInit = function () {
+    EstadisticaAgilidadComponent.prototype.ngOnInit = function () {
     };
-    return JuegosComponent;
+    return EstadisticaAgilidadComponent;
 }());
-JuegosComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'app-juegos',
-        template: __webpack_require__("../../../../../src/app/componentes/juegos/juegos.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/componentes/juegos/juegos.component.css")]
+EstadisticaAgilidadComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-estadistica-agilidad',
+        template: __webpack_require__("../../../../../src/app/componentes/estadistica-agilidad/estadistica-agilidad.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/componentes/estadistica-agilidad/estadistica-agilidad.component.css")]
     }),
     __metadata("design:paramtypes", [])
-], JuegosComponent);
+], EstadisticaAgilidadComponent);
 
-//# sourceMappingURL=juegos.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/listado-de-paises/listado-de-paises.component.css":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/listado-de-paises/listado-de-paises.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<h1>\n Listado de paises\n</h1>\n<table class=\"table table-condensed\">\n  <thead>\n    <tr>\n      <th>Pais</th>\n      <th>Región</th>\n      <th>Nombre local</th>\n      <th>Sub Región</th>\n      <th>Población</th>\n      <th>Bandera</th>\n      <th>Capital</th>\n      <th>GPS</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let pais of listadoDePaises\">\n      <td>{{pais.name}} </td>\n      <td>{{pais.region}} </td> \n      <td>{{pais.nativeName}} </td> \n      <td>{{pais.subregion}} </td>       \n      <td>{{pais.population}} </td> \n      <td><img src='{{pais.flag}}' width=\"50px\"/> </td> \n      <td>{{pais.capital}} </td> \n      <td>{{pais.borders}} </td> \n      <td>{{pais.latlng}} </td> \n    </tr>\n   \n  </tbody>\n</table>"
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/listado-de-paises/listado-de-paises.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListadoDePaisesComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__servicios_paises_service__ = __webpack_require__("../../../../../src/app/servicios/paises.service.ts");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var ListadoDePaisesComponent = (function () {
-    function ListadoDePaisesComponent(servicioPaises) {
-        this.miServicioDePaises = servicioPaises;
-    }
-    ListadoDePaisesComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.miServicioDePaises.listar()
-            .then(function (datos) {
-            console.info("listado de paises", datos);
-            _this.listadoDePaises = datos;
-        });
-    };
-    return ListadoDePaisesComponent;
-}());
-ListadoDePaisesComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'app-listado-de-paises',
-        template: __webpack_require__("../../../../../src/app/componentes/listado-de-paises/listado-de-paises.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/componentes/listado-de-paises/listado-de-paises.component.css")]
-    }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__servicios_paises_service__["a" /* PaisesService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__servicios_paises_service__["a" /* PaisesService */]) === "function" && _a || Object])
-], ListadoDePaisesComponent);
-
-var _a;
-//# sourceMappingURL=listado-de-paises.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/listado-de-resultados/listado-de-resultados.component.css":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/listado-de-resultados/listado-de-resultados.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<!--div *ngFor=\"let juego of listado\">\n\n<p> {{juego.nombre}} </p>\n<p> {{juego.jugador}} </p>\n\n</div-->\n\n<table class=\"table table-condensed\">\n    <thead>\n      <tr>\n        <th>Juego</th>\n        <th>Jugador</th>\n        <th>Resultado</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr *ngFor=\"let juego of listado\">\n        <td>{{juego.nombre}} </td>\n        <td>{{juego.jugador}} </td> \n        <td *ngIf=\"juego.gano\">Gano </td>   \n        <td *ngIf=\"!juego.gano\">Perdio</td>     \n      </tr>\n     \n    </tbody>\n  </table>"
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/listado-de-resultados/listado-de-resultados.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListadoDeResultadosComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var ListadoDeResultadosComponent = (function () {
-    function ListadoDeResultadosComponent() {
-    }
-    ListadoDeResultadosComponent.prototype.ngOnInit = function () {
-    };
-    ListadoDeResultadosComponent.prototype.ver = function () {
-        console.info(this.listado);
-    };
-    return ListadoDeResultadosComponent;
-}());
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* Input */])(),
-    __metadata("design:type", Object)
-], ListadoDeResultadosComponent.prototype, "listado", void 0);
-ListadoDeResultadosComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'app-listado-de-resultados',
-        template: __webpack_require__("../../../../../src/app/componentes/listado-de-resultados/listado-de-resultados.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/componentes/listado-de-resultados/listado-de-resultados.component.css")]
-    }),
-    __metadata("design:paramtypes", [])
-], ListadoDeResultadosComponent);
-
-//# sourceMappingURL=listado-de-resultados.component.js.map
+//# sourceMappingURL=estadistica-agilidad.component.js.map
 
 /***/ }),
 
@@ -1047,7 +1247,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "/* Style all font awesome icons */\r\n.fa {\r\n    padding: 20px;\r\n    font-size: 30px;\r\n    width: 50px;\r\n    text-align: center;\r\n    text-decoration: none;\r\n    border-radius: 50%;\r\n}\r\n\r\n/* Add a hover effect if you want */\r\n.fa:hover {\r\n    opacity: 0.7;\r\n}\r\n\r\n/* Set a specific color for each brand */\r\n\r\n/* Facebook */\r\n.fa-facebook {\r\n    background: #3B5998;\r\n    color: white;\r\n}\r\n\r\n/* Twitter */\r\n.fa-twitter {\r\n    background: #55ACEE;\r\n    color: white;\r\n}", ""]);
+exports.push([module.i, "", ""]);
 
 // exports
 
@@ -1060,7 +1260,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/componentes/listado/listado.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "\n<!--input type=\"button\" (click)=\"llamaService()\" class=\"btn btn-info\" value=\"Pulsame\" > \n<input type=\"button\" (click)=\"llamaServicePromesa()\" class=\"btn btn-info\" value=\"Pulsame Promesa\" --> \n\n<!-- Centered Pills -->\n<ul class=\"nav nav-pills nav-justified\">\n    <li class=\"active\"><a routerLink=\"/Principal\">Sala de Juegos</a></li>\n    <li><a (click)=\"llamaService()\">Servicio</a></li>\n    <li><a (click)=\"llamaServicePromesa()\">Serv Promesa</a></li>\n    <li><a (click)=\"llamaServicePromesa()\">Serv observable</a></li>\n  </ul>\n  \n<app-listado-de-resultados [listado]=\"listadoParaCompartir\"> </app-listado-de-resultados>\n\n"
+module.exports = "<div *ngFor=\"let juego Of ListadoDeResultados\" >\n  {{juego.Nombre}}  \n {{juego.Jugador}}   \n <p *ngIf=\"juego.Gano\" > Gano!!       </p>\n <p *ngIf=\"!juego.Gano\"> Perdio!!       </p>\n\n\n</div>"
 
 /***/ }),
 
@@ -1070,7 +1270,6 @@ module.exports = "\n<!--input type=\"button\" (click)=\"llamaService()\" class=\
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListadoComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__servicios_juego_service_service__ = __webpack_require__("../../../../../src/app/servicios/juego-service.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1081,98 +1280,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-
 var ListadoComponent = (function () {
-    function ListadoComponent(servicioJuego) {
-        this.miServicioJuego = servicioJuego;
+    function ListadoComponent() {
     }
     ListadoComponent.prototype.ngOnInit = function () {
-    };
-    ListadoComponent.prototype.llamaService = function () {
-        console.log("llamaService");
-        this.listadoParaCompartir = this.miServicioJuego.listar();
-    };
-    ListadoComponent.prototype.llamaServicePromesa = function () {
-        var _this = this;
-        console.log("llamaServicePromesa");
-        this.miServicioJuego.listarPromesa().then(function (listado) {
-            _this.listadoParaCompartir = listado;
-        });
+        console.info(this.ListadoDeResultados);
     };
     return ListadoComponent;
 }());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+    __metadata("design:type", Array)
+], ListadoComponent.prototype, "ListadoDeResultados", void 0);
 ListadoComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-listado',
         template: __webpack_require__("../../../../../src/app/componentes/listado/listado.component.html"),
         styles: [__webpack_require__("../../../../../src/app/componentes/listado/listado.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__servicios_juego_service_service__["a" /* JuegoServiceService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__servicios_juego_service_service__["a" /* JuegoServiceService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [])
 ], ListadoComponent);
 
-var _a;
 //# sourceMappingURL=listado.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/listados/listados.component.css":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/listados/listados.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<p>\n  listados works!\n</p>\n"
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/listados/listados.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListadosComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var ListadosComponent = (function () {
-    function ListadosComponent() {
-    }
-    ListadosComponent.prototype.ngOnInit = function () {
-    };
-    return ListadosComponent;
-}());
-ListadosComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'app-listados',
-        template: __webpack_require__("../../../../../src/app/componentes/listados/listados.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/componentes/listados/listados.component.css")]
-    }),
-    __metadata("design:paramtypes", [])
-], ListadosComponent);
-
-//# sourceMappingURL=listados.component.js.map
 
 /***/ }),
 
@@ -1184,7 +1313,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "\r\nform {\r\n    border: 10px solid #f1f1f1;\r\n    padding: 10px;\r\n    background:gray;\r\n}\r\n\r\ninput[type=text], input[type=password] {\r\n    width: 100%;\r\n    padding: 12px 20px;\r\n    margin: 8px 0;\r\n    display: inline-block;\r\n    border: 1px solid #ccc;\r\n    box-sizing: border-box;\r\n}\r\n\r\nbutton {\r\n    background-color: #4CAF50;\r\n    color: white;\r\n    padding: 14px 20px;\r\n    margin: 8px 0;\r\n    border: none;\r\n    cursor: pointer;\r\n    width: 100%;\r\n}\r\n\r\nbutton:hover {\r\n    opacity: 0.8;\r\n}\r\n\r\n.cancelbtn {\r\n    width: auto;\r\n    padding: 10px 18px;\r\n    background-color: #f44336;\r\n}\r\n.aceptbtn {\r\n    width: auto;\r\n    padding: 10px 18px;\r\n    background-color: #3664F4;\r\n}\r\n.imgcontainer {\r\n    text-align: center;\r\n    margin: 24px 0 12px 0;\r\n}\r\n\r\nimg.avatar {\r\n    width: 40%;\r\n    border-radius: 50%;\r\n}\r\n\r\n.container {\r\n    padding: 16px;\r\n}\r\n\r\nspan.psw {\r\n    float: right;\r\n    padding-top: 16px;\r\n}\r\n\r\n/* Change styles for span and cancel button on extra small screens */\r\n@media screen and (max-width: 300px) {\r\n    span.psw {\r\n       display: block;\r\n       float: none;\r\n    }\r\n    .cancelbtn {\r\n       width: 100%;\r\n    }\r\n}", ""]);
+exports.push([module.i, "\r\n.miclase\r\n{\r\n    height: 100%;\r\n}\r\n\r\n.wrapper {    \r\n\tmargin-top: 80px;\r\n\tmargin-bottom: 20px;\r\n}\r\n\r\n.form-signin {\r\n  max-width: 420px;\r\n  padding: 30px 38px 66px;\r\n  margin: 0 auto;\r\n  background-color: #eee;\r\n  border: 3px dotted rgba(0,0,0,0.1);  \r\n  }\r\n\r\n.form-signin-heading {\r\n  text-align:center;\r\n  margin-bottom: 30px;\r\n}\r\n\r\n.form-control {\r\n  position: relative;\r\n  font-size: 16px;\r\n  height: auto;\r\n  padding: 10px;\r\n}\r\n\r\ninput[type=\"text\"] {\r\n  margin-bottom: 0px;\r\n  border-bottom-left-radius: 0;\r\n  border-bottom-right-radius: 0;\r\n}\r\n\r\ninput[type=\"password\"] {\r\n  margin-bottom: 0px;\r\n  border-top-left-radius: 0;\r\n  border-top-right-radius: 0;\r\n}\r\n\r\ninput[type=\"select\"] {\r\n    margin-bottom: 20px;\r\n    border-top-left-radius: 0;\r\n    border-top-right-radius: 0;\r\n  }\r\n\r\n.colorgraph {\r\n  height: 7px;\r\n  border-top: 0;\r\n  /*background: #c4e17f;*/\r\n  border-radius: 5px;\r\n  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);\r\n}", ""]);
 
 // exports
 
@@ -1197,7 +1326,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/componentes/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--div style=\"margin: 20% auto; width: 30%;\">\n  <div class=\"row\">\n    <div class=\"col-lg-6\">\n      Usuario\n    </div>\n    <div class=\"col-lg-6\">\n      <input type=\"text\"  [(ngModel)]=\"usuario\">\n    </div>\n  </div>\n  <div class=\"row\" style=\"margin-top: 5px\">\n    <div class=\"col-lg-6\">\n      Clave\n    </div>\n    <div class=\"col-lg-6\">\n      <input type=\"password\" [(ngModel)]=\"clave\">\n    </div>\n  </div>\n  <div class=\"row\" style=\"text-align: center; margin-top: 10px\">\n    <div class=\"col-lg-12\">\n      <button (click)=\"Entrar()\" class=\"btn btn-info btn-lg\" >Entrar</button>\n    </div>\n  </div>\n</div-->\n <div class=\"container\" >\n  <div class=\"jumbotron\" style=\"padding:50px;\">\n    <form action=\"return true;\">\n      <div class=\"imgcontainer\">\n        <img src=\"../assets/imagenes/login.png\" alt=\"Avatar\" class=\"avatar\" max-width=\"104\" >\n      </div>\n\n      <div class=\"container\">\n        <label><b>Usuario</b></label>\n        <input type=\"text\" placeholder=\"Usuario\"  [(ngModel)]=\"usuario\"  name=\"uname\" required>\n\n        <label><b>Clave</b></label>\n        <input type=\"password\" placeholder=\"Clave\"  [(ngModel)]=\"clave\" name=\"psw\" required>\n            \n        <button *ngIf=\"logeando\"  (click)=\"MoverBarraDeProgreso()\" >Ingresar</button>\n       \n        <div *ngIf=\"!logeando\" class=\"progress\">\n            <div class=\"progress-bar progress-bar-info progress-bar-striped active\" [class]=\"clase\" role=\"progressbar\" aria-valuenow=\"10\" aria-valuemin=\"0\" aria-valuemax=\"100\" [style.width]=\"ProgresoDeAncho\" >\n              {{progresoMensaje}} - {{progreso}}%\n            </div>\n        </div>\n       \n        <input type=\"checkbox\" checked=\"checked\"> Recordar mis datos\n      </div>\n\n      <div class=\"container\" style=\"background-color:#f1f1f1\">\n        <button type=\"button\" class=\"cancelbtn\">Cancelar</button>\n        <button type=\"button\" class=\"aceptbtn\" routerLink=\"/Registro\" >Registrarse</button>\n        <span class=\"psw\">Te olvidaste <a href=\"#\">la clave?</a></span>\n      </div>\n     \n    </form>\n  </div>\n</div>"
+module.exports = "\n<html >\n\t\n<body clase = \"miclase\" background=\"../assets/2.jpg\" >\n<div class = \"container\" >\n\t<div class=\"wrapper\">\n\t\t<form action=\"\" method=\"post\" name=\"Login_Form\" class=\"form-signin\">       \n\t\t    <h3 class=\"form-signin-heading\">Sala de juegos</h3>\n\t\t\t  <hr class=\"colorgraph\"><br>\n\t\t\t  \n\t\t\t  <input type=\"text\"  class=\"form-control\"  name=\"usuario\" [(ngModel)]=\"miUsuario.usuario\" placeholder=\"Usuario\"/>\n\t\t\t  <input type=\"password\" id=\"paw\" class=\"form-control\" [(ngModel)]=\"miUsuario.clave\" name=\"pass\" placeholder=\"Clave\">\t \t\t  \n\t\t\t  <select class=\"form-control\" name=\"firstField\" [(ngModel)]=\"tipoUser\" (change)=\"UserValido()\" placeholder=\"Seleccione usuario\">\n\t\t\t\t<option value=\"usuario\">Usuario</option>\n\t\t\t\t<option value=\"admin\">Administrador</option>\n\t\t\t\t<option value=\"invitado\">Invitado</option>\n\t\t\t\t<option value=\"jugador1\">Jugador 1</option>\n\t\t\t\t<option value=\"jugador2\">Jugador 2</option>\n\t\t\t  </select>\n\t\t\t  <button type=\"submit\" class=\"btn btn-lg btn-primary btn-block\" (click)=\"miUsuario.Entrar()\" id=\"submit\"  >Ingresar</button>\n\t\t\t  <button type=\"submit\" class=\"btn btn-lg btn-primary btn-block\" (click)=\"Registrarse()\" id=\"submit\" >Registrar</button>\t\t\n\t\t</form>\t\t\t\n\t</div>\n</div>\n</body>\n</html>"
 
 /***/ }),
 
@@ -1207,9 +1336,12 @@ module.exports = "<!--div style=\"margin: 20% auto; width: 30%;\">\n  <div class
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_observable_TimerObservable__ = __webpack_require__("../../../../rxjs/observable/TimerObservable.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_observable_TimerObservable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_observable_TimerObservable__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Clase_login__ = __webpack_require__("../../../../../src/app/Clase/login.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__ = __webpack_require__("../../../../angularfire2/database/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__ = __webpack_require__("../../../../angularfire2/auth/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angular_2_local_storage__ = __webpack_require__("../../../../angular-2-local-storage/dist/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angular_2_local_storage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_angular_2_local_storage__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1219,85 +1351,72 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
+
+
 
 
 
 var LoginComponent = (function () {
-    function LoginComponent(route, router) {
+    function LoginComponent(route, router, localStorageService, db, _auth) {
         this.route = route;
         this.router = router;
-        this.usuario = '';
-        this.clave = '';
-        this.progresoMensaje = "esperando...";
-        this.logeando = true;
-        this.clase = "progress-bar progress-bar-info progress-bar-striped ";
-        this.progreso = 0;
-        this.ProgresoDeAncho = "0%";
+        this.localStorageService = localStorageService;
+        this._auth = _auth;
+        this.miUsuario = new __WEBPACK_IMPORTED_MODULE_1__Clase_login__["a" /* Login */](route, router, _auth);
+        console.info(this.users);
     }
-    LoginComponent.prototype.ngOnInit = function () {
+    LoginComponent.prototype.Registrarse = function () {
+        this.router.navigate(['/Registrar']);
     };
-    LoginComponent.prototype.Entrar = function () {
-        if (this.usuario === 'admin' && this.clave === 'admin') {
-            this.router.navigate(['/Principal']);
+    LoginComponent.prototype.UserValido = function () {
+        switch (this.tipoUser) {
+            case "admin": {
+                this.miUsuario.usuario = "admin@admin.com";
+                this.miUsuario.clave = "111111";
+                break;
+            }
+            case "usuario": {
+                this.miUsuario.usuario = "usuario@usuario.com";
+                this.miUsuario.clave = "333333";
+                break;
+            }
+            case "invitado": {
+                this.miUsuario.usuario = "invitado@invitado.com";
+                this.miUsuario.clave = "222222";
+                break;
+            }
+            case "jugador1": {
+                this.miUsuario.usuario = "j1@jugador.com";
+                this.miUsuario.clave = "444444";
+                break;
+            }
+            case "jugador2": {
+                this.miUsuario.usuario = "j2@jugador.com";
+                this.miUsuario.clave = "555555";
+                break;
+            }
         }
     };
-    LoginComponent.prototype.MoverBarraDeProgreso = function () {
-        var _this = this;
-        this.logeando = false;
-        this.clase = "progress-bar progress-bar-danger progress-bar-striped active";
-        this.progresoMensaje = "NSA spy...";
-        var timer = __WEBPACK_IMPORTED_MODULE_2_rxjs_observable_TimerObservable__["TimerObservable"].create(200, 50);
-        this.subscription = timer.subscribe(function (t) {
-            console.log("inicio");
-            _this.progreso = _this.progreso + 1;
-            _this.ProgresoDeAncho = _this.progreso + 20 + "%";
-            switch (_this.progreso) {
-                case 15:
-                    _this.clase = "progress-bar progress-bar-warning progress-bar-striped active";
-                    _this.progresoMensaje = "Verificando ADN...";
-                    break;
-                case 30:
-                    _this.clase = "progress-bar progress-bar-Info progress-bar-striped active";
-                    _this.progresoMensaje = "Adjustando encriptación..";
-                    break;
-                case 60:
-                    _this.clase = "progress-bar progress-bar-success progress-bar-striped active";
-                    _this.progresoMensaje = "Recompilando Info del dispositivo..";
-                    break;
-                case 75:
-                    _this.clase = "progress-bar progress-bar-success progress-bar-striped active";
-                    _this.progresoMensaje = "Recompilando claves facebook, gmail, chats..";
-                    break;
-                case 85:
-                    _this.clase = "progress-bar progress-bar-success progress-bar-striped active";
-                    _this.progresoMensaje = "Instalando KeyLogger..";
-                    break;
-                case 100:
-                    console.log("final");
-                    _this.subscription.unsubscribe();
-                    _this.Entrar();
-                    break;
-            }
-        });
-        //this.logeando=true;
+    LoginComponent.prototype.ngOnInit = function () {
     };
     return LoginComponent;
 }());
 LoginComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-login',
         template: __webpack_require__("../../../../../src/app/componentes/login/login.component.html"),
         styles: [__webpack_require__("../../../../../src/app/componentes/login/login.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5_angular_2_local_storage__["LocalStorageService"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_angular_2_local_storage__["LocalStorageService"]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_angularfire2_database__["a" /* AngularFireDatabase */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _e || Object])
 ], LoginComponent);
 
-var _a, _b;
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=login.component.js.map
 
 /***/ }),
 
-/***/ "../../../../../src/app/componentes/mapa-de-google/mapa-de-google.component.css":
+/***/ "../../../../../src/app/componentes/memotest/memotest.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
@@ -1305,7 +1424,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "agm-map {\r\n    height: 300px;\r\n  }", ""]);
+exports.push([module.i, "/* Base CSS */\r\nbody{\r\n    background:url('http://ghostcode.in/wp-content/uploads/2016/09/super_hero_whatsapp_background_by_x_ama-d8fr7iz.jpg'); \r\n   /* padding:50px; */\r\n   font-family: cursive;\r\n }\r\n.alignleft {\r\n    float: left;\r\n    margin-right: 15px;\r\n}\r\n.alignright {\r\n    float: right;\r\n    margin-left: 15px;\r\n}\r\n.aligncenter {\r\n    display: block;\r\n    margin: 0 auto 15px;\r\n}\r\na:focus { outline: 0 solid }\r\nimg {\r\n    max-width: 100%;\r\n    height: auto;\r\n}\r\n.fix { overflow: hidden }\r\nh1,\r\nh2,\r\nh3,\r\nh4,\r\nh5,\r\nh6 {\r\n    margin: 0 0 15px;\r\n    font-weight: 700;\r\n}\r\nhtml,\r\nbody { height: 100% }\r\n\r\na {\r\n    transition: 0.3s;\r\n    color: #333;\r\n}\r\na:hover { text-decoration: none }\r\n\r\n\r\n\r\n.search-box{margin:80px auto;position:absolute;}\r\n.caption{margin-bottom:50px;}\r\n.loginForm input[type=text], .loginForm input[type=password]{\r\n\tmargin-bottom:10px;\r\n}\r\n.loginForm input[type=submit]{\r\n\tbackground:#fb044a;\r\n\tcolor:#fff;\r\n    font-weight:700;\r\n    margin-bottom:10px;\r\n    padding: 5px 100px;\r\n}\r\n.loginForm input[type=submit]:focus{\r\n\tbackground:#C00003;\r\n\tcolor:#fff;\r\n\tfont-weight:700;\r\n\t\r\n}\r\n.loginForm input[type=submit]:hover{\r\n\tbackground:#C00003;\r\n\tcolor:#fff;\r\n\tfont-weight:700;\t\r\n}\r\n\r\n#pswd_info {\r\n\tbackground: #dfdfdf none repeat scroll 0 0;\r\n\tcolor: #fff;\r\n\tleft: 20px;\r\n\tposition: absolute;\r\n\ttop: 115px;\r\n}\r\n#pswd_info h4{\r\n    background: black none repeat scroll 0 0;\r\n    display: block;\r\n    font-size: 14px;\r\n    letter-spacing: 0;\r\n    padding: 17px 0;\r\n    text-align: center;\r\n    text-transform: uppercase;\r\n}\r\n#pswd_info ul {\r\n    list-style: outside none none;\r\n}\r\n#pswd_info ul li {\r\n   padding: 10px 45px;\r\n}\r\n\r\n.valid {\r\n\tbackground: rgba(0, 0, 0, 0) url(\"https://s19.postimg.org/vq43s2wib/valid.png\") no-repeat scroll 2px 6px;\r\n\tcolor: green;\r\n\tline-height: 21px;\r\n\tpadding-left: 22px;\r\n}\r\n\r\n.invalid {\r\n\tbackground: rgba(0, 0, 0, 0) url(\"https://s19.postimg.org/olmaj1p8z/invalid.png\") no-repeat scroll 2px 6px;\r\n\tcolor: red;\r\n\tline-height: 21px;\r\n\tpadding-left: 22px;\r\n}\r\n\r\n\r\n#pswd_info::before {\r\n    background: #dfdfdf none repeat scroll 0 0;\r\n    content: \"\";\r\n    height: 25px;\r\n    left: -13px;\r\n    margin-top: -12.5px;\r\n    position: absolute;\r\n    top: 50%;\r\n    -webkit-transform: rotate(45deg);\r\n            transform: rotate(45deg);\r\n    width: 25px;\r\n}\r\n#pswd_info {\r\n    display:none;\r\n}\r\n\r\n.miclase\r\n{\r\n    height: 100%;\r\n}\r\n\r\n.wrapper {    \r\n\tmargin-top: 80px;\r\n\tmargin-bottom: 20px;\r\n}\r\n\r\n.form-signin {\r\n  max-width: 420px;\r\n  padding: 30px 38px 66px;\r\n  margin: 0 auto;\r\n  background-color: #eee;\r\n  border: 3px dotted rgba(0,0,0,0.1);  \r\n  }\r\n\r\n.form-signin-heading {\r\n  text-align:center;\r\n  margin-bottom: 30px;\r\n}\r\n\r\n.form-control {\r\n  position: relative;\r\n  font-size: 16px;\r\n  height: auto;\r\n  padding: 10px;\r\n}\r\n\r\ninput[type=\"text\"] {\r\n  margin-bottom: 0px;\r\n  border-bottom-left-radius: 0;\r\n  border-bottom-right-radius: 0;\r\n}\r\n\r\ninput[type=\"password\"] {\r\n  margin-bottom: 0px;\r\n  border-top-left-radius: 0;\r\n  border-top-right-radius: 0;\r\n}\r\n\r\ninput[type=\"select\"] {\r\n    margin-bottom: 20px;\r\n    border-top-left-radius: 0;\r\n    border-top-right-radius: 0;\r\n  }\r\n\r\n.colorgraph {\r\n  height: 7px;\r\n  border-top: 0;\r\n  /*background: #c4e17f;*/\r\n  border-radius: 5px;\r\n  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);\r\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -1315,18 +1434,89 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ "../../../../../src/app/componentes/mapa-de-google/mapa-de-google.component.html":
+/***/ "../../../../../src/app/componentes/memotest/memotest.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1>{{ title }}</h1>\n\n<!-- this creates a google map on the page with the given lat/lng from -->\n<!-- the component as the initial center of the map: -->\n<agm-map [latitude]=\"lat\" [longitude]=\"lng\"  (mapClick)=\"mapClicked($event)\">\n   \n  <agm-marker [latitude]=\"lat\" [longitude]=\"lng\"></agm-marker>\n</agm-map>\n<input type =\"text\" [(ngModel)]=\"lat\" />\n<input type=\"text\" [(ngModel)]=\"lng\"/> "
+module.exports = "\n<body >\n\t\t<app-menu-barra></app-menu-barra>\n\t\t<div>\n\t  <form class=\"loginForm\">\n\t\t<div >\n\t\t\t\t<table WIDTH=100%>\n\t\t\t\t  <tr>\n\t\t\t\t\t<th></th>\n\t\t\t\t\t<th></th>\n\t\t\t\t\t<th><h1 align=\"center\">{{miJuego.NombreDelJuego}}</h1>\n\t\t\t\t\t\t<h3 align=\"center\">Traduce a ingles la imagen</h3></th>\n\t\t\t\t\t<th></th>\n\t\t\t\t\t<th><div align=\"center\"><input class=\"miboton\" type=\"image\" style='width:120px'  (click)=\"miJuego.Nuevo()\"  img src=\"assets/Nuevo.png\"></div></th>\n\t\t\t\t  </tr>\n\t\t\t\t  <tr>\n\t\t\t\t\t<td></td>\n\t\t\t\t\t<td></td>\n\t\t\t\t\t<td><div align=\"center\"><img class=\"img-responsive\" src=\"{{miJuego.myPhotoURL}}\" /> \n\t\t\t\t\t\t<h3>AYUDA:\n\t\t\t\t\t\t<a  *ngFor=\"let item of miJuego.ayuda\">\n\t\t\t\t\t\t\t\t{{item}}\n\t\t\t\t\t\t</a></h3><div [hidden]=\"miJuego.Habilitado\">\n\t\t\t\t\t\t<input type=\"text\"  class=\"form-control\"  name=\"usuario\" [(ngModel)]=\"miJuego.foto\" placeholder=\"Respuesta\"/></div>\n\t\t\t\t\t\t<div [hidden]=\"!miJuego.Habilitado\">Oprima en NUEVO</div></div>\n\t\t\t\t\t</td>\n\t\t\t\t\t<td></td>\n\t\t\t\t\t<td></td>\n\t\t\t\t  </tr>\n\t\t\t\t  <tr>\n\t\t\t\t\t<td></td>\n\t\t\t\t\t<td></td>\n\t\t\t\t\t<td><div align=\"center\" [hidden]=\"miJuego.Habilitado\"><input class=\"miboton\" type=\"image\" align=\"center\" style='width:120px'  (click)=\"miJuego.Verificar()\"  img src=\"assets/Verificar.png\"></div></td>\n\t\t\t\t\t<td></td>\n\t\t\t\t\t<td></td> \n\t\t\t\t  </tr>\n\t\t\t\t  <tr>\n\t\t\t\t\t  <td><input class=\"miboton\" type=\"image\" style='width:120px;height:160px'  (click)=\"Salir()\"  img src=\"assets/Salir.png\">\t\t</td>\n\t\t\t\t\t<td></td>\n\t\t\t\t\t<td></td>\n\t\t\t\t\t<td></td>\n\t\t\t\t\t<td><div align=\"center\"><input  type=\"image\" align=\"center\" style='width:220px'  (click)=\"miJuego.Ayuda()\"  img src=\"assets/Ayuda.png\"></div></td>\n\t\t\t\t  </tr>\n\t\t\t\t</table>\n\t\t  </div>\n\t\t</form>\n\t  \n\t\t<table class=\"table table-condensed\">\n\t\t  <thead>\n\t\t\t<tr>\n\t\t\t\t<th>Jugador</th>\n\t\t\t\t<th>Gano</th>\n\t\t\t\t<th>Tiempo</th>\n\t\t\t\t<th>Juego</th>\n\t\t\t</tr>\n\t\t  </thead>\n\t\t  <tbody>\n\t\t\t<tr *ngFor=\"let juego of miJuego.Jugadores\">\n\t\t\t  <td>{{juego.Nombre}} </td>\n\t\t\t  <td>{{juego.Gano}} </td> \n\t\t\t  <td>{{juego.Tiempo}} </td> \n\t\t\t  <td>{{juego.Juego}} </td> \n\t\t\t</tr>\n\t\t  \n\t\t  </tbody>\n\t\t</table>\n\t  </div>\n</body>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/componentes/mapa-de-google/mapa-de-google.component.ts":
+/***/ "../../../../../src/app/componentes/memotest/memotest.component.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MapaDeGoogleComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MemotestComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Clase_memoTest__ = __webpack_require__("../../../../../src/app/Clase/memoTest.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var MemotestComponent = (function () {
+    function MemotestComponent(router) {
+        this.router = router;
+        this.miJuego = new __WEBPACK_IMPORTED_MODULE_1__Clase_memoTest__["a" /* MemoTest */]("pablo", "Jugador1");
+    }
+    MemotestComponent.prototype.ngOnInit = function () {
+    };
+    MemotestComponent.prototype.Salir = function () {
+        this.router.navigate(['/menu']);
+    };
+    return MemotestComponent;
+}());
+MemotestComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-memotest',
+        template: __webpack_require__("../../../../../src/app/componentes/memotest/memotest.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/componentes/memotest/memotest.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _a || Object])
+], MemotestComponent);
+
+var _a;
+//# sourceMappingURL=memotest.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/componentes/menu-barra/menu-barra.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "/* bootstrap dropdown hover menu*/\r\n\r\nbody {\r\n    font-family: 'PT Sans', sans-serif;\r\n    font-size: 13px;\r\n    font-weight: 400;\r\n    color: #4f5d6e;\r\n    position: relative;\r\n    background: rgb(26, 49, 95);\r\n    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(26, 49, 95, 1)), color-stop(10%, rgba(26, 49, 95, 1)), color-stop(24%, rgba(29, 108, 141, 1)), color-stop(37%, rgba(41, 136, 151, 1)), color-stop(77%, rgba(39, 45, 100, 1)), color-stop(90%, rgba(26, 49, 95, 1)), color-stop(100%, rgba(26, 49, 95, 1)));\r\n    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#1a315f', endColorstr='#1a315f', GradientType=0);\r\n  }\r\n  \r\n  .body-wrap {\r\n    min-height: 700px;\r\n  }\r\n  \r\n  .body-wrap {\r\n    position: relative;\r\n    z-index: 0;\r\n  }\r\n  \r\n  .body-wrap:before,\r\n  .body-wrap:after {\r\n    content: '';\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    right: 0;\r\n    z-index: -1;\r\n    height: 260px;\r\n    background: linear-gradient(to bottom, rgba(26, 49, 95, 1) 0%, rgba(26, 49, 95, 0) 100%);\r\n    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#1a315f', endColorstr='#001a315f', GradientType=0);\r\n  }\r\n  \r\n  .body-wrap:after {\r\n    top: auto;\r\n    bottom: 0;\r\n    background: linear-gradient(to bottom, rgba(26, 49, 95, 0) 0%, rgba(26, 49, 95, 1) 100%);\r\n    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#001a315f', endColorstr='#1a315f', GradientType=0);\r\n  }\r\n  \r\n  nav {\r\n    margin-top: 60px;\r\n    box-shadow: 5px 4px 5px #000;\r\n  }", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/componentes/menu-barra/menu-barra.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "\n\n  <div class=\"container\">\n    <nav class=\"navbar navbar-inverse\" role=\"navigation\">\n      <div class=\"container-fluid\">\n        <div class=\"navbar-header\">\n\n          <a class=\"navbar-brand\" routerLink=\"/menu\" >Inicio </a>\n          <a class=\"navbar-brand\" routerLink=\"/adivina\" >Adivina</a>\n          <a class=\"navbar-brand\" routerLink=\"/agilidad\" >Agilidad</a>\n          <a class=\"navbar-brand\" routerLink=\"/anagrama\" >anagrama</a>\n          <a class=\"navbar-brand\" routerLink=\"/PPT\" >Piedra,papel o tijera</a>\n          <a class=\"navbar-brand\" routerLink=\"/memotest\" >Traduce</a>\n        </div>\n\n\n        <div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n\n          <ul class=\"nav navbar-nav navbar-right\">\n              <a class=\"navbar-brand\" routerLink=\"/quienSoy\" >¿Quien soy?</a>\n              <a class=\"navbar-brand\" routerLink=\"/login\" >Salir</a>\n          </ul>\n        </div>\n        <!-- /.navbar-collapse -->\n      </div>\n      <!-- /.container-fluid -->\n    </nav>\n  </div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/componentes/menu-barra/menu-barra.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MenuBarraComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1338,114 +1528,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-var MapaDeGoogleComponent = (function () {
-    function MapaDeGoogleComponent() {
-        this.title = 'El Primer mapa';
-        this.lat = 33.678418;
-        this.lng = 5.809007;
-        // google maps zoom level
-        this.zoom = 8;
+var MenuBarraComponent = (function () {
+    function MenuBarraComponent() {
+        this.muestra = true;
     }
-    MapaDeGoogleComponent.prototype.ngOnInit = function () {
+    MenuBarraComponent.prototype.ngOnInit = function () {
     };
-    return MapaDeGoogleComponent;
+    MenuBarraComponent.prototype.mortrar = function () {
+        //alert("A");
+        if (this.muestra)
+            this.muestra = false;
+        else
+            this.muestra = true;
+        //alert(this.muestra);
+    };
+    return MenuBarraComponent;
 }());
-MapaDeGoogleComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'app-mapa-de-google',
-        template: __webpack_require__("../../../../../src/app/componentes/mapa-de-google/mapa-de-google.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/componentes/mapa-de-google/mapa-de-google.component.css")]
+MenuBarraComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-menu-barra',
+        template: __webpack_require__("../../../../../src/app/componentes/menu-barra/menu-barra.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/componentes/menu-barra/menu-barra.component.css")]
     }),
     __metadata("design:paramtypes", [])
-], MapaDeGoogleComponent);
+], MenuBarraComponent);
 
-//# sourceMappingURL=mapa-de-google.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/menu-card/menu-card.component.css":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, ".card {\r\n    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);\r\n    transition: 0.3s;\r\n    border-radius: 5px; /* 5px rounded corners */\r\n    max-width: 300px;\r\n   height: 100%;\r\n    margin: 10px;\r\n    padding-bottom: 10px;\r\n    float: left;\r\n  background-color: #DEF3A6;\r\n    text-align: center;\r\n}\r\n\r\n/* Add rounded corners to the top left and the top right corner of the image */\r\nimg {\r\n    border-radius: 5px 5px 0 0;\r\n    width: 200px;\r\n    height: 200px;\r\n}/* Add some padding inside the card container */\r\n.container {\r\n    padding: 2px 16px;\r\n}\r\n\r\n\r\n.button{\r\n    margin-left: 1px;\r\n    display: inline-block;\r\n    width: 90%;\r\n    padding: 5px 15px;\r\n    font-size: 24px;\r\n    text-align: center;\r\n    cursor: pointer;\r\n    outline: none;\r\n    color: #fff;\r\n    background-color: #4CAF50;\r\n    border: none;\r\n    border-radius: 15px;\r\n    box-shadow: 0 9px #999;\r\n\r\n    border: none;\r\n    outline: 0;\r\n \r\n    padding: 8px;\r\n    color: white;\r\n   /* background-color: #000;*/\r\n    text-align: center;\r\n    cursor: pointer;\r\n    width: 100%;\r\n  }\r\n  \r\n  .button:hover {background-color: #3e8e41}\r\n  \r\n  .button:active {\r\n    background-color: #3e8e41;\r\n    box-shadow: 0 5px #666;\r\n    -webkit-transform: translateY(4px);\r\n            transform: translateY(4px);\r\n  }", ""]);
-
-// exports
-
-
-/*** EXPORTS FROM exports-loader ***/
-module.exports = module.exports.toString();
+//# sourceMappingURL=menu-barra.component.js.map
 
 /***/ }),
 
-/***/ "../../../../../src/app/componentes/menu-card/menu-card.component.html":
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"container\" >\n    <div class=\"card\">\n      <img class=\"img-thumbnail\"   src=\"../assets/imagenes/cerebro.jpg\" alt=\"Avatar\" style=\"width:100%\">\n      <h1>Velocidad y agilidad aritmética </h1>\n      <p class=\"title\">Juego de agilidad mental</p>\n      <p>UTN FRA </p>\n  \n      <a href=\"#\"><i class=\"fa fa-dribbble\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-twitter\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-linkedin\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-facebook\"></i></a> \n      <p>           <button class=\"button\"  (click)=\"Juego('Agilidad')\">Jugar</button></p>\n    \n    </div>\n  \n    <div class=\"card\">\n      <img class=\"img-thumbnail\" src=\"../assets/imagenes/ppt.jpg\" alt=\"Avatar\" style=\"width:100%\">\n      <h1>Piedra Papel o Tijera</h1>\n      <p class=\"title\">Juega contra la máquina</p>\n      <p>UTN FRA </p>\n      \n      <a href=\"#\"><i class=\"fa fa-dribbble\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-twitter\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-linkedin\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-facebook\"></i></a> \n      <p>           <button class=\"button\"  (click)=\"Juego('PPT')\">Jugar</button></p>\n    </div>\n    <div class=\"card\">\n      <img  class=\"img-thumbnail\"  src=\"../assets/imagenes/adivina.png\" alt=\"Avatar\" style=\"width:100%\">\n      <h1>Adivina el número secreto</h1>\n      <p class=\"title\">Juega de estrategia</p>\n      <p>UTN FRA </p>\n      \n      <a href=\"#\"><i class=\"fa fa-dribbble\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-twitter\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-linkedin\"></i></a> \n      <a href=\"#\"><i class=\"fa fa-facebook\"></i></a> \n      <p>           <button class=\"button\"  (click)=\"Juego('Adivina')\">Jugar</button></p>\n    </div>\n  </div>"
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/menu-card/menu-card.component.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MenuCardComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var MenuCardComponent = (function () {
-    function MenuCardComponent(route, router) {
-        this.route = route;
-        this.router = router;
-    }
-    MenuCardComponent.prototype.ngOnInit = function () {
-    };
-    MenuCardComponent.prototype.Juego = function (tipo) {
-        switch (tipo) {
-            case 'Adivina':
-                this.router.navigate(['/Juegos/Adivina']);
-                break;
-            case 'Agilidad':
-                this.router.navigate(['/Juegos/Agilidad']);
-                break;
-            case 'AdivinaMasListado':
-                this.router.navigate(['/Juegos/AdivinaMasListado']);
-                break;
-            case 'AgilidadaMasListado':
-                this.router.navigate(['/Juegos/AgilidadaMasListado']);
-                break;
-        }
-    };
-    return MenuCardComponent;
-}());
-MenuCardComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'app-menu-card',
-        template: __webpack_require__("../../../../../src/app/componentes/menu-card/menu-card.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/componentes/menu-card/menu-card.component.css")]
-    }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object])
-], MenuCardComponent);
-
-var _a, _b;
-//# sourceMappingURL=menu-card.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/componentes/menu/menu.component.css":
+/***/ "../../../../../src/app/componentes/menu-de-listado/menu-de-listado.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
@@ -1463,10 +1575,136 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
+/***/ "../../../../../src/app/componentes/menu-de-listado/menu-de-listado.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<h1>LISTADO</h1>\n<app-listado [ListadoDeResultados]=\"listadoParaCompartir\"></app-listado> "
+
+/***/ }),
+
+/***/ "../../../../../src/app/componentes/menu-de-listado/menu-de-listado.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MenuDeListadoComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__servicios_listado_service__ = __webpack_require__("../../../../../src/app/servicios/listado.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var MenuDeListadoComponent = (function () {
+    function MenuDeListadoComponent() {
+        this.miServicio = new __WEBPACK_IMPORTED_MODULE_1__servicios_listado_service__["a" /* ListadoService */]();
+        this.listadoParaCompartir = this.miServicio.listar();
+    }
+    MenuDeListadoComponent.prototype.ngOnInit = function () {
+    };
+    return MenuDeListadoComponent;
+}());
+MenuDeListadoComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-menu-de-listado',
+        template: __webpack_require__("../../../../../src/app/componentes/menu-de-listado/menu-de-listado.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/componentes/menu-de-listado/menu-de-listado.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], MenuDeListadoComponent);
+
+//# sourceMappingURL=menu-de-listado.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/componentes/menu-opciones/menu-opciones.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "/* make sidebar nav vertical */ \r\n@media (min-width: 768px){\r\n    .affix-content .container {\r\n      width: 700px;\r\n    }   \r\n  \r\n    html,body{\r\n      background-color: #f8f8f8;\r\n      height: 100%;\r\n      overflow: hidden;\r\n    }\r\n      .affix-content .container .page-header{\r\n      margin-top: 0;\r\n    }\r\n    .sidebar-nav{\r\n          position:fixed; \r\n          width:100%;\r\n    }\r\n    .affix-sidebar{\r\n      padding-right:0; \r\n      font-size:small;\r\n      padding-left: 0;\r\n    }  \r\n    .affix-row, .affix-container, .affix-content{\r\n      height: 100%;\r\n      margin-left: 0;\r\n      margin-right: 0;    \r\n    } \r\n    .affix-content{\r\n      background-color:white; \r\n    } \r\n    .sidebar-nav .navbar .navbar-collapse {\r\n      padding: 0;\r\n      max-height: none;\r\n    }\r\n    .sidebar-nav .navbar{\r\n      border-radius:0; \r\n      margin-bottom:0; \r\n      border:0;\r\n    }\r\n    .sidebar-nav .navbar ul {\r\n      float: none;\r\n      display: block;\r\n    }\r\n    .sidebar-nav .navbar li {\r\n      float: none;\r\n      display: block;\r\n    }\r\n    .sidebar-nav .navbar li a {\r\n      padding-top: 12px;\r\n      padding-bottom: 12px;\r\n    }  \r\n  }\r\n  \r\n  @media (min-width: 769px){\r\n    .affix-content .container {\r\n      width: 600px;\r\n    }\r\n      .affix-content .container .page-header{\r\n      margin-top: 0;\r\n    }  \r\n  }\r\n  \r\n  @media (min-width: 992px){\r\n    .affix-content .container {\r\n    width: 900px;\r\n    }\r\n      .affix-content .container .page-header{\r\n      margin-top: 0;\r\n    }\r\n  }\r\n  \r\n  @media (min-width: 1220px){\r\n    .affix-row{\r\n      overflow: hidden;\r\n    }\r\n  \r\n    .affix-content{\r\n      overflow: auto;\r\n    }\r\n  \r\n    .affix-content .container {\r\n      width: 1000px;\r\n    }\r\n  \r\n    .affix-content .container .page-header{\r\n      margin-top: 0;\r\n    }\r\n    .affix-content{\r\n      padding-right: 30px;\r\n      padding-left: 30px;\r\n    }  \r\n    .affix-title{\r\n      border-bottom: 1px solid #ecf0f1; \r\n      padding-bottom:10px;\r\n    }\r\n    .navbar-nav {\r\n      margin: 0;\r\n    }\r\n    .navbar-collapse{\r\n      padding: 0;\r\n    }\r\n    .sidebar-nav .navbar li a:hover {\r\n      background-color: #428bca;\r\n      color: white;\r\n    }\r\n    .sidebar-nav .navbar li a > .caret {\r\n      margin-top: 8px;\r\n    }  \r\n  }\r\n  ", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/componentes/menu-opciones/menu-opciones.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "\n<script src=\"//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js\"></script> \n<script src=\"//ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js\" type=\"text/javascript\"></script> \n<script src=\"/bootstrap/js/bootstrap.min.js\"></script> \n<script src=\"/js/slider_input.js\"></script>\n\n<link rel=\"stylesheet\" href=\"http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/themes/base/jquery-ui.css\" type=\"text/css\" media=\"all\" />\n<link href=\"/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\" media=\"screen\">\n\n<div class=\"row affix-row\">\n  <div class=\"col-sm-3 col-md-2 affix-sidebar\">\n  <div class=\"sidebar-nav\">\n<div class=\"navbar navbar-default\" role=\"navigation\">\n  <div class=\"navbar-header\">\n    <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".sidebar-navbar-collapse\">\n    <span class=\"sr-only\">Toggle navigation</span>\n    <span class=\"icon-bar\"></span>\n    <span class=\"icon-bar\"></span>\n    <span class=\"icon-bar\"></span>\n    </button>\n    <span class=\"visible-xs navbar-brand\">Sidebar menu</span>\n  </div>\n  <div class=\"navbar-collapse collapse sidebar-navbar-collapse\">\n    <ul class=\"nav navbar-nav\" id=\"sidenav01\">\n      <li class=\"active\">\n        <a href=\"#\" data-toggle=\"collapse\" data-target=\"#toggleDemo0\" data-parent=\"#sidenav01\" class=\"collapsed\">\n        <h4>\n        Control Panel\n        <br>\n        <small>IOSDSV <span class=\"caret\"></span></small>\n        </h4>\n        </a>\n        <div class=\"collapse\" id=\"toggleDemo0\" style=\"height: 0px;\">\n          <ul class=\"nav nav-list\">\n            <li><a href=\"#\">ProfileSubMenu1</a></li>\n            <li><a href=\"#\">ProfileSubMenu2</a></li>\n            <li><a href=\"#\">ProfileSubMenu3</a></li>\n          </ul>\n        </div>\n      </li>\n      <li>\n        <a href=\"#toggleDemo\" data-toggle=\"collapse\" data-target=\"#toggleDemo\" data-parent=\"#sidenav01\" class=\"collapsed\">\n        <span class=\"glyphicon glyphicon-cloud\"></span> Submenu 1 <span class=\"caret pull-right\"></span>\n        </a>\n        <div class=\"collapse\" id=\"toggleDemo\" style=\"height: 0px;\">\n          <ul class=\"nav nav-list\">\n            <li><a href=\"#\">Submenu1.1</a></li>\n            <li><a href=\"#\">Submenu1.2</a></li>\n            <li><a href=\"#\">Submenu1.3</a></li>\n          </ul>\n        </div>\n      </li>\n      <li class=\"active\">\n        <a href=\"#\" data-toggle=\"collapse\" data-target=\"#toggleDemo2\" data-parent=\"#sidenav01\" class=\"collapsed\">\n        <span class=\"glyphicon glyphicon-inbox\"></span> Submenu 2 <span class=\"caret pull-right\"></span>\n        </a>\n        <div class=\"collapse\" id=\"toggleDemo2\" style=\"height: 0px;\">\n          <ul class=\"nav nav-list\">\n            <li><a href=\"#\">Submenu2.1</a></li>\n            <li><a href=\"#\">Submenu2.2</a></li>\n            <li><a href=\"#\">Submenu2.3</a></li>\n          </ul>\n        </div>\n      </li>\n      <li><a href=\"#\"><span class=\"glyphicon glyphicon-lock\"></span> Normalmenu</a></li>\n      <li><a href=\"#\"><span class=\"glyphicon glyphicon-calendar\"></span> WithBadges <span class=\"badge pull-right\">42</span></a></li>\n      <li><a href=\"\"><span class=\"glyphicon glyphicon-cog\"></span> PreferencesMenu</a></li>\n    </ul>\n    </div><!--/.nav-collapse -->\n  </div>\n</div>\n</div>\n<div class=\"col-sm-9 col-md-10 affix-content\">\n  <div class=\"container\">\n    \n      <div class=\"page-header\">\n<h3><span class=\"glyphicon glyphicon-th-list\"></span> Navigation</h3>\n</div>\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris lectus orci, viverra nec neque non, tincidunt commodo leo. Nullam eleifend velit purus, id aliquam elit venenatis sit amet. Cras vel nisl eget eros tempus viverra. Phasellus in enim et nulla tempor blandit. Donec at lectus sit amet velit faucibus tincidunt quis sed est. Mauris placerat purus odio. In egestas, velit quis congue sodales, turpis lacus pellentesque neque, quis accumsan orci nibh sed mauris. Sed sit amet pulvinar felis. Aliquam consequat tellus non ligula elementum, at egestas quam vestibulum.\nDuis sed urna sit amet quam rutrum malesuada sed eu risus. Cras sit amet velit a neque tincidunt cursus sed ac nunc. Donec ac auctor purus. Proin viverra turpis sit amet dui sagittis, quis tempor elit suscipit. Curabitur rutrum lacus et diam lacinia, vel ullamcorper libero vulputate. Phasellus sem ligula, pharetra sed nisl sed, facilisis sagittis ante. Nullam egestas turpis et mauris aliquet cursus. Nullam vel eleifend neque.</p>\n<p>Pellentesque semper nisl eget auctor varius. Vivamus auctor venenatis rhoncus. Ut at elit eget justo placerat tincidunt. Etiam varius sapien lacus, eget vehicula diam tincidunt et. Integer at velit eu metus luctus bibendum. Mauris ornare hendrerit felis, at cursus enim tempor et. Nullam pretium at libero facilisis aliquet. Mauris malesuada eros sed erat laoreet blandit. Proin venenatis ac arcu sed tristique.</p>\n<p>In eget ullamcorper mi. Curabitur iaculis a eros in elementum. Pellentesque volutpat quam nec dolor pharetra, vitae iaculis lacus viverra. Aenean tristique felis sed leo ultricies lobortis. Phasellus ut libero dictum, dapibus elit et, pretium tellus. Donec fermentum neque dolor, vitae mattis odio blandit nec. Sed eget tellus ac dui pellentesque ultrices vitae eget arcu. Sed congue sit amet nunc eu sollicitudin. Praesent sit amet auctor purus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Quisque tincidunt erat sem, ac rhoncus nisi aliquet vel. Pellentesque at lectus faucibus, ultrices tellus non, accumsan justo. Curabitur vitae turpis aliquet, vehicula enim eu, rhoncus quam.</p>\n<p>Aenean vitae lorem a elit faucibus porta vitae nec risus. Mauris eget ligula nisi. Nunc eu egestas leo. In euismod consectetur sollicitudin. Curabitur sed justo eleifend, consequat tortor eu, semper massa. Proin rhoncus, odio eu pulvinar pulvinar, urna neque dignissim metus, eget porta libero justo non dolor. Phasellus rhoncus dui diam, at vehicula mauris rhoncus et. Cras quis varius mauris. Sed erat ante, mattis quis lacus nec, vehicula congue enim. Nam vel felis ultricies, sodales justo ac, tristique odio. Sed ullamcorper purus eget tortor posuere tempor. Donec at auctor felis, at iaculis quam. Proin fermentum sagittis sem vel varius. Proin enim nibh, mollis a nibh vitae, porta congue dui.</p>\n<p>Cras malesuada, est in placerat varius, risus nibh gravida tortor, et ullamcorper erat metus et velit. Fusce mollis mollis sem, non tincidunt nisi tristique eget. Aliquam erat volutpat. Vivamus mollis justo nunc, in commodo diam tristique ut. Proin at nunc dolor. Aenean dapibus commodo orci, in mollis odio volutpat in. Curabitur rutrum eu arcu vehicula interdum. Etiam eu imperdiet lacus, vel placerat magna. Duis molestie eu erat eu auctor. Sed cursus porta sem quis imperdiet. Cras pharetra ante urna, a tempus neque facilisis egestas. Proin vel nulla vitae eros luctus ornare ut vel sem. Donec eget erat in risus lobortis viverra. Mauris libero nisl, pretium in justo vel, porta euismod elit. Donec commodo porttitor metus, vel sagittis ante interdum ut.\nVivamus sodales turpis et eros cursus, eu feugiat dolor rhoncus. Nulla nisi lectus, molestie eu quam nec, condimentum sagittis est. Cras eu volutpat quam, vehicula suscipit metus. Duis ornare urna arcu, non malesuada nunc bibendum at. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer venenatis augue sed iaculis sodales. Donec nec turpis mi.</p>\n<p>Sed facilisis lorem in bibendum rutrum. Morbi ligula risus, aliquam a lorem quis, pulvinar varius odio. Sed facilisis mi sit amet elit euismod hendrerit. Vestibulum fermentum erat eu semper ultricies. Interdum et malesuada fames ac ante ipsum primis in faucibus. In tristique orci tortor, in mollis magna varius non. Nullam sed dui scelerisque, porta nunc id, iaculis urna. Nunc faucibus ac enim nec sollicitudin.\nQuisque nec ante arcu. Nullam aliquet et turpis nec pulvinar. Maecenas tellus velit, lobortis vitae laoreet eu, feugiat eu orci. Maecenas molestie malesuada nulla, id dignissim sem blandit at. Suspendisse hendrerit quis arcu ut malesuada. Nam porttitor magna et porttitor convallis. Curabitur gravida elementum lorem, in mattis turpis tristique tincidunt. Aliquam id neque euismod, consectetur diam sit amet, adipiscing felis. Phasellus sit amet sem elementum, elementum nisi non, aliquam ligula. Morbi in interdum mi, at pulvinar nunc.</p>\n<p>Praesent aliquet, sapien id pulvinar auctor, elit nisl imperdiet elit, id mattis felis lacus a neque. Fusce ullamcorper, urna vitae mollis tempus, sapien urna aliquam neque, sed dignissim nunc mauris sed nisi. Mauris malesuada congue mauris. Aenean vel justo tincidunt, euismod dolor ut, mattis purus. Vivamus eget adipiscing augue. Curabitur et neque faucibus nunc porta ultrices eu ut justo. Nam eu quam et urna consectetur convallis. Integer at fringilla erat, ut molestie nulla. Maecenas rutrum justo ut lectus gravida, vitae eleifend nulla ullamcorper. Sed consequat sit amet purus id congue. Integer condimentum, odio non pellentesque posuere, eros nisi porttitor nunc, ac laoreet nibh quam eu eros. Sed quis massa posuere, gravida erat non, varius turpis. Morbi venenatis vestibulum vulputate. Vestibulum arcu mauris, commodo commodo ligula nec, molestie blandit neque. Nulla imperdiet, massa nec placerat iaculis, odio lacus aliquam dui, eu vehicula velit dolor et augue.</p>\n    \n  </div>\n</div>\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/componentes/menu-opciones/menu-opciones.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MenuOpcionesComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var MenuOpcionesComponent = (function () {
+    function MenuOpcionesComponent() {
+    }
+    MenuOpcionesComponent.prototype.ngOnInit = function () {
+    };
+    return MenuOpcionesComponent;
+}());
+MenuOpcionesComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-menu-opciones',
+        template: __webpack_require__("../../../../../src/app/componentes/menu-opciones/menu-opciones.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/componentes/menu-opciones/menu-opciones.component.css")]
+    }),
+    __metadata("design:paramtypes", [])
+], MenuOpcionesComponent);
+
+//# sourceMappingURL=menu-opciones.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/componentes/menu/menu.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\r\n/*-----------------------------------------*/\r\nbody{\r\n  background:url('https://images4.alphacoders.com/795/thumb-1920-79578.png');\r\n  /* padding:50px; */\r\n  font-family: cursive;\r\n}\r\n\r\n#login-dp{\r\n  min-width: 250px;\r\n  padding: 14px 14px 0;\r\n  overflow:hidden;\r\n  background-color:rgba(255,255,255,.8);\r\n}\r\n#login-dp .help-block{\r\n  font-size:12px    \r\n}\r\n#login-dp .bottom{\r\n  background-color:rgba(255,255,255,.8);\r\n  border-top:1px solid #ddd;\r\n  clear:both;\r\n  padding:14px;\r\n}\r\n#login-dp .social-buttons{\r\n  margin:12px 0    \r\n}\r\n#login-dp .social-buttons a{\r\n  width: 49%;\r\n}\r\n#login-dp .form-group {\r\n  margin-bottom: 10px;\r\n}\r\n.btn-fb{\r\n  color: #fff;\r\n  background-color:#000000;\r\n}\r\n.btn-tw:hover{\r\n  color: #fff;\r\n  background-color:#000000;\r\n}\r\n@media(max-width:768px){\r\n  #login-dp{\r\n      background-color: inherit;\r\n      color: #fff;\r\n  }\r\n  #login-dp .bottom{\r\n      background-color: inherit;\r\n      border-top:0 none;\r\n  }\r\n}\r\n\r\n.list-group-item{\r\n  color: rgb(255, 255, 255);\r\n  background-color:#a19191;\r\n}\r\n\r\n\r\n\r\n/**/\r\n\r\n\r\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
 /***/ "../../../../../src/app/componentes/menu/menu.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--div>\n    <button routerLink=\"/Principal\">Principal</button>\n    <button (click)=\"Juego('Adivina')\">Adivina</button>\n    <button (click)=\"Juego('Agilidad')\">Agilidad</button>\n    <button (click)=\"Juego('AdivinaMasListado')\">Adivina+listado</button>\n    <button (click)=\"Juego('AgilidadaMasListado')\">Agilidad+listado</button>  \n    <button routerLink=\"/error\">Error</button>\n  \n</div-->\n\n<!--nav class=\"navbar navbar-inverse\">\n    <div class=\"container-fluid\">\n      <div class=\"navbar-header\">\n        <a class=\"navbar-brand\" routerLink=\"/Principal\">Inicio</a>\n      </div>\n      <ul class=\"nav navbar-nav\">\n        <li class=\"active\"><a routerLink=\"/Juegos\">Juegos</a></li>\n        <li><a data-toggle=\"tooltip\" title=\"Hooray!\" (click)=\"Juego('Adivina')\">Adivina</a></li>\n        <li><a  (click)=\"Juego('Agilidad')\">Agilidad</a></li>\n        <li><a  (click)=\"Juego('AdivinaMasListado')\">Adivina+listado</a></li>\n        <li><a  (click)=\"Juego('AgilidadaMasListado')\">Agilidad+listado</a></li>\n      </ul>\n      <ul class=\"nav navbar-nav navbar-right\">\n          <li><a href=\"#\"><span class=\"glyphicon glyphicon-user\"></span> Mis Datos</a></li>\n          <li><a href=\"#\"><span class=\"glyphicon glyphicon-log-out\"></span> Salir</a></li>\n        </ul>\n    </div>\n  </nav-->\n  <nav class=\"navbar navbar-inverse\">\n      <div class=\"container-fluid\">\n        <div class=\"navbar-header\">\n          <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#myNavbar\">\n            <span class=\"icon-bar\"></span>\n                                  \n          </button>\n          <a class=\"navbar-brand\" routerLink=\"/Principal\">Inicio</a>\n        </div>\n        <div class=\"collapse navbar-collapse\" id=\"myNavbar\">\n            <ul class=\"nav navbar-nav\">\n                <li class=\"active\"><a routerLink=\"/Juegos\">Menú de Juegos</a></li>\n                <li><a data-toggle=\"tooltip\" title=\"Hooray!\" (click)=\"Juego('Adivina')\">Adivina</a></li>\n                <li><a  (click)=\"Juego('Agilidad')\">Agilidad</a></li>\n                <li><a  (click)=\"Juego('AdivinaMasListado')\">Adivina+listado</a></li>\n                <li><a  (click)=\"Juego('AgilidadaMasListado')\">Agilidad+listado</a></li>\n              </ul>\n              <ul class=\"nav navbar-nav navbar-right\">\n                  <li><a href=\"#\"><span class=\"glyphicon glyphicon-user\"></span> Mis Datos</a></li>\n                  <li><a href=\"/Login\"><span class=\"glyphicon glyphicon-log-out\"></span> Salir</a></li>\n                </ul>\n        </div>\n      </div>\n    </nav>\n      \n   "
+module.exports = "\n<!-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->\n\n\n <body>\n    <app-menu-barra></app-menu-barra>\n<div class=\"container\">\n        <div class=\"row\">\n            <div class=\"row\"> \n                        <div class=\"col-xs-12 col-sm-3 col-md-3\">\n                            <a>\n                                <img src=\"../assets/adivina.jpg\"  style='width:170px;height:160px' class=\"img-responsive img-box img-thumbnail\"> \n                            </a>\n                        </div> \n                        <div class=\"col-xs-12 col-sm-9 col-md-9\">\n                            <div class=\"list-group\">\n                                <div class=\"list-group-item\">\n                                    <div class=\"row-content\">\n                                        <div class=\"list-group-item-heading\" >\n                                                <h4><a routerLink=\"/adivina\" >Adivina el numero</a></h4>\n                                        </div>\n                                        <p>Trata de adivina el numero secreto y busca mejorar tus marcas.</p>\n                                        <small>\n                                            <span class=\"explore\"><i class=\"glyphicon glyphicon-th\"></i> <a>Dificultad media </a></span>\n                                        </small>                                \n                                      \n                                    </div>\n                                </div>\n                            </div>\n\n                        </div> \n                    </div>\n                   \n                    <hr>\n                    <div class=\"row\"> \n                        <div class=\"col-xs-12 col-sm-3 col-md-3\">\n                            <a>\n                                <img src=\"../assets/agilidad.jpg\" style='width:170px;height:160px' class=\"img-responsive img-box img-thumbnail\"> \n                            </a>\n                        </div> \n                        <div class=\"col-xs-12 col-sm-9 col-md-9\">\n                            <div class=\"list-group\">\n                                <div class=\"list-group-item\">\n                                    <div class=\"row-content\">\n                                        <div class=\"list-group-item-heading\">\n                                        </div>\n                                        <h4><a routerLink=\"/agilidad\" >Agilidad aritmetica</a></h4>\n                                        <p>Juego de agilidad mental ¿que tan rapido puedo resolver los problemas matematicos?.</p>\n                                        <small>\n                                            <span class=\"explore\"><i class=\"glyphicon glyphicon-th\"></i> <a>Dificultad media </a></span>\n                                        </small>\n                                    </div>\n                                </div>\n                            </div>\n\n                        </div> \n                    </div>\n                \n                    <hr>\n                    <div class=\"row\"> \n                        <div class=\"col-xs-12 col-sm-3 col-md-3\">\n                            <a>\n                                <img src=\"../assets/anagrama.jpg\" style='width:170px;height:160px' class=\"img-responsive img-box img-thumbnail\"> \n                            </a>\n                        </div> \n                        <div class=\"col-xs-12 col-sm-9 col-md-9\">\n                            <div class=\"list-group\">\n                                <div class=\"list-group-item\">\n                                    <div class=\"row-content\">\n                                        <div class=\"list-group-item-heading\">\n                                        </div>\n                                        <h4><a routerLink=\"/anagrama\" >Anagrama</a></h4>\n                                        <p>Ordena las palabras para formar los nombres correctos.</p>\n                                        <small>\n                                            <span class=\"explore\"><i class=\"glyphicon glyphicon-th\"></i> <a>Dificultad media </a></span>\n                                        </small>\n                                    </div>\n                                </div>\n                            </div>\n           \n                        </div> \n                    </div>  \n                  \n                    <hr>\n                    <div class=\"row\"> \n                        <div class=\"col-xs-12 col-sm-3 col-md-3\">\n                            <a>\n                                <img src=\"../assets/PPT.png\" style='width:170px;height:160px' class=\"img-responsive img-box img-thumbnail\"> \n                            </a>\n                        </div> \n                        <div class=\"col-xs-12 col-sm-9 col-md-9\">\n                            <div class=\"list-group\">\n                                <div class=\"list-group-item\">\n                                    <div class=\"row-content\">\n                                        <div class=\"list-group-item-heading\">\n                                        </div>\n                                        <h4><a routerLink=\"/PPT\" >Piedra , papel o tijera</a></h4>\n                                        <p>Desafia a la maquina e intenta ganarle con piedra papel o tijera</p>\n                                        <small>\n                                            <span class=\"explore\"><i class=\"glyphicon glyphicon-th\"></i> <a>Dificultad media </a></span>\n                                        </small>\n                                    </div>\n                                </div>\n                            </div>\n\n                        </div> \n                    </div>  \n                  \n                    <hr> \n                    <div class=\"row\"> \n                        <div class=\"col-xs-12 col-sm-3 col-md-3\">\n                            <a>\n                                <img src=\"../assets/traductor.jpg\" style='width:170px;height:160px' class=\"img-responsive img-box img-thumbnail\"> \n                            </a>\n                        </div> \n                        <div class=\"col-xs-12 col-sm-9 col-md-9\">\n                            <div class=\"list-group\">\n                                <div class=\"list-group-item\">\n                                    <div class=\"row-content\">\n                                        <div class=\"list-group-item-heading\">\n                                        </div>\n                                        <h4><a routerLink=\"/memotest\" >Traduce</a></h4>\n                                        <p>Traduce las imagenes a ingles en el menor tiempo.</p>\n                                        <small>\n                                            <span class=\"explore\"><i class=\"glyphicon glyphicon-th\"></i> <a>Dificultad media </a></span>\n                                        </small>\n                                    </div>\n                                </div>\n                            </div>\n                         \n                        </div> \n                    </div>           \n        </div>\n        <br>\n        <br>\n        <br>\n        <br>\n    </div>\n</body> \n"
 
 /***/ }),
 
@@ -1489,32 +1727,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var MenuComponent = (function () {
-    function MenuComponent(route, router) {
-        this.route = route;
+    function MenuComponent(Route, router) {
+        this.Route = Route;
         this.router = router;
+        var personaGuardada = localStorage.getItem("miUsuario");
+        var persona = JSON.parse(personaGuardada);
     }
     MenuComponent.prototype.ngOnInit = function () {
     };
-    MenuComponent.prototype.Juego = function (tipo) {
-        switch (tipo) {
-            case 'Adivina':
-                this.router.navigate(['/Juegos/Adivina']);
+    MenuComponent.prototype.OpcionMenu = function (Opcion) {
+        switch (Opcion) {
+            case 'menu':
+                this.router.navigate(['/menu']);
                 break;
-            case 'Agilidad':
-                this.router.navigate(['/Juegos/Agilidad']);
+            case 'agilidad':
+                this.router.navigate(['/agilidad']);
                 break;
-            case 'AdivinaMasListado':
-                this.router.navigate(['/Juegos/AdivinaMasListado']);
+            case 'adivina':
+                this.router.navigate(['/adivina']);
                 break;
-            case 'AgilidadaMasListado':
-                this.router.navigate(['/Juegos/AgilidadaMasListado']);
+            case 'estAdivina':
+                this.router.navigate(['/estadisticaAdivina']);
+                break;
+            case 'estAgilidad':
+                this.router.navigate(['/estadisticaAgilidad']);
                 break;
         }
     };
     return MenuComponent;
 }());
 MenuComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-menu',
         template: __webpack_require__("../../../../../src/app/componentes/menu/menu.component.html"),
         styles: [__webpack_require__("../../../../../src/app/componentes/menu/menu.component.css")]
@@ -1527,7 +1770,7 @@ var _a, _b;
 
 /***/ }),
 
-/***/ "../../../../../src/app/componentes/principal/principal.component.css":
+/***/ "../../../../../src/app/componentes/piedra-papel-tijera/piedra-papel-tijera.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
@@ -1535,7 +1778,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".imagenDeMenu{\r\nwidth: 80px;\r\nheight: 70px;\r\n}\r\n\r\n.hero-text {\r\n    text-align: center;\r\n    position: absolute;\r\n    top: 50%;\r\n    left: 50%;\r\n    -webkit-transform: translate(-50%, -50%);\r\n            transform: translate(-50%, -50%);\r\n    color: #100000;\r\n    }", ""]);
+exports.push([module.i, "/* Base CSS */\r\n\r\nbody{\r\n    background:url('http://ghostcode.in/wp-content/uploads/2016/09/super_hero_whatsapp_background_by_x_ama-d8fr7iz.jpg'); \r\n   /* padding:50px; */\r\n   font-family: cursive;\r\n }\r\n.alignleft {\r\n    float: left;\r\n    margin-right: 15px;\r\n}\r\n.alignright {\r\n    float: right;\r\n    margin-left: 15px;\r\n}\r\n.aligncenter {\r\n    display: block;\r\n    margin: 0 auto 15px;\r\n}\r\na:focus { outline: 0 solid }\r\nimg {\r\n    max-width: 100%;\r\n    height: auto;\r\n}\r\n.fix { overflow: hidden }\r\nh1,\r\nh2,\r\nh3,\r\nh4,\r\nh5,\r\nh6 {\r\n    margin: 0 0 15px;\r\n    font-weight: 700;\r\n}\r\nhtml,\r\nbody { height: 100% }\r\n\r\na {\r\n    transition: 0.3s;\r\n    color: #333;\r\n}\r\na:hover { text-decoration: none }\r\n\r\n\r\n\r\n.search-box{margin:80px auto;position:absolute;}\r\n.caption{margin-bottom:50px;}\r\n.loginForm input[type=text], .loginForm input[type=password]{\r\n\tmargin-bottom:10px;\r\n}\r\n.loginForm input[type=submit]{\r\n\tbackground:#fb044a;\r\n\tcolor:#fff;\r\n    font-weight:700;\r\n    margin-bottom:10px;\r\n    padding: 5px 100px;\r\n}\r\n.loginForm input[type=submit]:focus{\r\n\tbackground:#C00003;\r\n\tcolor:#fff;\r\n\tfont-weight:700;\r\n\t\r\n}\r\n.loginForm input[type=submit]:hover{\r\n\tbackground:#C00003;\r\n\tcolor:#fff;\r\n\tfont-weight:700;\t\r\n}\r\n\r\n#pswd_info {\r\n\tbackground: #dfdfdf none repeat scroll 0 0;\r\n\tcolor: #fff;\r\n\tleft: 20px;\r\n\tposition: absolute;\r\n\ttop: 115px;\r\n}\r\n#pswd_info h4{\r\n    background: black none repeat scroll 0 0;\r\n    display: block;\r\n    font-size: 14px;\r\n    letter-spacing: 0;\r\n    padding: 17px 0;\r\n    text-align: center;\r\n    text-transform: uppercase;\r\n}\r\n#pswd_info ul {\r\n    list-style: outside none none;\r\n}\r\n#pswd_info ul li {\r\n   padding: 10px 45px;\r\n}\r\n\r\n.valid {\r\n\tbackground: rgba(0, 0, 0, 0) url(\"https://s19.postimg.org/vq43s2wib/valid.png\") no-repeat scroll 2px 6px;\r\n\tcolor: green;\r\n\tline-height: 21px;\r\n\tpadding-left: 22px;\r\n}\r\n\r\n.invalid {\r\n\tbackground: rgba(0, 0, 0, 0) url(\"https://s19.postimg.org/olmaj1p8z/invalid.png\") no-repeat scroll 2px 6px;\r\n\tcolor: red;\r\n\tline-height: 21px;\r\n\tpadding-left: 22px;\r\n}\r\n\r\n\r\n#pswd_info::before {\r\n    background: #dfdfdf none repeat scroll 0 0;\r\n    content: \"\";\r\n    height: 25px;\r\n    left: -13px;\r\n    margin-top: -12.5px;\r\n    position: absolute;\r\n    top: 50%;\r\n    -webkit-transform: rotate(45deg);\r\n            transform: rotate(45deg);\r\n    width: 25px;\r\n}\r\n#pswd_info {\r\n    display:none;\r\n}\r\n\r\n\r\n/* .miboton\r\n{\r\n    background-color: rgb(5, 50, 182);\r\n    border: 1px solidrgb(5, 50, 182);\r\n    border-radius: 15px;\r\n    -moz-border-radius: 15px;\r\n    -webkit-border-radius: 15px;\r\n  -ms-border-radius: 15px;\r\n  -o-border-radius: 15px;\r\n    color: #fff;\r\n    font-weight: bold;\r\n    line-height: 48px;\r\n    text-align: center;\r\n    text-transform: uppercase;\r\n    width: 240px;\r\n    margin-bottom: 5px;\r\n    \r\n} */", ""]);
 
 // exports
 
@@ -1545,19 +1788,21 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ "../../../../../src/app/componentes/principal/principal.component.html":
+/***/ "../../../../../src/app/componentes/piedra-papel-tijera/piedra-papel-tijera.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-cabecera>  </app-cabecera>\n\n\n\n \n<div class=\"container\" >\n   \n    <ul class=\"list-group\">\n        <li class=\"list-group-item list-group-item-danger\">\n           \n                <div class=\"media-body\">\n                    <div class=\"hero-text\">\n                        <h4 >Menú Principal</h4>\n                    </div>\n                 </div>\n               \n             \n          </li>\n        <li class=\"list-group-item list-group-item-success\">\n          <a routerLink=\"/Juegos\">\n            <div class=\"media\">\n              <div class=\"media-left\">\n                    <img src=\"./assets/imagenes/saladejuegos.png\" class=\"media-object imagenDeMenu\" >\n              </div>\n              <div class=\"media-body\">\n                <h4 class=\"media-heading\">Juegos</h4>\n                <p>El método lúdico es un conjunto de estrategias diseñadas para crear un ambiente de armonía en los estudiantes que están inmersos en el proceso de aprendizaje. Este método busca que los alumnos se apropien de los temas impartidos por los docentes utilizando el juego.</p>\n              </div>\n             \n            </div> \n          </a>\n        </li>\n        <li class=\"list-group-item list-group-item-info\">\n            <a routerLink=\"/Listado\">\n              <div class=\"media\">\n                  <div class=\"media-left\">\n                      <img src=\"./assets/imagenes/listado.jpg\" class=\"media-object imagenDeMenu\" >\n                    </div>\n                <div class=\"media-body\">\n                  <h4 class=\"media-heading\">Listados de resultados</h4>\n                  <p>Los listados de los resultados con ordenamiento y busqueda</p>\n                </div>\n                \n              </div> \n            </a>\n          </li>\n        <li class=\"list-group-item list-group-item-warning\">\n          <a routerLink=\"/Juegos\">\n            <div class=\"media\">\n                <div class=\"media-left\">\n                    <img src=\"./assets/imagenes/Configuracion.png\" class=\"media-object imagenDeMenu\" >\n                  </div>\n              <div class=\"media-body\">\n                <h4 class=\"media-heading\">Configuraci&oacute;n</h4>\n                <p>Ajustes de la aplicacion y los métodos de autentificación</p>\n              </div>\n             \n            </div> \n          </a>\n        </li>\n       \n        \n      </ul>\n</div>"
+module.exports = "<body >\n  <div>\n<div  ALIGN=center>\n    <h1 align=\"center\" >{{miJuego.NombreDelJuego}}</h1>\n    <input class=\"miboton\" type=\"image\" align=\"right\" style='width:120px'  (click)=\"miJuego.GenerarNuevo()\"  img src=\"assets/Nuevo.png\">\n    <h3>El primero en llegar a 7 puntos gana.</h3>\n  <table align=\"center\">\n    <tr>\n      <th>Usuario</th>\n      <th></th>\n      <th></th>\n      <th></th>\n      <th>Maquina</th>\n    </tr>\n    <tr>\n      <td><a (click)=\"miJuego.OpcionElegida('piedra')\"><img src=\"../assets/piedra.jpg\" style='width:120px;height:120px'></a></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td><a><img src=\"../assets/piedra.jpg\" style='width:120px;height:120px'></a></td>\n    </tr>\n    <tr>\n      <td><a (click)=\"miJuego.OpcionElegida('papel')\"><img src=\"../assets/papel.jpg\" style='width:120px;height:120px'></a></td>\n      <td><img src=\"{{ miJuego.elijioUsuario }}\" style='width:120px;height:120px'></td>\n      <td></td>\n      <td><img src=\"{{ miJuego.elijioMaquina }}\" style='width:120px;height:120px'></td>\n      <td><a><img src=\"../assets/papel.jpg\" style='width:120px;height:120px'></a></td>\n    </tr>\n    <tr>\n      <td><a (click)=\"miJuego.OpcionElegida('tijera')\"><img src=\"../assets/tijera.jpg\" style='width:120px;height:120px'></a></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td><a><img src=\"../assets/tijera.jpg\" style='width:120px;height:120px'></a></td>\n    </tr>\n    <tr>\n      <td><h3>Puntos {{miJuego.puntosU}}</h3></td>\n      <td></td>\n      <td><h3>Empates {{miJuego.empate}}</h3></td>\n      <td></td>\n      <td><h3>Puntos {{miJuego.puntosM}}</h3></td>\n    </tr>\n  </table>\n</div>\n<input class=\"miboton\" type=\"image\" style='width:120px;height:160px'  (click)=\"Salir()\"  img src=\"assets/Salir.png\">\t\n\n<table class=\"table table-condensed\">\n  <thead>\n    <tr>\n        <th>Jugador</th>\n        <th>Gano</th>\n        <th>Juego</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let juego of miJuego.Jugadores\">\n      <td>{{juego.Nombre}} </td>\n      <td>{{juego.Gano}} </td> \n      <td>{{juego.Juego}} </td> \n    </tr>\n  \n  </tbody>\n</table>\n</div>\n</body>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/componentes/principal/principal.component.ts":
+/***/ "../../../../../src/app/componentes/piedra-papel-tijera/piedra-papel-tijera.component.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PrincipalComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PiedraPapelTijeraComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Clase_piedraPapelTijera__ = __webpack_require__("../../../../../src/app/Clase/piedraPapelTijera.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1568,27 +1813,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-var PrincipalComponent = (function () {
-    function PrincipalComponent() {
-        this.status = {
-            isFirstOpen: true,
-            isFirstDisabled: false
-        };
-    }
-    PrincipalComponent.prototype.ngOnInit = function () {
-    };
-    return PrincipalComponent;
-}());
-PrincipalComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'app-principal',
-        template: __webpack_require__("../../../../../src/app/componentes/principal/principal.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/componentes/principal/principal.component.css")]
-    }),
-    __metadata("design:paramtypes", [])
-], PrincipalComponent);
 
-//# sourceMappingURL=principal.component.js.map
+
+var PiedraPapelTijeraComponent = (function () {
+    function PiedraPapelTijeraComponent(router) {
+        this.router = router;
+        var user = localStorage.getItem("miUsuario");
+        var personaGuardada = JSON.parse(user);
+        this.miJuego = new __WEBPACK_IMPORTED_MODULE_1__Clase_piedraPapelTijera__["a" /* PPT */]("Piedra , papel o tijera", personaGuardada.nombre);
+    }
+    PiedraPapelTijeraComponent.prototype.ngOnInit = function () {
+    };
+    PiedraPapelTijeraComponent.prototype.Salir = function () {
+        this.router.navigate(['/menu']);
+    };
+    return PiedraPapelTijeraComponent;
+}());
+PiedraPapelTijeraComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-piedra-papel-tijera',
+        template: __webpack_require__("../../../../../src/app/componentes/piedra-papel-tijera/piedra-papel-tijera.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/componentes/piedra-papel-tijera/piedra-papel-tijera.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _a || Object])
+], PiedraPapelTijeraComponent);
+
+var _a;
+//# sourceMappingURL=piedra-papel-tijera.component.js.map
 
 /***/ }),
 
@@ -1600,7 +1851,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".imagenDeQuienSoy{\r\n    width: 100%;\r\n   \r\n    }\r\nbody {\r\n    font: 20px Montserrat, sans-serif;\r\n    line-height: 1.8;\r\n    color: #f5f6f7;\r\n}\r\np {font-size: 16px;}\r\n.margin {margin-bottom: 45px;}\r\n.bg-1 { \r\n    background-color: #1abc9c; /* Green */\r\n    color: #ffffff;\r\n}\r\n.bg-2 { \r\n    background-color: #474e5d; /* Dark Blue */\r\n    color: #ffffff;\r\n}\r\n.bg-3 { \r\n    background-color: #ffffff; /* White */\r\n    color: #555555;\r\n}\r\n.bg-4 { \r\n    background-color: #2f2f2f; /* Black Gray */\r\n    color: #fff;\r\n}\r\n.container-fluid {\r\n    padding-top: 70px;\r\n    padding-bottom: 70px;\r\n}\r\n.navbar {\r\n    padding-top: 15px;\r\n    padding-bottom: 15px;\r\n    border: 0;\r\n    border-radius: 0;\r\n    margin-bottom: 0;\r\n    font-size: 12px;\r\n    letter-spacing: 5px;\r\n}\r\n.navbar-nav  li a:hover {\r\n    color: #1abc9c !important;\r\n}", ""]);
+exports.push([module.i, "/* Base CSS */\r\n\r\nbody{\r\n    background:url('http://ghostcode.in/wp-content/uploads/2016/09/super_hero_whatsapp_background_by_x_ama-d8fr7iz.jpg'); \r\n   /* padding:50px; */\r\n   font-family: cursive;\r\n }\r\n.alignleft {\r\n    float: left;\r\n    margin-right: 15px;\r\n}\r\n.alignright {\r\n    float: right;\r\n    margin-left: 15px;\r\n}\r\n.aligncenter {\r\n    display: block;\r\n    margin: 0 auto 15px;\r\n}\r\na:focus { outline: 0 solid }\r\nimg {\r\n    max-width: 100%;\r\n    height: auto;\r\n}\r\n.fix { overflow: hidden }\r\nh1,\r\nh2,\r\nh3,\r\nh4,\r\nh5,\r\nh6 {\r\n    margin: 0 0 15px;\r\n    font-weight: 700;\r\n}\r\nhtml,\r\nbody { height: 100% }\r\n\r\na {\r\n    transition: 0.3s;\r\n    color: #333;\r\n}\r\na:hover { text-decoration: none }\r\n\r\n\r\n\r\n.search-box{margin:80px auto;position:absolute;}\r\n.caption{margin-bottom:50px;}\r\n.loginForm input[type=text], .loginForm input[type=password]{\r\n\tmargin-bottom:10px;\r\n}\r\n.loginForm input[type=submit]{\r\n\tbackground:#fb044a;\r\n\tcolor:#fff;\r\n    font-weight:700;\r\n    margin-bottom:10px;\r\n    padding: 5px 100px;\r\n}\r\n.loginForm input[type=submit]:focus{\r\n\tbackground:#C00003;\r\n\tcolor:#fff;\r\n\tfont-weight:700;\r\n\t\r\n}\r\n.loginForm input[type=submit]:hover{\r\n\tbackground:#C00003;\r\n\tcolor:#fff;\r\n\tfont-weight:700;\t\r\n}\r\n\r\n#pswd_info {\r\n\tbackground: #dfdfdf none repeat scroll 0 0;\r\n\tcolor: #fff;\r\n\tleft: 20px;\r\n\tposition: absolute;\r\n\ttop: 115px;\r\n}\r\n#pswd_info h4{\r\n    background: black none repeat scroll 0 0;\r\n    display: block;\r\n    font-size: 14px;\r\n    letter-spacing: 0;\r\n    padding: 17px 0;\r\n    text-align: center;\r\n    text-transform: uppercase;\r\n}\r\n#pswd_info ul {\r\n    list-style: outside none none;\r\n}\r\n#pswd_info ul li {\r\n   padding: 10px 45px;\r\n}\r\n\r\n.valid {\r\n\tbackground: rgba(0, 0, 0, 0) url(\"https://s19.postimg.org/vq43s2wib/valid.png\") no-repeat scroll 2px 6px;\r\n\tcolor: green;\r\n\tline-height: 21px;\r\n\tpadding-left: 22px;\r\n}\r\n\r\n.invalid {\r\n\tbackground: rgba(0, 0, 0, 0) url(\"https://s19.postimg.org/olmaj1p8z/invalid.png\") no-repeat scroll 2px 6px;\r\n\tcolor: red;\r\n\tline-height: 21px;\r\n\tpadding-left: 22px;\r\n}\r\n\r\n\r\n#pswd_info::before {\r\n    background: #dfdfdf none repeat scroll 0 0;\r\n    content: \"\";\r\n    height: 25px;\r\n    left: -13px;\r\n    margin-top: -12.5px;\r\n    position: absolute;\r\n    top: 50%;\r\n    -webkit-transform: rotate(45deg);\r\n            transform: rotate(45deg);\r\n    width: 25px;\r\n}\r\n#pswd_info {\r\n    display:none;\r\n}\r\n\r\n\r\n/* .miboton\r\n{\r\n    background-color: rgb(5, 50, 182);\r\n    border: 1px solidrgb(5, 50, 182);\r\n    border-radius: 15px;\r\n    -moz-border-radius: 15px;\r\n    -webkit-border-radius: 15px;\r\n  -ms-border-radius: 15px;\r\n  -o-border-radius: 15px;\r\n    color: #fff;\r\n    font-weight: bold;\r\n    line-height: 48px;\r\n    text-align: center;\r\n    text-transform: uppercase;\r\n    width: 240px;\r\n    margin-bottom: 5px;\r\n    \r\n} */", ""]);
 
 // exports
 
@@ -1613,7 +1864,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/componentes/quien-soy/quien-soy.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "  <nav class=\"navbar navbar-default\">\n    <div class=\"container\">\n      <div class=\"navbar-header\">\n        <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#myNavbar\">\n          <span class=\"icon-bar\"></span>\n          <span class=\"icon-bar\"></span>\n          <span class=\"icon-bar\"></span>                        \n        </button>\n        <a class=\"navbar-brand\" href=\"/Principal\">Sala De Juegos</a>\n      </div>\n      <div class=\"collapse navbar-collapse\" id=\"myNavbar\">\n        <ul class=\"nav navbar-nav navbar-right\">\n          <li><a href=\"/QuienSoy#quien\">Quien</a></li>\n          <li><a href=\"/QuienSoy#que\">Ques es</a></li>\n          <li><a href=\"/QuienSoy#donde\">Donde</a></li>\n        </ul>\n      </div>\n    </div>\n  </nav>\n  \n  <!-- First Container -->\n  <div id =\"quiwn\"class=\"container-fluid bg-1 text-center\">\n    <h3 class=\"margin\">Quién Soy?</h3>\n    <img src=\"/assets/imagenes/quiensoy.jpg\" class=\"img-responsive img-circle margin\" style=\"display:inline\" alt=\"Bird\" width=\"350\" height=\"350\">\n    <h3>Soy Un alumno de la UTN FRA</h3>\n  </div>\n  \n  <!-- Second Container -->\n  <div id =\"que\" class=\"container-fluid bg-2 text-center\">\n    <h3 class=\"margin\">Esto es un trabajo práctico</h3>\n    <p>Cada universidad, cada facultad, cada carrera y obviamente cada materia en particular tiene estrategias didácticas y formas de evaluación diferentes. A pesar de que en muchos casos las universidades intentan estandarizar la forma de dictar clase para generar un orden en las planificaciones cuatrimestre a cuatrimestre, las formas de evaluación son elementales tanto para las instituciones y profesores como para los alumnos. A través de la evaluación formativa el educador busca información en el alumno para lograr comprender cómo se está\n      produciendo el proceso de aprendizaje y poder reajustar los objetivos pedagógicos. Y para el alumno es una muestra del progreso que está logrando y si puede aplicar, materializar y darle visibilidad a la comprensión del tema. Según Black y William (1998), la evaluación formativa, ayuda a que los estudiantes sean independientes a la hora del aprendizaje, es decir, se presenta como receptor, autorregulador y centro de esa misma evaluación. </p>\n    <a href=\"#\" class=\"btn btn-default btn-lg\">\n      <span class=\"glyphicon glyphicon-file\"></span> Descargar PDF\n    </a>\n  </div>\n  \n  <!-- Third Container (Grid) -->\n  <div id =\"donde\" class=\"container-fluid bg-3 text-center\">    \n    <h3 class=\"margin\">Dónde Funciona?</h3><br>\n    <div class=\"row\">\n      <div class=\"col-sm-4\">\n        <p>Con las tecnologias WEB que permiten desarrollar aplicaciones multiplataforma</p>\n        <img src=\"/assets/imagenes/quiensoy1.png\" class=\"img-responsive margin imagenDeQuienSoy\"  alt=\"Image\">\n      </div>\n      <div class=\"col-sm-4\"> \n        <p>Principalmente orientada a la experiencia del usuario, garantizando que su funcionamieto sea fluido y pensado en el comportamiento del usuario y en la funcionalidad.</p>\n        <img src=\"/assets/imagenes/quiensoy2.jpg\" class=\"img-responsive margin imagenDeQuienSoy\" alt=\"Image\">\n      </div>\n      <div class=\"col-sm-4\"> \n        <p>Para los sistemas operativos lideres en el mercado del consumo masivo</p>\n        <img src=\"/assets/imagenes/quiensoy3.png\" class=\"img-responsive margin imagenDeQuienSoy\" alt=\"Image\">\n      </div>\n    </div>\n  </div>\n  \n  <!-- Footer -->\n  <footer class=\"container-fluid bg-4 text-center\">\n    <p>Modificado por <a href=\"https://www.octavio.com.ar\">www.octavio.com.ar</a></p> \n  </footer>"
+module.exports = "<body align=\"center\">\r\n\r\n    <app-menu-barra></app-menu-barra>\r\n  <div>\r\n      <h1>Sala de juegos</h1>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <h3>Informacion sobre el autor:</h3>\r\n      Nombre: Adiliberti pablo<br>\r\n      Mail: Pablo.adiliberti@hotmail.com<br>\r\n      gitHub:PabloAdiliberti<br>\r\n      <br>\r\n      <br>\r\n      <br>\r\n      <h3>Informacion sobre el juego:</h3>\r\n      Traduce: Es un juego donde se muestra un imagen y \r\n      se debe traducir a ingles en el menor tiempo posible.\r\n      <br>\r\n      <img src=\"../assets/traductor.jpg\" style='width:170px;height:160px' class=\"img-responsive img-box img-thumbnail\"> \r\n\r\n      <br>\r\n      <br>\r\n  </div>\r\n</body>"
 
 /***/ }),
 
@@ -1641,7 +1892,7 @@ var QuienSoyComponent = (function () {
     return QuienSoyComponent;
 }());
 QuienSoyComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-quien-soy',
         template: __webpack_require__("../../../../../src/app/componentes/quien-soy/quien-soy.component.html"),
         styles: [__webpack_require__("../../../../../src/app/componentes/quien-soy/quien-soy.component.css")]
@@ -1653,7 +1904,7 @@ QuienSoyComponent = __decorate([
 
 /***/ }),
 
-/***/ "../../../../../src/app/componentes/registro/registro.component.css":
+/***/ "../../../../../src/app/componentes/registrar/registrar.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
@@ -1661,7 +1912,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "input[type=text], input[type=password] {\r\n    width: 100%;\r\n    padding: 12px 20px;\r\n    margin: 8px 0;\r\n    display: inline-block;\r\n    border: 1px solid #ccc;\r\n    box-sizing: border-box;\r\n}\r\n\r\n/* Set a style for all buttons */\r\nbutton {\r\n    background-color: #4CAF50;\r\n    color: white;\r\n    padding: 14px 20px;\r\n    margin: 8px 0;\r\n    border: none;\r\n    cursor: pointer;\r\n    width: 100%;\r\n}\r\n\r\n/* Extra styles for the cancel button */\r\n.cancelbtn {\r\n    padding: 14px 20px;\r\n    background-color: #f44336;\r\n}\r\n\r\n/* Float cancel and signup buttons and add an equal width */\r\n.cancelbtn,.signupbtn {float:left;width:50%}\r\n\r\n/* Add padding to container elements */\r\n.container {\r\n    padding: 16px;\r\n}\r\n\r\n/* The Modal (background) */\r\n.modal {\r\n    display: none; /* Hidden by default */\r\n    position: fixed; /* Stay in place */\r\n    z-index: 1; /* Sit on top */\r\n    left: 0;\r\n    top: 0;\r\n    width: 100%; /* Full width */\r\n    height: 100%; /* Full height */\r\n    overflow: auto; /* Enable scroll if needed */\r\n    background-color: rgb(0,0,0); /* Fallback color */\r\n    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */\r\n    padding-top: 60px;\r\n}\r\n\r\n/* Modal Content/Box */\r\n.modal-content {\r\n    background-color: #fefefe;\r\n    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */\r\n    border: 1px solid #888;\r\n    width: 98%; /* Could be more or less, depending on screen size */\r\n}\r\n\r\n/* The Close Button (x) */\r\n.close {\r\n    position: absolute;\r\n    right: 35px;\r\n    top: 15px;\r\n    color: #000;\r\n    font-size: 40px;\r\n    font-weight: bold;\r\n}\r\n\r\n.close:hover,\r\n.close:focus {\r\n    color: red;\r\n    cursor: pointer;\r\n}\r\n\r\n/* Clear floats */\r\n.clearfix::after {\r\n    content: \"\";\r\n    clear: both;\r\n    display: table;\r\n}\r\n\r\n/* Change styles for cancel button and signup button on extra small screens */\r\n@media screen and (max-width: 300px) {\r\n    .cancelbtn, .signupbtn {\r\n       width: 100%;\r\n    }\r\n}", ""]);
+exports.push([module.i, "/* Base CSS\r\n.alignleft {\r\n    float: left;\r\n    margin-right: 15px;\r\n}\r\n.alignright {\r\n    float: right;\r\n    margin-left: 15px;\r\n}\r\n.aligncenter {\r\n    display: block;\r\n    margin: 0 auto 15px;\r\n}\r\n\r\n.fix { overflow: hidden }\r\nh1,\r\nh2,\r\nh3,\r\nh4,\r\nh5,\r\nh6 {\r\n    margin: 0 0 15px;\r\n    font-weight: 700;\r\n}\r\nhtml,\r\nbody { height: 100% }\r\n\r\na {\r\n    -moz-transition: 0.3s;\r\n    -o-transition: 0.3s;\r\n    -webkit-transition: 0.3s;\r\n    transition: 0.3s;\r\n    color: #333;\r\n}\r\na:hover { text-decoration: none }\r\n\r\n\r\n\r\n.search-box{margin:80px auto;position:absolute;}\r\n.caption{margin-bottom:50px;}\r\n.loginForm input[type=text], .loginForm input[type=password]{\r\n\tmargin-bottom:10px;\r\n}\r\n.loginForm input[type=submit]{\r\n\tbackground:#fb044a;\r\n\tcolor:#fff;\r\n\tfont-weight:700;\r\n\t\r\n}\r\n.loginForm input[type=submit]:focus{\r\n\tbackground:#C00003;\r\n\tcolor:#fff;\r\n\tfont-weight:700;\r\n\t\r\n}\r\n.loginForm input[type=submit]:hover{\r\n\tbackground:#C00003;\r\n\tcolor:#fff;\r\n\tfont-weight:700;\t\r\n}\r\n\r\n\r\n#pswd_info {\r\n\tbackground: #dfdfdf none repeat scroll 0 0;\r\n\tcolor: #fff;\r\n\tleft: 20px;\r\n\tposition: absolute;\r\n\ttop: 115px;\r\n}\r\n#pswd_info h4{\r\n    background: black none repeat scroll 0 0;\r\n    display: block;\r\n    font-size: 14px;\r\n    letter-spacing: 0;\r\n    padding: 17px 0;\r\n    text-align: center;\r\n    text-transform: uppercase;\r\n}\r\n#pswd_info ul {\r\n    list-style: outside none none;\r\n}\r\n#pswd_info ul li {\r\n   padding: 10px 45px;\r\n}\r\n\r\n.valid {\r\n\tbackground: rgba(0, 0, 0, 0) url(\"https://s19.postimg.org/vq43s2wib/valid.png\") no-repeat scroll 2px 6px;\r\n\tcolor: green;\r\n\tline-height: 21px;\r\n\tpadding-left: 22px;\r\n}\r\n\r\n.invalid {\r\n\tbackground: rgba(0, 0, 0, 0) url(\"https://s19.postimg.org/olmaj1p8z/invalid.png\") no-repeat scroll 2px 6px;\r\n\tcolor: red;\r\n\tline-height: 21px;\r\n\tpadding-left: 22px;\r\n}\r\n\r\n\r\n#pswd_info::before {\r\n    background: #dfdfdf none repeat scroll 0 0;\r\n    content: \"\";\r\n    height: 25px;\r\n    left: -13px;\r\n    margin-top: -12.5px;\r\n    position: absolute;\r\n    top: 50%;\r\n    transform: rotate(45deg);\r\n    width: 25px;\r\n}\r\n#pswd_info {\r\n    display:none;\r\n} */\r\n\r\n.wrapper {    \r\n\tmargin-top: 80px;\r\n\tmargin-bottom: 20px;\r\n}\r\n\r\n.form-signin {\r\n  max-width: 420px;\r\n  padding: 30px 38px 66px;\r\n  margin: 0 auto;\r\n  background-color: #eee;\r\n  border: 3px dotted rgba(0,0,0,0.1);  \r\n  }\r\n\r\n.form-signin-heading {\r\n  text-align:center;\r\n  margin-bottom: 30px;\r\n}\r\n\r\n.form-control {\r\n  position: relative;\r\n  font-size: 16px;\r\n  height: auto;\r\n  padding: 10px;\r\n}\r\n\r\ninput[type=\"text\"] {\r\n  margin-bottom: 0px;\r\n  border-bottom-left-radius: 0;\r\n  border-bottom-right-radius: 0;\r\n}\r\n\r\ninput[type=\"password\"] {\r\n  margin-bottom: 0px;\r\n  border-top-left-radius: 0;\r\n  border-top-right-radius: 0;\r\n}\r\n\r\ninput[type=\"select\"] {\r\n    margin-bottom: 20px;\r\n    border-top-left-radius: 0;\r\n    border-top-right-radius: 0;\r\n  }\r\n\r\n.colorgraph {\r\n  height: 7px;\r\n  border-top: 0;\r\n  background: #c4e17f;\r\n  border-radius: 5px;\r\n  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);\r\n}", ""]);
 
 // exports
 
@@ -1671,149 +1922,22 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ "../../../../../src/app/componentes/registro/registro.component.html":
+/***/ "../../../../../src/app/componentes/registrar/registrar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<body>\n  <div class=\"jumbotron\">\n    <h2 id=\"terminos\">Terminos y condiciones</h2>\n    <p>El Gobierno de la República Argentina (en adelante el “Gobierno Nacional”) no es responsable por los daños y perjuicios que puedan surgir, incluyendo, sin límite, daños, pérdidas o gastos directos, indirectos, que surjan en relación con el uso de los Activos Digitales o la imposibilidad de uso, en relación con cualquier falla en el vencimiento, error, omisión, interrupción, defecto, demora en la operación o transmisión, virus de computadora o falla del sistema de línea, aún en el caso de que el Gobierno Nacional o sus representantes fueran informados sobre la posibilidad de dichos daños, pérdidas o gastos.</p>\n    <p>El Gobierno Nacional no controla ni garantiza la ausencia de virus ni de otros elementos en los contenidos que puedan producir alteraciones en su sistema informático (software y hardware) o en los documentos electrónicos y ficheros almacenados en su sistema informático.</p>\n    <p>El Gobierno Nacional no puede garantizar que la transmisión de información por parte de los Usuarios sea completamente segura. El Usuario asume este riesgo.</p>\n   \n  </div>\n  <strong><p>No leer lo anterior, es solo un ejemplo sacado de https://www.argentina.gob.ar/terminos-y-condiciones </p></strong>\n  <button onclick=\"document.getElementById('id01').style.display='block'\" style=\"width:auto;\">Acepto</button>\n  <button  class=\"cancelbtn\"  routerLink=\"/Principal\" style=\"width:auto;\">No acepto</button>\n  <div id=\"id01\" class=\"modal\">\n    <span onclick=\"document.getElementById('id01').style.display='none'\" class=\"close\" title=\"Close Modal\">×</span>\n    <form class=\"modal-content animate\" >\n      <div class=\"container\">\n        <label><b>Email</b></label>\n        <input type=\"text\" placeholder=\"Ingresa tu correo\" name=\"email\" required>\n  \n        <label><b>Clave</b></label>\n        <input type=\"password\" placeholder=\"Aca la clave\" name=\"psw\" required>\n  \n        <label><b>Repita la clave</b></label>\n        <input type=\"password\" placeholder=\"Aca repeti la misa clave  de arriba\" name=\"psw-repeat\" required>\n        <input type=\"checkbox\" checked=\"checked\">Recordar mis datos\n        <p>creando la cuenta aceptando los<a  onclick=\"document.getElementById('id01').style.display='none'\"  >Terminos y condiciones</a>.</p>\n  \n        <div class=\"clearfix\">\n          <button type=\"button\" onclick=\"document.getElementById('id01').style.display='none'\" class=\"cancelbtn\">Me arrepenti</button>\n          <button type=\"submit\" class=\"signupbtn\">Registrarme</button>\n        </div>\n      </div>\n    </form>\n  </div>\n  \n  <script>\n  // Get the modal\n  var modal = document.getElementById('id01');\n  \n  // When the user clicks anywhere outside of the modal, close it\n  window.onclick = function(event) {\n      if (event.target == modal) {\n          modal.style.display = \"none\";\n      }\n  }\n  </script>\n  \n  </body>"
+module.exports = "<body clase = \"miclase\" background=\"../assets/2.jpg\" >\n<div class = \"container\">\n\t\t<div class=\"wrapper\">\n\t\t\t<form action=\"\" method=\"post\" name=\"Login_Form\" class=\"form-signin\">       \n\t\t\t\t<h3 class=\"form-signin-heading\">Registrar</h3>\n\t\t\t\t  <hr class=\"colorgraph\"><br>\n\t\t\t\t   \n\t\t\t\t  <input type=\"text\"  class=\"form-control\"  name=\"usuario\" [(ngModel)]=\"miUsuario.usuario\" placeholder=\"Nombre\"/>\n\t\t\t\t  <input type=\"password\" id=\"paw\" class=\"form-control\" [(ngModel)]=\"miUsuario.clave\" name=\"pass\" placeholder=\"Clave\">\n\t\t\t\t  <input type=\"password\" id=\"paw\" class=\"form-control\" [(ngModel)]=\"miUsuario.clave2\" name=\"pass\" placeholder=\"Repetir clave\">\n\t\t\t\t  <button type=\"submit\" (click)=\"miUsuario.registrar()\" id=\"submit\"  class=\"btn btn-lg btn-primary btn-block\" >Registrar</button>\n\t\t\t\t  <button type=\"submit\" (click)=\"Cancelar()\" id=\"submit\"  class=\"btn btn-lg btn-primary btn-block\" >Cancelar</button>\n\t\t\t</form>\t\t\t\n\t\t</div>\n\t</div>\n</body>"
 
 /***/ }),
 
-/***/ "../../../../../src/app/componentes/registro/registro.component.ts":
+/***/ "../../../../../src/app/componentes/registrar/registrar.component.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegistroComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-//para poder hacer las validaciones
-//import { Validators, FormBuilder, FormControl, FormGroup} from '@angular/forms';
-var RegistroComponent = (function () {
-    /* constructor( private miConstructor:FormBuilder) { }
-     email=new FormControl('',[Validators.email]);
-     formRegistro:FormGroup=this.miConstructor.group({
-       usuario:this.email
-     });*/
-    function RegistroComponent() {
-    }
-    RegistroComponent.prototype.ngOnInit = function () {
-    };
-    return RegistroComponent;
-}());
-RegistroComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
-        selector: 'app-registro',
-        template: __webpack_require__("../../../../../src/app/componentes/registro/registro.component.html"),
-        styles: [__webpack_require__("../../../../../src/app/componentes/registro/registro.component.css")]
-    }),
-    __metadata("design:paramtypes", [])
-], RegistroComponent);
-
-//# sourceMappingURL=registro.component.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/ruteando/ruteando.module.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RuteandoModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegistrarComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__componentes_adivina_el_numero_adivina_el_numero_component__ = __webpack_require__("../../../../../src/app/componentes/adivina-el-numero/adivina-el-numero.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__componentes_login_login_component__ = __webpack_require__("../../../../../src/app/componentes/login/login.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__componentes_error_error_component__ = __webpack_require__("../../../../../src/app/componentes/error/error.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__componentes_principal_principal_component__ = __webpack_require__("../../../../../src/app/componentes/principal/principal.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__componentes_agilidad_aritmetica_agilidad_aritmetica_component__ = __webpack_require__("../../../../../src/app/componentes/agilidad-aritmetica/agilidad-aritmetica.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__componentes_adivina_mas_listado_adivina_mas_listado_component__ = __webpack_require__("../../../../../src/app/componentes/adivina-mas-listado/adivina-mas-listado.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__componentes_agilidad_mas_listado_agilidad_mas_listado_component__ = __webpack_require__("../../../../../src/app/componentes/agilidad-mas-listado/agilidad-mas-listado.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__componentes_listado_listado_component__ = __webpack_require__("../../../../../src/app/componentes/listado/listado.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__componentes_juegos_juegos_component__ = __webpack_require__("../../../../../src/app/componentes/juegos/juegos.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__componentes_registro_registro_component__ = __webpack_require__("../../../../../src/app/componentes/registro/registro.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__componentes_menu_card_menu_card_component__ = __webpack_require__("../../../../../src/app/componentes/menu-card/menu-card.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__componentes_quien_soy_quien_soy_component__ = __webpack_require__("../../../../../src/app/componentes/quien-soy/quien-soy.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__componentes_listado_de_paises_listado_de_paises_component__ = __webpack_require__("../../../../../src/app/componentes/listado-de-paises/listado-de-paises.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__componentes_mapa_de_google_mapa_de_google_component__ = __webpack_require__("../../../../../src/app/componentes/mapa-de-google/mapa-de-google.component.ts");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-// importo del module principal
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// declaro donde quiero que se dirija
-var MiRuteo = [
-    { path: '', component: __WEBPACK_IMPORTED_MODULE_5__componentes_principal_principal_component__["a" /* PrincipalComponent */] },
-    { path: 'Login', component: __WEBPACK_IMPORTED_MODULE_3__componentes_login_login_component__["a" /* LoginComponent */] },
-    { path: 'Mapa', component: __WEBPACK_IMPORTED_MODULE_15__componentes_mapa_de_google_mapa_de_google_component__["a" /* MapaDeGoogleComponent */] },
-    { path: 'QuienSoy', component: __WEBPACK_IMPORTED_MODULE_13__componentes_quien_soy_quien_soy_component__["a" /* QuienSoyComponent */] },
-    { path: 'Registro', component: __WEBPACK_IMPORTED_MODULE_11__componentes_registro_registro_component__["a" /* RegistroComponent */] },
-    { path: 'Principal', component: __WEBPACK_IMPORTED_MODULE_5__componentes_principal_principal_component__["a" /* PrincipalComponent */] },
-    { path: 'Listado', component: __WEBPACK_IMPORTED_MODULE_9__componentes_listado_listado_component__["a" /* ListadoComponent */] },
-    { path: 'Paises', component: __WEBPACK_IMPORTED_MODULE_14__componentes_listado_de_paises_listado_de_paises_component__["a" /* ListadoDePaisesComponent */] },
-    { path: 'Juegos',
-        component: __WEBPACK_IMPORTED_MODULE_10__componentes_juegos_juegos_component__["a" /* JuegosComponent */],
-        children: [{ path: '', component: __WEBPACK_IMPORTED_MODULE_12__componentes_menu_card_menu_card_component__["a" /* MenuCardComponent */] },
-            { path: 'Adivina', component: __WEBPACK_IMPORTED_MODULE_2__componentes_adivina_el_numero_adivina_el_numero_component__["a" /* AdivinaElNumeroComponent */] },
-            { path: 'AdivinaMasListado', component: __WEBPACK_IMPORTED_MODULE_7__componentes_adivina_mas_listado_adivina_mas_listado_component__["a" /* AdivinaMasListadoComponent */] },
-            { path: 'AgilidadaMasListado', component: __WEBPACK_IMPORTED_MODULE_8__componentes_agilidad_mas_listado_agilidad_mas_listado_component__["a" /* AgilidadMasListadoComponent */] },
-            { path: 'Agilidad', component: __WEBPACK_IMPORTED_MODULE_6__componentes_agilidad_aritmetica_agilidad_aritmetica_component__["a" /* AgilidadAritmeticaComponent */] }]
-    },
-    { path: '**', component: __WEBPACK_IMPORTED_MODULE_4__componentes_error_error_component__["a" /* ErrorComponent */] },
-    { path: 'error', component: __WEBPACK_IMPORTED_MODULE_4__componentes_error_error_component__["a" /* ErrorComponent */] }
-];
-var RuteandoModule = (function () {
-    function RuteandoModule() {
-    }
-    return RuteandoModule;
-}());
-RuteandoModule = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["M" /* NgModule */])({
-        imports: [
-            __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */].forRoot(MiRuteo)
-        ],
-        exports: [
-            __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* RouterModule */]
-        ]
-    })
-], RuteandoModule);
-
-//# sourceMappingURL=ruteando.module.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/servicios/juego-service.service.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return JuegoServiceService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__clases_juego_adivina__ = __webpack_require__("../../../../../src/app/clases/juego-adivina.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mi_http_mi_http_service__ = __webpack_require__("../../../../../src/app/servicios/mi-http/mi-http.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__("../../../../angularfire2/auth/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Clase_login__ = __webpack_require__("../../../../../src/app/Clase/login.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1826,83 +1950,109 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var JuegoServiceService = (function () {
-    function JuegoServiceService(miHttp) {
-        this.miHttp = miHttp;
-        this.peticion = this.miHttp.httpGetO("http://localhost:3003");
-        //    this.peticion = this.miHttp.httpGetO("https://restcountries.eu/rest/v2/all");
+
+var RegistrarComponent = (function () {
+    function RegistrarComponent(route, router, _auth) {
+        this.route = route;
+        this.router = router;
+        this._auth = _auth;
+        this.Mensaje = "";
+        this.miUsuario = new __WEBPACK_IMPORTED_MODULE_3__Clase_login__["a" /* Login */](route, router, _auth);
     }
-    JuegoServiceService.prototype.listar = function () {
-        this.miHttp.httpGetP("https://restcountries.eu/rest/v2/all")
-            .then(function (data) {
-            console.log(data);
-        })
-            .catch(function (err) {
-            console.log(err);
-        });
-        this.peticion
-            .subscribe(function (data) {
-            console.log("En listar");
-            console.log(data);
-        }, function (err) {
-            console.info("error: ", err);
-        });
+    RegistrarComponent.prototype.Registrar = function () {
+        try {
+            var result = this._auth.auth.createUserWithEmailAndPassword(this.miUsuario.usuario, this.miUsuario.clave);
+            this.Mensaje = this.miUsuario.usuario + " Fue ingresado Exitosamente!";
+            // this.ingreso = true;
+        }
+        catch (e) {
+            // this.ingreso = false;
+            // console.error(e);
+            // this.Mensaje=e;
+        }
+    };
+    RegistrarComponent.prototype.Cancelar = function () {
+        this.router.navigate(['/login']);
+    };
+    RegistrarComponent.prototype.ngOnInit = function () {
+    };
+    return RegistrarComponent;
+}());
+RegistrarComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'app-registrar',
+        template: __webpack_require__("../../../../../src/app/componentes/registrar/registrar.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/componentes/registrar/registrar.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["a" /* AngularFireAuth */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__["a" /* AngularFireAuth */]) === "function" && _c || Object])
+], RegistrarComponent);
+
+var _a, _b, _c;
+//# sourceMappingURL=registrar.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/servicios/listado.service.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListadoService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Clase_juego__ = __webpack_require__("../../../../../src/app/Clase/juego.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var ListadoService = (function () {
+    function ListadoService() {
+    }
+    ListadoService.prototype.listar = function () {
+        var juego1;
+        var juego2;
+        var juego3;
+        var juego4;
+        var juego5;
+        var juego6;
         var miArray = new Array();
-        miArray.push(new __WEBPACK_IMPORTED_MODULE_1__clases_juego_adivina__["a" /* JuegoAdivina */]("Juego 1", false));
-        miArray.push(new __WEBPACK_IMPORTED_MODULE_1__clases_juego_adivina__["a" /* JuegoAdivina */]("Pepe", true));
-        miArray.push(new __WEBPACK_IMPORTED_MODULE_1__clases_juego_adivina__["a" /* JuegoAdivina */]("Juego 3", false));
-        miArray.push(new __WEBPACK_IMPORTED_MODULE_1__clases_juego_adivina__["a" /* JuegoAdivina */]("Juego 4", false));
-        miArray.push(new __WEBPACK_IMPORTED_MODULE_1__clases_juego_adivina__["a" /* JuegoAdivina */]("Juego 5", false));
-        miArray.push(new __WEBPACK_IMPORTED_MODULE_1__clases_juego_adivina__["a" /* JuegoAdivina */]("Juego 6", false));
+        juego1 = new __WEBPACK_IMPORTED_MODULE_1__Clase_juego__["a" /* Juego */]("pablo1", "jugador1");
+        juego2 = new __WEBPACK_IMPORTED_MODULE_1__Clase_juego__["a" /* Juego */]("pablo2", "jugador2");
+        juego3 = new __WEBPACK_IMPORTED_MODULE_1__Clase_juego__["a" /* Juego */]("pablo3", "jugador3");
+        juego4 = new __WEBPACK_IMPORTED_MODULE_1__Clase_juego__["a" /* Juego */]("pablo4", "jugador4");
+        juego5 = new __WEBPACK_IMPORTED_MODULE_1__Clase_juego__["a" /* Juego */]("pablo5", "jugador5");
+        juego6 = new __WEBPACK_IMPORTED_MODULE_1__Clase_juego__["a" /* Juego */]("pablo6", "jugador6");
+        miArray.push(juego1);
+        miArray.push(juego2);
+        miArray.push(juego3);
+        miArray.push(juego4);
+        miArray.push(juego5);
+        miArray.push(juego6);
         return miArray;
     };
-    JuegoServiceService.prototype.listarPromesa = function () {
-        this.peticion
-            .subscribe(function (data) {
-            console.log("En listarPromesa");
-            console.log(data);
-        }, function (err) {
-            console.log(err);
-        });
-        var promesa = new Promise(function (resolve, reject) {
-            var miArray = new Array();
-            miArray.push(new __WEBPACK_IMPORTED_MODULE_1__clases_juego_adivina__["a" /* JuegoAdivina */]("JuegoPromesa 1", false, "promesa"));
-            miArray.push(new __WEBPACK_IMPORTED_MODULE_1__clases_juego_adivina__["a" /* JuegoAdivina */]("PepePromesa", true));
-            miArray.push(new __WEBPACK_IMPORTED_MODULE_1__clases_juego_adivina__["a" /* JuegoAdivina */]("JuegoPromesa 3", false));
-            miArray.push(new __WEBPACK_IMPORTED_MODULE_1__clases_juego_adivina__["a" /* JuegoAdivina */]("JuegoPromesa 4", false));
-            miArray.push(new __WEBPACK_IMPORTED_MODULE_1__clases_juego_adivina__["a" /* JuegoAdivina */]("JuegoPromesa 5", false));
-            miArray.push(new __WEBPACK_IMPORTED_MODULE_1__clases_juego_adivina__["a" /* JuegoAdivina */]("JuegoPromesa 6", false));
-            resolve(miArray);
-        });
-        return promesa;
-    };
-    return JuegoServiceService;
+    return ListadoService;
 }());
-JuegoServiceService = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__mi_http_mi_http_service__["a" /* MiHttpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__mi_http_mi_http_service__["a" /* MiHttpService */]) === "function" && _a || Object])
-], JuegoServiceService);
+ListadoService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [])
+], ListadoService);
 
-var _a;
-//# sourceMappingURL=juego-service.service.js.map
+//# sourceMappingURL=listado.service.js.map
 
 /***/ }),
 
-/***/ "../../../../../src/app/servicios/mi-http/mi-http.service.ts":
+/***/ "../../../../../src/app/servicios/store.service.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MiHttpService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StoreService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__("../../../../rxjs/Observable.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__("../../../../rxjs/add/operator/catch.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__("../../../../rxjs/add/operator/map.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_toPromise__ = __webpack_require__("../../../../rxjs/add/operator/toPromise.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_toPromise__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ngrx_store__ = __webpack_require__("../../../../@ngrx/store/@ngrx/store.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1914,95 +2064,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-
-
-
-
-var MiHttpService = (function () {
-    function MiHttpService(http) {
-        this.http = http;
+var StoreService = (function () {
+    function StoreService(store) {
+        this.store = store;
     }
-    MiHttpService.prototype.httpGetP = function (url) {
-        return this.http
-            .get(url)
-            .toPromise()
-            .then(this.extractData)
-            .catch(this.handleError);
-    };
-    MiHttpService.prototype.httpPostP = function (url, objeto) {
-        return this.http
-            .get(url)
-            .subscribe(function (data) {
-            console.log(data);
-            return data;
-        });
-    };
-    MiHttpService.prototype.httpGetO = function (url) {
-        return this.http.get(url)
-            .map(function (res) { return res.json(); })
-            .catch(function (err) { return __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__["Observable"].throw(err.json().error || 'Server error'); });
-    };
-    MiHttpService.prototype.extractData = function (res) {
-        return res.json() || {};
-    };
-    MiHttpService.prototype.handleError = function (error) {
-        return error;
-    };
-    return MiHttpService;
+    return StoreService;
 }());
-MiHttpService = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]) === "function" && _a || Object])
-], MiHttpService);
+StoreService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__ngrx_store__["a" /* Store */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__ngrx_store__["a" /* Store */]) === "function" && _a || Object])
+], StoreService);
 
 var _a;
-//# sourceMappingURL=mi-http.service.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/servicios/paises.service.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PaisesService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mi_http_mi_http_service__ = __webpack_require__("../../../../../src/app/servicios/mi-http/mi-http.service.ts");
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var PaisesService = (function () {
-    function PaisesService(miHttp) {
-        this.miHttp = miHttp;
-    }
-    PaisesService.prototype.listar = function () {
-        return this.miHttp.httpGetP("https://restcountries.eu/rest/v2/all")
-            .then(function (data) {
-            console.log(data);
-            return data;
-        })
-            .catch(function (err) {
-            console.log(err);
-            return null;
-        });
-        //return null;
-    };
-    return PaisesService;
-}());
-PaisesService = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__mi_http_mi_http_service__["a" /* MiHttpService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__mi_http_mi_http_service__["a" /* MiHttpService */]) === "function" && _a || Object])
-], PaisesService);
-
-var _a;
-//# sourceMappingURL=paises.service.js.map
+//# sourceMappingURL=store.service.js.map
 
 /***/ }),
 
@@ -2037,7 +2111,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].production) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_24" /* enableProdMode */])();
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["enableProdMode"])();
 }
 Object(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */]);
 //# sourceMappingURL=main.js.map
