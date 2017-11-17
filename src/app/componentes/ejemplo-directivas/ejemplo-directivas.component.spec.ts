@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AgilidadAritmeticaComponent } from './agilidad-aritmetica.component';
+import { EjemploDirectivasComponent } from './ejemplo-directivas.component';
 
-describe('AgilidadAritmeticaComponent', () => {
-  let component: AgilidadAritmeticaComponent;
-  let fixture: ComponentFixture<AgilidadAritmeticaComponent>;
+describe('EjemploDirectivasComponent', () => {
+  let component: EjemploDirectivasComponent;
+  let fixture: ComponentFixture<EjemploDirectivasComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AgilidadAritmeticaComponent ]
+      declarations: [ EjemploDirectivasComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AgilidadAritmeticaComponent);
+    fixture = TestBed.createComponent(EjemploDirectivasComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -26,6 +26,11 @@ import { PiedraPapelTijeraComponent } from './componentes/piedra-papel-tijera/pi
 import { MenuOpcionesComponent } from './componentes/menu-opciones/menu-opciones.component';
 import { MenuBarraComponent } from './componentes/menu-barra/menu-barra.component';
 import { QuienSoyComponent } from './componentes/quien-soy/quien-soy.component';
+import { ResaltarDirective } from './directivas/resaltar.directive';
+import { EjemploDirectivasComponent } from './componentes/ejemplo-directivas/ejemplo-directivas.component';
+import { Resaltar2Directive } from './directivas/resaltar2.directive';
+import { Resaltar3Directive } from './directivas/resaltar3.directive';
+import { Resaltar4Directive } from './directivas/resaltar4.directive';
 
 
 let miRuteo = [{path:'adivina',component:AdivinaComponent},
@@ -41,6 +46,7 @@ let miRuteo = [{path:'adivina',component:AdivinaComponent},
 {path:'anagrama',component: AnagramaComponent},
 {path:'PPT',component: PiedraPapelTijeraComponent},
 {path:'quienSoy',component: QuienSoyComponent},
+{path:'directiva',component: EjemploDirectivasComponent},
 {path:'menuDeListado',component: MenuDeListadoComponent}] 
 
 export const firebaseConfig = {
@@ -69,7 +75,12 @@ export const firebaseConfig = {
     PiedraPapelTijeraComponent,
     MenuOpcionesComponent,
     MenuBarraComponent,
-    QuienSoyComponent
+    QuienSoyComponent,
+    ResaltarDirective,
+    EjemploDirectivasComponent,
+    Resaltar2Directive,
+    Resaltar3Directive,
+    Resaltar4Directive
   ],
   imports: [
     RouterModule.forRoot(miRuteo),
